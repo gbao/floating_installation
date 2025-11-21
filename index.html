@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Floating Wind Turbine Assembly Visualization</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Floating Wind Turbine Assembly Process</h1>
+            <p class="subtitle">Learning Curve Analysis & Efficiency Prediction</p>
+        </header>
+
+        <!-- Key Metrics Summary -->
+        <section class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-label">Overall Improvement</div>
+                <div class="metric-value" id="overall-improvement">54.29%</div>
+                <div class="metric-desc">Floater 1 → 3</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Learning Rate</div>
+                <div class="metric-value" id="learning-rate">69%</div>
+                <div class="metric-desc">Wright's Model</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Floater 1 Time</div>
+                <div class="metric-value" id="f1-time">58.3h</div>
+                <div class="metric-desc">Initial baseline</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Floater 3 Time</div>
+                <div class="metric-value" id="f3-time">26.7h</div>
+                <div class="metric-desc">Latest performance</div>
+            </div>
+        </section>
+
+        <!-- Interactive Controls -->
+        <section class="controls-section">
+            <h2>Scenario Planning</h2>
+            <div class="controls-grid">
+                <div class="control-group">
+                    <label for="turbine-count">Number of Turbines:</label>
+                    <input type="range" id="turbine-count" min="3" max="50" value="10" step="1">
+                    <span id="turbine-count-value">10</span>
+                </div>
+                <div class="control-group">
+                    <label for="learning-rate-adjust">Learning Rate Adjustment:</label>
+                    <input type="range" id="learning-rate-adjust" min="0.5" max="1.0" value="0.6895" step="0.01">
+                    <span id="learning-rate-adjust-value">69%</span>
+                </div>
+                <div class="control-group">
+                    <button id="reset-btn" class="btn-secondary">Reset to Default</button>
+                    <button id="calculate-btn" class="btn-primary">Recalculate Predictions</button>
+                </div>
+            </div>
+            <div class="prediction-summary">
+                <h3>Predicted Results for <span id="predicted-turbines">10</span> Turbines:</h3>
+                <div class="prediction-grid">
+                    <div class="prediction-item">
+                        <span class="pred-label">Avg Assembly Time:</span>
+                        <span class="pred-value" id="pred-avg-time">28.0 hours</span>
+                    </div>
+                    <div class="prediction-item">
+                        <span class="pred-label">Total Project Time:</span>
+                        <span class="pred-value" id="pred-total-time">280.2 hours</span>
+                    </div>
+                    <div class="prediction-item">
+                        <span class="pred-label">Time Savings:</span>
+                        <span class="pred-value" id="pred-savings">52.0%</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Component Timeline Comparison -->
+        <section class="chart-section">
+            <h2>Component Assembly Timeline - All Floaters</h2>
+            <div class="chart-container">
+                <canvas id="timeline-chart"></canvas>
+            </div>
+        </section>
+
+        <!-- Learning Curve Visualization -->
+        <section class="chart-section">
+            <h2>Learning Curve Progression</h2>
+            <div class="chart-container">
+                <canvas id="learning-curve-chart"></canvas>
+            </div>
+        </section>
+
+        <!-- Component Breakdown -->
+        <section class="chart-section">
+            <h2>Component-Level Efficiency Improvements</h2>
+            <div class="chart-container">
+                <canvas id="component-chart"></canvas>
+            </div>
+        </section>
+
+        <!-- Scaling Predictions -->
+        <section class="chart-section">
+            <h2>Scaling Predictions (10, 20, 30+ Turbines)</h2>
+            <div class="chart-container">
+                <canvas id="scaling-chart"></canvas>
+            </div>
+        </section>
+
+        <!-- Resource Utilization -->
+        <section class="chart-section">
+            <h2>Resource Utilization Analysis</h2>
+            <div class="chart-grid">
+                <div class="chart-container-small">
+                    <canvas id="utilization-chart"></canvas>
+                </div>
+                <div class="utilization-insights">
+                    <h3>Key Insights</h3>
+                    <ul>
+                        <li><strong>Crane Utilization:</strong> <span id="crane-util">4.67%</span> - Significant improvement opportunity</li>
+                        <li><strong>Total Project Duration:</strong> <span id="project-duration">104.8 days</span></li>
+                        <li><strong>Active Assembly Time:</strong> <span id="active-time">4.9 days</span> (4.67% of total)</li>
+                        <li><strong>Idle/Transit Time:</strong> <span id="idle-time">99.9 days</span> (95.33% of total)</li>
+                    </ul>
+                    <div class="insight-box">
+                        <strong>Recommendation:</strong> Optimize logistics and scheduling to increase crane utilization.
+                        Parallel operations and reduced transit times could significantly reduce overall project duration.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Data Table -->
+        <section class="data-section">
+            <h2>Detailed Assembly Data</h2>
+            <div class="table-responsive">
+                <table id="data-table">
+                    <thead>
+                        <tr>
+                            <th>Component</th>
+                            <th>Floater 1 (hrs)</th>
+                            <th>Floater 2 (hrs)</th>
+                            <th>Floater 3 (hrs)</th>
+                            <th>F1→F2 Improvement</th>
+                            <th>F2→F3 Improvement</th>
+                            <th>Total Improvement</th>
+                        </tr>
+                    </thead>
+                    <tbody id="data-table-body">
+                        <!-- Populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <footer>
+            <p>Data Source: EFGL Floating Wind Turbine Assembly Project | Visualization powered by Chart.js</p>
+            <p>Learning Curve Model: Wright's Cumulative Average Model</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

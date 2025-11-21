@@ -1,0 +1,121 @@
+{
+  "floaters": [
+    {
+      "id": 1,
+      "operations": [
+        {
+          "name": "Tower Section 1",
+          "duration": 8.166667
+        },
+        {
+          "name": "Tower Section 2",
+          "duration": 9.5
+        },
+        {
+          "name": "Tower Section 3",
+          "duration": 24.333333
+        },
+        {
+          "name": "Nacelle",
+          "duration": 4.333333
+        },
+        {
+          "name": "Blade 1",
+          "duration": 4.833333
+        },
+        {
+          "name": "Blade 2",
+          "duration": 4.666667
+        },
+        {
+          "name": "Blade 3",
+          "duration": 2.5
+        }
+      ],
+      "total_hours": 58.333332999999996,
+      "total_days": 2.4305555416666667
+    },
+    {
+      "id": 2,
+      "operations": [
+        {
+          "name": "Tower Section 1",
+          "duration": 5.5
+        },
+        {
+          "name": "Tower Section 2",
+          "duration": 6.166667
+        },
+        {
+          "name": "Tower Section 3",
+          "duration": 5.166667
+        },
+        {
+          "name": "Nacelle",
+          "duration": 3.5
+        },
+        {
+          "name": "Blade 1",
+          "duration": 3.666667
+        },
+        {
+          "name": "Blade 2",
+          "duration": 4.5
+        },
+        {
+          "name": "Blade 3",
+          "duration": 3.833333
+        }
+      ],
+      "total_hours": 32.333334,
+      "total_days": 1.34722225
+    },
+    {
+      "id": 3,
+      "operations": [
+        {
+          "name": "Tower Section 1",
+          "duration": 5.333333
+        },
+        {
+          "name": "Tower Section 2",
+          "duration": 5.666667
+        },
+        {
+          "name": "Tower Section 3",
+          "duration": 4.333333
+        },
+        {
+          "name": "Nacelle",
+          "duration": 3.166667
+        },
+        {
+          "name": "Blade 1",
+          "duration": 3.166667
+        },
+        {
+          "name": "Blade 2",
+          "duration": 2.833333
+        },
+        {
+          "name": "Blade 3",
+          "duration": 2.166667
+        }
+      ],
+      "total_hours": 26.666667,
+      "total_days": 1.111111125
+    }
+  ],
+  "learning_curve": {
+    "avg_learning_rate": 0.6895139951135766,
+    "b_coefficient": -0.5363482603692141,
+    "f1_to_f2_improvement_pct": 44.57142711183672,
+    "f2_to_f3_improvement_pct": 17.525773865447963,
+    "overall_improvement_pct": 54.28571345306121
+  },
+  "project_metrics": {
+    "total_project_days": 104.777778,
+    "avg_time_per_wtg_days": 34.925926,
+    "crane_utilization_pct": 4.665959719690436
+  }
+}
