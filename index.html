@@ -3,17 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Floating Wind Turbine Assembly Visualization</title>
+    <title>Floating Wind Turbine Assembly - Project Comparison</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Floating Wind Turbine Assembly Process</h1>
-            <p class="subtitle">Learning Curve Analysis & Efficiency Prediction</p>
+            <h1>Floating Wind Turbine Assembly - Project Comparison</h1>
+            <p class="subtitle">EFGL vs Eolmed Learning Curve Analysis</p>
         </header>
 
+        <!-- Tab Navigation -->
+        <nav class="tab-navigation">
+            <button class="tab-button active" data-tab="efgl">EFGL Project</button>
+            <button class="tab-button" data-tab="eolmed">Eolmed Project</button>
+            <button class="tab-button" data-tab="comparison">Comparison</button>
+        </nav>
+
+        <!-- TAB 1: EFGL PROJECT -->
+        <div class="tab-content active" id="tab-efgl">
         <!-- Key Metrics Summary -->
         <section class="metrics-grid">
             <div class="metric-card">
@@ -153,13 +162,112 @@
                 </table>
             </div>
         </section>
+        </div>
+        <!-- END TAB 1: EFGL PROJECT -->
+
+        <!-- TAB 2: EOLMED PROJECT -->
+        <div class="tab-content" id="tab-eolmed">
+        <!-- Content will be dynamically generated, similar structure to EFGL -->
+        <div id="eolmed-content-placeholder">
+            <p style="text-align: center; padding: 40px; font-size: 18px; color: #64748b;">
+                Loading Eolmed project data...
+            </p>
+        </div>
+        </div>
+        <!-- END TAB 2: EOLMED PROJECT -->
+
+        <!-- TAB 3: COMPARISON -->
+        <div class="tab-content" id="tab-comparison">
+            <!-- Comparison Metrics Summary -->
+            <section class="comparison-intro">
+                <h2>Project Comparison Overview</h2>
+                <p class="comparison-note">
+                    Eolmed project was executed after EFGL, benefiting from lessons learned and process improvements
+                    from the earlier project experience.
+                </p>
+            </section>
+
+            <!-- Comparison Summary Table -->
+            <section class="comparison-table-section">
+                <h2>Key Metrics Comparison</h2>
+                <div class="table-responsive">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Metric</th>
+                                <th>EFGL</th>
+                                <th>Eolmed</th>
+                                <th>Difference</th>
+                            </tr>
+                        </thead>
+                        <tbody id="comparison-summary-table">
+                            <!-- Populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Comparison Charts -->
+            <section class="chart-section">
+                <h2>Tower Section Erection Time Comparison</h2>
+                <div class="chart-container">
+                    <canvas id="comparison-tower-chart"></canvas>
+                </div>
+            </section>
+
+            <section class="chart-section">
+                <h2>Blade Installation Time Comparison</h2>
+                <div class="chart-container">
+                    <canvas id="comparison-blade-chart"></canvas>
+                </div>
+            </section>
+
+            <section class="chart-section">
+                <h2>Learning Curve Comparison</h2>
+                <div class="chart-container">
+                    <canvas id="comparison-learning-curve"></canvas>
+                </div>
+            </section>
+
+            <section class="chart-section">
+                <h2>Overall Assembly Time Progression</h2>
+                <div class="chart-container">
+                    <canvas id="comparison-total-time"></canvas>
+                </div>
+            </section>
+
+            <!-- Key Insights -->
+            <section class="insights-section">
+                <h2>Key Insights & Analysis</h2>
+                <div class="insights-grid">
+                    <div class="insight-card">
+                        <h3>Tower Erection</h3>
+                        <p id="insight-towers">Loading...</p>
+                    </div>
+                    <div class="insight-card">
+                        <h3>Blade Installation</h3>
+                        <p id="insight-blades">Loading...</p>
+                    </div>
+                    <div class="insight-card">
+                        <h3>Overall Performance</h3>
+                        <p id="insight-overall">Loading...</p>
+                    </div>
+                    <div class="insight-card">
+                        <h3>Learning Rate</h3>
+                        <p id="insight-learning">Loading...</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <!-- END TAB 3: COMPARISON -->
 
         <footer>
-            <p>Data Source: EFGL Floating Wind Turbine Assembly Project | Visualization powered by Chart.js</p>
+            <p>Data Sources: EFGL & Eolmed Floating Wind Turbine Assembly Projects | Visualization powered by Chart.js</p>
             <p>Learning Curve Model: Wright's Cumulative Average Model</p>
         </footer>
     </div>
 
+    <script src="eolmed-data.js"></script>
     <script src="app.js"></script>
 </body>
 </html>
