@@ -107,12 +107,12 @@ header h1 {
 
 /* Tab Content */
 .tab-content {
-    display: none;
+    display: none !important;
     animation: fadeIn 0.5s ease-in-out;
 }
 
 .tab-content.active {
-    display: block;
+    display: block !important;
 }
 
 @keyframes fadeIn {

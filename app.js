@@ -78,33 +78,53 @@ let currentSettings = {
 
 // ==================== TAB MANAGEMENT ====================
 function switchTab(tabName) {
+    console.log('Switching to tab:', tabName);
     currentTab = tabName;
 
     // Update URL hash
     window.location.hash = tabName;
 
-    // Update tab buttons
+    // Update tab buttons - remove active from all first
     document.querySelectorAll('.tab-button').forEach(btn => {
         btn.classList.remove('active');
-        if (btn.dataset.tab === tabName) {
-            btn.classList.add('active');
-        }
+        // Remove inline styles that might interfere
+        btn.style.background = '';
+        btn.style.color = '';
+        btn.style.border = '';
     });
 
-    // Update tab content
+    // Add active to selected button
+    const activeButton = document.querySelector(`.tab-button[data-tab="${tabName}"]`);
+    if (activeButton) {
+        activeButton.classList.add('active');
+        // Ensure active button is styled
+        activeButton.style.background = 'linear-gradient(135deg, #2563eb, #0ea5e9)';
+        activeButton.style.color = 'white';
+        activeButton.style.border = '2px solid #2563eb';
+    }
+
+    // Update tab content - hide all first
     document.querySelectorAll('.tab-content').forEach(content => {
         content.classList.remove('active');
+        content.style.display = 'none';
     });
 
+    // Show active content
     const activeContent = document.getElementById(`tab-${tabName}`);
     if (activeContent) {
         activeContent.classList.add('active');
+        activeContent.style.display = 'block';
+        console.log('Activated tab content:', `tab-${tabName}`);
+    } else {
+        console.error('Could not find tab content:', `tab-${tabName}`);
     }
 
     // Initialize tab-specific content
     if (tabName === 'eolmed' && !document.getElementById('eolmed-metrics')) {
+        console.log('Initializing Eolmed tab for first time...');
         initializeEolmedTab();
     } else if (tabName === 'comparison' && !comparisonCharts.towers) {
+        console.log('Initializing Comparison tab for first time...');
         initializeComparisonTab();
     }
 }
@@ -643,8 +663,9 @@ function initializeEolmedTab() {
     const placeholder = document.getElementById('eolmed-content-placeholder');
     if (!placeholder) return;
 
-    // Create Eolmed content structure (clone of EFGL structure)
+    // Create Eolmed content structure (COMPLETE clone of EFGL structure)
     const eolmedHTML = `
+        <!-- Key Metrics Summary -->
         <section class="metrics-grid" id="eolmed-metrics">
             <div class="metric-card">
                 <div class="metric-label">Overall Improvement</div>
@@ -668,6 +689,45 @@ function initializeEolmedTab() {
             </div>
         </section>
 
+        <!-- Interactive Controls -->
+        <section class="controls-section">
+            <h2>Scenario Planning</h2>
+            <div class="controls-grid">
+                <div class="control-group">
+                    <label for="eolmed-turbine-count">Number of Turbines:</label>
+                    <input type="range" id="eolmed-turbine-count" min="3" max="50" value="10" step="1">
+                    <span id="eolmed-turbine-count-value">10</span>
+                </div>
+                <div class="control-group">
+                    <label for="eolmed-learning-rate-adjust">Learning Rate Adjustment:</label>
+                    <input type="range" id="eolmed-learning-rate-adjust" min="0.5" max="1.0" value="${eolmedData.learning_curve.avg_learning_rate}" step="0.01">
+                    <span id="eolmed-learning-rate-adjust-value">${(eolmedData.learning_curve.avg_learning_rate * 100).toFixed(0)}%</span>
+                </div>
+                <div class="control-group">
+                    <button id="eolmed-reset-btn" class="btn-secondary">Reset to Default</button>
+                    <button id="eolmed-calculate-btn" class="btn-primary">Recalculate Predictions</button>
+                </div>
+            </div>
+            <div class="prediction-summary">
+                <h3>Predicted Results for <span id="eolmed-predicted-turbines">10</span> Turbines:</h3>
+                <div class="prediction-grid">
+                    <div class="prediction-item">
+                        <span class="pred-label">Avg Assembly Time:</span>
+                        <span class="pred-value" id="eolmed-pred-avg-time">-</span>
+                    </div>
+                    <div class="prediction-item">
+                        <span class="pred-label">Total Project Time:</span>
+                        <span class="pred-value" id="eolmed-pred-total-time">-</span>
+                    </div>
+                    <div class="prediction-item">
+                        <span class="pred-label">Time Savings:</span>
+                        <span class="pred-value" id="eolmed-pred-savings">-</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Component Timeline Comparison -->
         <section class="chart-section">
             <h2>Component Assembly Timeline - All Floaters</h2>
             <div class="chart-container">
@@ -675,6 +735,7 @@ function initializeEolmedTab() {
             </div>
         </section>
 
+        <!-- Learning Curve Visualization -->
         <section class="chart-section">
             <h2>Learning Curve Progression</h2>
             <div class="chart-container">
@@ -682,10 +743,65 @@ function initializeEolmedTab() {
             </div>
         </section>
 
+        <!-- Component Breakdown -->
         <section class="chart-section">
             <h2>Component-Level Efficiency Improvements</h2>
             <div class="chart-container">
                 <canvas id="eolmed-component-chart"></canvas>
+            </div>
+        </section>
+
+        <!-- Scaling Predictions -->
+        <section class="chart-section">
+            <h2>Scaling Predictions (10, 20, 30+ Turbines)</h2>
+            <div class="chart-container">
+                <canvas id="eolmed-scaling-chart"></canvas>
+            </div>
+        </section>
+
+        <!-- Resource Utilization -->
+        <section class="chart-section">
+            <h2>Resource Utilization Analysis</h2>
+            <div class="chart-grid">
+                <div class="chart-container-small">
+                    <canvas id="eolmed-utilization-chart"></canvas>
+                </div>
+                <div class="utilization-insights">
+                    <h3>Key Insights</h3>
+                    <ul>
+                        <li><strong>Crane Utilization:</strong> <span id="eolmed-crane-util">${eolmedData.project_metrics.crane_utilization_pct.toFixed(2)}%</span> - Significant improvement opportunity</li>
+                        <li><strong>Total Project Duration:</strong> <span id="eolmed-project-duration">${eolmedData.project_metrics.total_project_days.toFixed(1)} days</span></li>
+                        <li><strong>Active Assembly Time:</strong> <span id="eolmed-active-time">${((eolmedData.floaters[0].total_hours + eolmedData.floaters[1].total_hours + eolmedData.floaters[2].total_hours) / 24).toFixed(1)} days</span></li>
+                        <li><strong>Idle/Transit Time:</strong> <span id="eolmed-idle-time">${(eolmedData.project_metrics.total_project_days - ((eolmedData.floaters[0].total_hours + eolmedData.floaters[1].total_hours + eolmedData.floaters[2].total_hours) / 24)).toFixed(1)} days</span></li>
+                    </ul>
+                    <div class="insight-box">
+                        <strong>Recommendation:</strong> Optimize logistics and scheduling to increase crane utilization.
+                        Parallel operations and reduced transit times could significantly reduce overall project duration.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Data Table -->
+        <section class="data-section">
+            <h2>Detailed Assembly Data</h2>
+            <div class="table-responsive">
+                <table id="eolmed-data-table">
+                    <thead>
+                        <tr>
+                            <th>Component</th>
+                            <th>Floater 1 (hrs)</th>
+                            <th>Floater 2 (hrs)</th>
+                            <th>Floater 3 (hrs)</th>
+                            <th>F1→F2 Improvement</th>
+                            <th>F2→F3 Improvement</th>
+                            <th>Total Improvement</th>
+                        </tr>
+                    </thead>
+                    <tbody id="eolmed-data-table-body">
+                        <!-- Populated by JavaScript -->
+                    </tbody>
+                </table>
             </div>
         </section>
     `;
@@ -694,6 +810,15 @@ function initializeEolmedTab() {
 
     // Create Eolmed charts
     createEolmedCharts();
+
+    // Populate Eolmed data table
+    populateEolmedDataTable();
+
+    // Setup Eolmed event listeners
+    setupEolmedEventListeners();
+
+    // Update Eolmed predictions
+    updateEolmedPredictions();
 }
 
 function createEolmedCharts() {
@@ -827,6 +952,306 @@ function createEolmedCharts() {
                 scales: {
                     y: { beginAtZero: true, title: { display: true, text: 'Improvement (%)' }},
                     x: { title: { display: true, text: 'Component' }}
+                }
+            }
+        });
+    }
+
+    // Scaling Chart
+    const scalingCtx = document.getElementById('eolmed-scaling-chart');
+    if (scalingCtx) {
+        const predictions = calculatePredictionsForData(10, eolmedData);
+        const timeData = predictions.map(p => p.time);
+        const avgData = predictions.map(p => p.average);
+
+        eolmedCharts.scaling = new Chart(scalingCtx.getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: predictions.map(p => `T${p.turbine}`),
+                datasets: [
+                    {
+                        label: 'Individual Assembly Time',
+                        data: timeData,
+                        borderColor: '#3b82f6',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        borderWidth: 2,
+                        fill: true
+                    },
+                    {
+                        label: 'Average Assembly Time',
+                        data: avgData,
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        borderWidth: 2,
+                        fill: true
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Eolmed - Predicted Performance for 10 Turbines',
+                        font: { size: 16, weight: 'bold' }
+                    }
+                },
+                scales: {
+                    y: { beginAtZero: true, title: { display: true, text: 'Time (hours)' }},
+                    x: { title: { display: true, text: 'Turbine' }}
+                }
+            }
+        });
+    }
+
+    // Utilization Chart
+    const utilizationCtx = document.getElementById('eolmed-utilization-chart');
+    if (utilizationCtx) {
+        const utilized = eolmedData.project_metrics.crane_utilization_pct;
+        const idle = 100 - utilized;
+
+        eolmedCharts.utilization = new Chart(utilizationCtx.getContext('2d'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Active Assembly', 'Idle/Transit Time'],
+                datasets: [{
+                    data: [utilized, idle],
+                    backgroundColor: ['#10b981', '#ef4444'],
+                    borderWidth: 2,
+                    borderColor: '#ffffff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Eolmed - Crane Utilization',
+                        font: { size: 16, weight: 'bold' }
+                    },
+                    legend: { display: true, position: 'bottom' }
+                }
+            }
+        });
+    }
+}
+
+function calculatePredictionsForData(count, data) {
+    const baseTime = data.floaters[0].total_hours;
+    const b = data.learning_curve.b_coefficient;
+    let predictions = [];
+    let cumulativeTime = 0;
+
+    for (let n = 1; n <= count; n++) {
+        const predictedTime = baseTime * Math.pow(n, b);
+        cumulativeTime += predictedTime;
+        predictions.push({
+            turbine: n,
+            time: predictedTime,
+            cumulative: cumulativeTime,
+            average: cumulativeTime / n
+        });
+    }
+
+    return predictions;
+}
+
+function populateEolmedDataTable() {
+    const tbody = document.getElementById('eolmed-data-table-body');
+    if (!tbody) return;
+
+    const improvements = [];
+    eolmedData.floaters[0].operations.forEach((op, idx) => {
+        const f1 = eolmedData.floaters[0].operations[idx].duration;
+        const f2 = eolmedData.floaters[1].operations[idx].duration;
+        const f3 = eolmedData.floaters[2].operations[idx].duration;
+
+        const imp_f1_f2 = ((f1 - f2) / f1) * 100;
+        const imp_f2_f3 = ((f2 - f3) / f2) * 100;
+        const imp_total = ((f1 - f3) / f1) * 100;
+
+        improvements.push({
+            component: op.name,
+            f1, f2, f3,
+            imp_f1_f2,
+            imp_f2_f3,
+            imp_total
+        });
+    });
+
+    tbody.innerHTML = '';
+    improvements.forEach(item => {
+        const row = document.createElement('tr');
+        const formatImprovement = (val) => {
+            const className = val >= 0 ? 'improvement-positive' : 'improvement-negative';
+            const sign = val >= 0 ? '+' : '';
+            return `<span class="${className}">${sign}${val.toFixed(2)}%</span>`;
+        };
+
+        row.innerHTML = `
+            <td>${item.component}</td>
+            <td>${item.f1.toFixed(2)}</td>
+            <td>${item.f2.toFixed(2)}</td>
+            <td>${item.f3.toFixed(2)}</td>
+            <td>${formatImprovement(item.imp_f1_f2)}</td>
+            <td>${formatImprovement(item.imp_f2_f3)}</td>
+            <td>${formatImprovement(item.imp_total)}</td>
+        `;
+        tbody.appendChild(row);
+    });
+
+    // Add total row
+    const totalRow = document.createElement('tr');
+    totalRow.style.fontWeight = 'bold';
+    totalRow.style.backgroundColor = '#f1f5f9';
+
+    const f1Total = eolmedData.floaters[0].total_hours;
+    const f2Total = eolmedData.floaters[1].total_hours;
+    const f3Total = eolmedData.floaters[2].total_hours;
+
+    const totalF1F2 = ((f1Total - f2Total) / f1Total) * 100;
+    const totalF2F3 = ((f2Total - f3Total) / f2Total) * 100;
+    const totalOverall = ((f1Total - f3Total) / f1Total) * 100;
+
+    const formatImprovement = (val) => {
+        const className = val >= 0 ? 'improvement-positive' : 'improvement-negative';
+        const sign = val >= 0 ? '+' : '';
+        return `<span class="${className}">${sign}${val.toFixed(2)}%</span>`;
+    };
+
+    totalRow.innerHTML = `
+        <td>TOTAL</td>
+        <td>${f1Total.toFixed(2)}</td>
+        <td>${f2Total.toFixed(2)}</td>
+        <td>${f3Total.toFixed(2)}</td>
+        <td>${formatImprovement(totalF1F2)}</td>
+        <td>${formatImprovement(totalF2F3)}</td>
+        <td>${formatImprovement(totalOverall)}</td>
+    `;
+    tbody.appendChild(totalRow);
+}
+
+let eolmedSettings = {
+    turbineCount: 10,
+    learningRate: eolmedData.learning_curve.avg_learning_rate,
+    bCoefficient: eolmedData.learning_curve.b_coefficient
+};
+
+function updateEolmedPredictions() {
+    const predictions = calculatePredictionsForData(eolmedSettings.turbineCount, eolmedData);
+    const lastPrediction = predictions[predictions.length - 1];
+
+    const turbinesEl = document.getElementById('eolmed-predicted-turbines');
+    const avgTimeEl = document.getElementById('eolmed-pred-avg-time');
+    const totalTimeEl = document.getElementById('eolmed-pred-total-time');
+    const savingsEl = document.getElementById('eolmed-pred-savings');
+
+    if (turbinesEl) turbinesEl.textContent = eolmedSettings.turbineCount;
+    if (avgTimeEl) avgTimeEl.textContent = `${lastPrediction.average.toFixed(1)} hours`;
+    if (totalTimeEl) totalTimeEl.textContent = `${lastPrediction.cumulative.toFixed(1)} hours`;
+
+    const baseTime = eolmedData.floaters[0].total_hours;
+    const savings = ((baseTime - lastPrediction.average) / baseTime) * 100;
+    if (savingsEl) savingsEl.textContent = `${savings.toFixed(1)}%`;
+}
+
+function setupEolmedEventListeners() {
+    const turbineCountInput = document.getElementById('eolmed-turbine-count');
+    const turbineCountValue = document.getElementById('eolmed-turbine-count-value');
+
+    if (turbineCountInput) {
+        turbineCountInput.addEventListener('input', (e) => {
+            eolmedSettings.turbineCount = parseInt(e.target.value);
+            if (turbineCountValue) turbineCountValue.textContent = eolmedSettings.turbineCount;
+        });
+    }
+
+    const learningRateInput = document.getElementById('eolmed-learning-rate-adjust');
+    const learningRateValue = document.getElementById('eolmed-learning-rate-adjust-value');
+
+    if (learningRateInput) {
+        learningRateInput.addEventListener('input', (e) => {
+            eolmedSettings.learningRate = parseFloat(e.target.value);
+            if (learningRateValue) learningRateValue.textContent = `${(eolmedSettings.learningRate * 100).toFixed(0)}%`;
+            eolmedSettings.bCoefficient = Math.log(eolmedSettings.learningRate) / Math.log(2);
+        });
+    }
+
+    const calculateBtn = document.getElementById('eolmed-calculate-btn');
+    if (calculateBtn) {
+        calculateBtn.addEventListener('click', () => {
+            updateEolmedPredictions();
+            updateEolmedCharts();
+        });
+    }
+
+    const resetBtn = document.getElementById('eolmed-reset-btn');
+    if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+            eolmedSettings.turbineCount = 10;
+            eolmedSettings.learningRate = eolmedData.learning_curve.avg_learning_rate;
+            eolmedSettings.bCoefficient = eolmedData.learning_curve.b_coefficient;
+
+            if (turbineCountInput) turbineCountInput.value = 10;
+            if (turbineCountValue) turbineCountValue.textContent = '10';
+            if (learningRateInput) learningRateInput.value = eolmedSettings.learningRate;
+            if (learningRateValue) learningRateValue.textContent = `${(eolmedSettings.learningRate * 100).toFixed(0)}%`;
+
+            updateEolmedPredictions();
+            updateEolmedCharts();
+        });
+    }
+}
+
+function updateEolmedCharts() {
+    // Update scaling chart
+    if (eolmedCharts.scaling) {
+        eolmedCharts.scaling.destroy();
+    }
+    const scalingCtx = document.getElementById('eolmed-scaling-chart');
+    if (scalingCtx) {
+        const predictions = calculatePredictionsForData(eolmedSettings.turbineCount, eolmedData);
+        const timeData = predictions.map(p => p.time);
+        const avgData = predictions.map(p => p.average);
+
+        eolmedCharts.scaling = new Chart(scalingCtx.getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: predictions.map(p => `T${p.turbine}`),
+                datasets: [
+                    {
+                        label: 'Individual Assembly Time',
+                        data: timeData,
+                        borderColor: '#3b82f6',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        borderWidth: 2,
+                        fill: true
+                    },
+                    {
+                        label: 'Average Assembly Time',
+                        data: avgData,
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        borderWidth: 2,
+                        fill: true
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: `Eolmed - Predicted Performance for ${eolmedSettings.turbineCount} Turbines`,
+                        font: { size: 16, weight: 'bold' }
+                    }
+                },
+                scales: {
+                    y: { beginAtZero: true, title: { display: true, text: 'Time (hours)' }},
+                    x: { title: { display: true, text: 'Turbine' }}
                 }
             }
         });
