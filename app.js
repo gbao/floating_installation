@@ -10,14 +10,14 @@ const efglData = {
             operations: [
                 { name: "Tower Section 1", duration: 8.166667 },
                 { name: "Tower Section 2", duration: 9.5 },
-                { name: "Tower Section 3", duration: 24.333333 },
+                { name: "Tower Section 3", duration: 8.25 },
                 { name: "Nacelle", duration: 4.333333 },
                 { name: "Blade 1", duration: 4.833333 },
                 { name: "Blade 2", duration: 4.666667 },
                 { name: "Blade 3", duration: 2.5 }
             ],
-            total_hours: 58.33,
-            total_days: 2.43
+            total_hours: 42.25,
+            total_days: 1.76
         },
         {
             id: 2,
@@ -49,16 +49,16 @@ const efglData = {
         }
     ],
     learning_curve: {
-        avg_learning_rate: 0.6895,
-        b_coefficient: -0.5363,
-        f1_to_f2_improvement_pct: 44.57,
-        f2_to_f3_improvement_pct: 17.53,
-        overall_improvement_pct: 54.29
+        avg_learning_rate: 0.7945,
+        b_coefficient: -0.3319,
+        f1_to_f2_improvement_pct: 23.48,
+        f2_to_f3_improvement_pct: 17.51,
+        overall_improvement_pct: 36.88
     },
     project_metrics: {
-        total_project_days: 104.78,
-        avg_time_per_wtg_days: 34.93,
-        crane_utilization_pct: 4.67
+        total_project_days: 104.11,
+        avg_time_per_wtg_days: 34.70,
+        crane_utilization_pct: 4.05
     }
 };
 
@@ -72,8 +72,8 @@ let comparisonCharts = {};
 let currentTab = 'efgl';
 let currentSettings = {
     turbineCount: 10,
-    learningRate: 0.6895,
-    bCoefficient: -0.5363
+    learningRate: 0.7945,
+    bCoefficient: -0.3319
 };
 
 // ==================== TAB MANAGEMENT ====================
@@ -238,7 +238,12 @@ function createTimelineChart() {
                 tooltip: {
                     callbacks: {
                         label: function(context) {
-                            return `${context.dataset.label}: ${context.parsed.y.toFixed(2)} hours`;
+                            const label = `${context.dataset.label}: ${context.parsed.y.toFixed(2)} hours`;
+                            // Add asterisk for Tower Section 3 Floater 1 corrected value
+                            if (context.label === 'Tower Section 3' && context.datasetIndex === 0) {
+                                return [label + ' *', '(Corrected from 24.33h - see note below)'];
+                            }
+                            return label;
                         }
                     }
                 }
@@ -386,7 +391,12 @@ function createComponentChart() {
                 tooltip: {
                     callbacks: {
                         label: function(context) {
-                            return `${context.dataset.label}: ${context.parsed.y.toFixed(2)}%`;
+                            const label = `${context.dataset.label}: ${context.parsed.y.toFixed(2)}%`;
+                            // Note Tower Section 3's F1 corrected value
+                            if (context.label === 'Tower Section 3' && context.datasetIndex === 0) {
+                                return [label, '(F1 corrected from 24.33h to 8.25h)'];
+                            }
+                            return label;
                         }
                     }
                 }
@@ -540,9 +550,14 @@ function populateDataTable() {
             return `<span class="${className}">${sign}${val.toFixed(2)}%</span>`;
         };
 
+        // Add asterisk to Tower Section 3 F1 as outlier
+        const f1Display = item.component === 'Tower Section 3'
+            ? `${item.f1.toFixed(2)}*`
+            : item.f1.toFixed(2);
+
         row.innerHTML = `
             <td>${item.component}</td>
-            <td>${item.f1.toFixed(2)}</td>
+            <td>${f1Display}</td>
             <td>${item.f2.toFixed(2)}</td>
             <td>${item.f3.toFixed(2)}</td>
             <td>${formatImprovement(item.imp_f1_f2)}</td>
@@ -629,13 +644,13 @@ function setupEventListeners() {
     // Reset button
     document.getElementById('reset-btn').addEventListener('click', () => {
         currentSettings.turbineCount = 10;
-        currentSettings.learningRate = 0.6895;
-        currentSettings.bCoefficient = -0.5363;
+        currentSettings.learningRate = 0.7945;
+        currentSettings.bCoefficient = -0.3319;
 
         turbineCountInput.value = 10;
         turbineCountValue.textContent = '10';
-        learningRateInput.value = 0.6895;
-        learningRateValue.textContent = '69%';
+        learningRateInput.value = 0.7945;
+        learningRateValue.textContent = '79%';
 
         updatePredictions();
         updateCharts();
@@ -665,6 +680,29 @@ function initializeEolmedTab() {
 
     // Create Eolmed content structure (COMPLETE clone of EFGL structure)
     const eolmedHTML = `
+        <!-- Project Overview Section -->
+        <section class="project-overview">
+            <h2>Project Overview</h2>
+            <div class="overview-grid">
+                <div class="overview-item">
+                    <span class="overview-label">Project:</span>
+                    <span class="overview-value">Eolmed (PLN) Floating Wind Project</span>
+                </div>
+                <div class="overview-item">
+                    <span class="overview-label">Location:</span>
+                    <span class="overview-value">Port-La Nouvelle Yard</span>
+                </div>
+                <div class="overview-item">
+                    <span class="overview-label">Period:</span>
+                    <span class="overview-value">2024 - 2025</span>
+                </div>
+                <div class="overview-item">
+                    <span class="overview-label">Scope:</span>
+                    <span class="overview-value">3 floating wind foundations</span>
+                </div>
+            </div>
+        </section>
+
         <!-- Key Metrics Summary -->
         <section class="metrics-grid" id="eolmed-metrics">
             <div class="metric-card">
@@ -675,7 +713,7 @@ function initializeEolmedTab() {
             <div class="metric-card">
                 <div class="metric-label">Learning Rate</div>
                 <div class="metric-value">${(eolmedData.learning_curve.avg_learning_rate * 100).toFixed(0)}%</div>
-                <div class="metric-desc">Wright's Model</div>
+                <div class="metric-desc">Mathematical Relationship</div>
             </div>
             <div class="metric-card">
                 <div class="metric-label">Floater 1 Time</div>
@@ -686,6 +724,60 @@ function initializeEolmedTab() {
                 <div class="metric-label">Floater 3 Time</div>
                 <div class="metric-value">${eolmedData.floaters[2].total_hours}h</div>
                 <div class="metric-desc">Latest performance</div>
+            </div>
+        </section>
+
+        <!-- Learning Rate Methodology -->
+        <section class="methodology-section">
+            <h2>Learning Rate Methodology</h2>
+            <p class="methodology-intro">
+                The learning rate of ${(eolmedData.learning_curve.avg_learning_rate * 100).toFixed(1)}% is calculated using two complementary mathematical methods,
+                rather than Wright's Law which assumes production doubling. This approach is more appropriate
+                for sequential foundation assembly where production doesn't double.
+            </p>
+            <div class="methodology-grid">
+                <div class="method-card">
+                    <h3>Method 1: Sequential Transition Analysis</h3>
+                    <div class="calculation-box">
+                        <div class="calc-step">
+                            <span class="calc-label">F1 → F2 Transition:</span>
+                            <span class="calc-value">${eolmedData.floaters[1].total_hours.toFixed(2)} / ${eolmedData.floaters[0].total_hours.toFixed(2)} = ${((eolmedData.floaters[1].total_hours / eolmedData.floaters[0].total_hours) * 100).toFixed(1)}%</span>
+                        </div>
+                        <div class="calc-step">
+                            <span class="calc-label">F2 → F3 Transition:</span>
+                            <span class="calc-value">${eolmedData.floaters[2].total_hours.toFixed(2)} / ${eolmedData.floaters[1].total_hours.toFixed(2)} = ${((eolmedData.floaters[2].total_hours / eolmedData.floaters[1].total_hours) * 100).toFixed(1)}%</span>
+                        </div>
+                        <div class="calc-step final">
+                            <span class="calc-label">Average Learning Rate:</span>
+                            <span class="calc-value">~${(eolmedData.learning_curve.avg_learning_rate * 100).toFixed(1)}%</span>
+                        </div>
+                    </div>
+                    <p class="method-desc">
+                        This method analyzes the sequential improvement between consecutive foundations,
+                        providing insight into the rate of improvement at each stage of the project.
+                    </p>
+                </div>
+                <div class="method-card">
+                    <h3>Method 2: Power Law Regression</h3>
+                    <div class="calculation-box">
+                        <div class="calc-step">
+                            <span class="calc-label">Regression Model:</span>
+                            <span class="calc-value">Y = aX<sup>b</sup></span>
+                        </div>
+                        <div class="calc-step">
+                            <span class="calc-label">Power Coefficient:</span>
+                            <span class="calc-value">b = ${eolmedData.learning_curve.b_coefficient.toFixed(3)}</span>
+                        </div>
+                        <div class="calc-step final">
+                            <span class="calc-label">Learning Rate:</span>
+                            <span class="calc-value">2<sup>b</sup> = ${(eolmedData.learning_curve.avg_learning_rate * 100).toFixed(1)}%</span>
+                        </div>
+                    </div>
+                    <p class="method-desc">
+                        Power law regression fits the assembly time data to a mathematical curve,
+                        capturing the overall learning trend across all three foundations.
+                    </p>
+                </div>
             </div>
         </section>
 
@@ -802,6 +894,10 @@ function initializeEolmedTab() {
                         <!-- Populated by JavaScript -->
                     </tbody>
                 </table>
+            </div>
+            <div class="table-footnote">
+                <p>The Eolmed project shows more consistent learning patterns across components,
+                benefiting from lessons learned during the earlier EFGL project execution.</p>
             </div>
         </section>
     `;

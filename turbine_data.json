@@ -13,7 +13,7 @@
         },
         {
           "name": "Tower Section 3",
-          "duration": 24.333333
+          "duration": 8.25
         },
         {
           "name": "Nacelle",
@@ -32,8 +32,8 @@
           "duration": 2.5
         }
       ],
-      "total_hours": 58.333332999999996,
-      "total_days": 2.4305555416666667
+      "total_hours": 42.25,
+      "total_days": 1.760416667
     },
     {
       "id": 2,
@@ -107,15 +107,15 @@
     }
   ],
   "learning_curve": {
-    "avg_learning_rate": 0.6895139951135766,
-    "b_coefficient": -0.5363482603692141,
-    "f1_to_f2_improvement_pct": 44.57142711183672,
-    "f2_to_f3_improvement_pct": 17.525773865447963,
-    "overall_improvement_pct": 54.28571345306121
+    "avg_learning_rate": 0.794508,
+    "b_coefficient": -0.331867,
+    "f1_to_f2_improvement_pct": 23.48,
+    "f2_to_f3_improvement_pct": 17.51,
+    "overall_improvement_pct": 36.88
   },
   "project_metrics": {
-    "total_project_days": 104.777778,
-    "avg_time_per_wtg_days": 34.925926,
-    "crane_utilization_pct": 4.665959719690436
+    "total_project_days": 104.11,
+    "avg_time_per_wtg_days": 34.70,
+    "crane_utilization_pct": 4.05
   }
 }

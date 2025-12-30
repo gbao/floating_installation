@@ -23,27 +23,105 @@
 
         <!-- TAB 1: EFGL PROJECT -->
         <div class="tab-content active" id="tab-efgl">
+
+        <!-- Project Overview Section -->
+        <section class="project-overview">
+            <h2>Project Overview</h2>
+            <div class="overview-grid">
+                <div class="overview-item">
+                    <span class="overview-label">Project:</span>
+                    <span class="overview-value">EFGL Floating Wind Project</span>
+                </div>
+                <div class="overview-item">
+                    <span class="overview-label">Location:</span>
+                    <span class="overview-value">Fincantieri Yard</span>
+                </div>
+                <div class="overview-item">
+                    <span class="overview-label">Period:</span>
+                    <span class="overview-value">2023 - 2024</span>
+                </div>
+                <div class="overview-item">
+                    <span class="overview-label">Scope:</span>
+                    <span class="overview-value">3 floating wind foundations</span>
+                </div>
+            </div>
+        </section>
+
         <!-- Key Metrics Summary -->
         <section class="metrics-grid">
             <div class="metric-card">
                 <div class="metric-label">Overall Improvement</div>
-                <div class="metric-value" id="overall-improvement">54.29%</div>
+                <div class="metric-value" id="overall-improvement">36.88%</div>
                 <div class="metric-desc">Floater 1 → 3</div>
             </div>
             <div class="metric-card">
                 <div class="metric-label">Learning Rate</div>
-                <div class="metric-value" id="learning-rate">69%</div>
-                <div class="metric-desc">Wright's Model</div>
+                <div class="metric-value" id="learning-rate">79%</div>
+                <div class="metric-desc">Mathematical Relationship</div>
             </div>
             <div class="metric-card">
                 <div class="metric-label">Floater 1 Time</div>
-                <div class="metric-value" id="f1-time">58.3h</div>
-                <div class="metric-desc">Initial baseline</div>
+                <div class="metric-value" id="f1-time">42.3h*</div>
+                <div class="metric-desc">Corrected baseline</div>
             </div>
             <div class="metric-card">
                 <div class="metric-label">Floater 3 Time</div>
                 <div class="metric-value" id="f3-time">26.7h</div>
                 <div class="metric-desc">Latest performance</div>
+            </div>
+        </section>
+
+        <!-- Learning Rate Methodology -->
+        <section class="methodology-section">
+            <h2>Learning Rate Methodology</h2>
+            <p class="methodology-intro">
+                The learning rate of 79.5% is calculated using two complementary mathematical methods,
+                rather than Wright's Law which assumes production doubling. This approach is more appropriate
+                for sequential foundation assembly where production doesn't double.
+            </p>
+            <div class="methodology-grid">
+                <div class="method-card">
+                    <h3>Method 1: Sequential Transition Analysis</h3>
+                    <div class="calculation-box">
+                        <div class="calc-step">
+                            <span class="calc-label">F1 → F2 Transition:</span>
+                            <span class="calc-value">32.33 / 42.25* = 76.5%</span>
+                        </div>
+                        <div class="calc-step">
+                            <span class="calc-label">F2 → F3 Transition:</span>
+                            <span class="calc-value">26.67 / 32.33 = 82.5%</span>
+                        </div>
+                        <div class="calc-step final">
+                            <span class="calc-label">Average Learning Rate:</span>
+                            <span class="calc-value">~79.5%</span>
+                        </div>
+                    </div>
+                    <p class="method-desc">
+                        This method analyzes the sequential improvement between consecutive foundations,
+                        providing insight into the rate of improvement at each stage of the project.
+                    </p>
+                </div>
+                <div class="method-card">
+                    <h3>Method 2: Power Law Regression</h3>
+                    <div class="calculation-box">
+                        <div class="calc-step">
+                            <span class="calc-label">Regression Model:</span>
+                            <span class="calc-value">Y = aX<sup>b</sup></span>
+                        </div>
+                        <div class="calc-step">
+                            <span class="calc-label">Power Coefficient:</span>
+                            <span class="calc-value">b = -0.332</span>
+                        </div>
+                        <div class="calc-step final">
+                            <span class="calc-label">Learning Rate:</span>
+                            <span class="calc-value">2<sup>b</sup> = 79.5%</span>
+                        </div>
+                    </div>
+                    <p class="method-desc">
+                        Power law regression fits the assembly time data to a mathematical curve,
+                        capturing the overall learning trend across all three foundations.
+                    </p>
+                </div>
             </div>
         </section>
 
@@ -58,8 +136,8 @@
                 </div>
                 <div class="control-group">
                     <label for="learning-rate-adjust">Learning Rate Adjustment:</label>
-                    <input type="range" id="learning-rate-adjust" min="0.5" max="1.0" value="0.6895" step="0.01">
-                    <span id="learning-rate-adjust-value">69%</span>
+                    <input type="range" id="learning-rate-adjust" min="0.5" max="1.0" value="0.7945" step="0.01">
+                    <span id="learning-rate-adjust-value">79%</span>
                 </div>
                 <div class="control-group">
                     <button id="reset-btn" class="btn-secondary">Reset to Default</button>
@@ -160,6 +238,12 @@
                         <!-- Populated by JavaScript -->
                     </tbody>
                 </table>
+            </div>
+            <div class="table-footnote">
+                <p><strong>*</strong> Tower Section 3 Floater 1 has been corrected from 24.33h to 8.25h to reflect pure assembly hours.
+                Original measurement of 24.33h included overnight gap (lift started in evening, completed next morning) with
+                non-productive time: night downtime, weather window waiting, and work hour restrictions. The corrected value of 8.25h
+                represents actual crane-active assembly time, providing more accurate learning curve analysis.</p>
             </div>
         </section>
         </div>
@@ -263,7 +347,7 @@
 
         <footer>
             <p>Data Sources: EFGL & Eolmed Floating Wind Turbine Assembly Projects | Visualization powered by Chart.js</p>
-            <p>Learning Curve Model: Wright's Cumulative Average Model</p>
+            <p>Learning Curve Model: Mathematical Relationship (Sequential Transition Analysis & Power Law Regression)</p>
         </footer>
     </div>
 
