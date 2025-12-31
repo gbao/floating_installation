@@ -690,7 +690,7 @@ function initializeEolmedTab() {
                 </div>
                 <div class="overview-item">
                     <span class="overview-label">Location:</span>
-                    <span class="overview-value">Port-La Nouvelle Yard</span>
+                    <span class="overview-value">Mediterranean Sea, France</span>
                 </div>
                 <div class="overview-item">
                     <span class="overview-label">Period:</span>
@@ -699,6 +699,192 @@ function initializeEolmedTab() {
                 <div class="overview-item">
                     <span class="overview-label">Scope:</span>
                     <span class="overview-value">3 floating wind foundations</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Specifications -->
+        <section class="tech-specs-section">
+            <h2>Technical Specifications</h2>
+
+            <div class="specs-category">
+                <h3>Wind Turbine Generator (WTG)</h3>
+                <div class="specs-grid">
+                    <div class="spec-item">
+                        <span class="spec-icon">⚡</span>
+                        <div class="spec-content">
+                            <div class="spec-label">Model</div>
+                            <div class="spec-value">Vestas V164-10.0 MW</div>
+                        </div>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-icon">🔌</span>
+                        <div class="spec-content">
+                            <div class="spec-label">Unit Power</div>
+                            <div class="spec-value">10 MW</div>
+                        </div>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-icon">↔️</span>
+                        <div class="spec-content">
+                            <div class="spec-label">Rotor Diameter</div>
+                            <div class="spec-value">164 m</div>
+                        </div>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-icon">📏</span>
+                        <div class="spec-content">
+                            <div class="spec-label">Blade Length</div>
+                            <div class="spec-value">80 m</div>
+                        </div>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-icon">⚖️</span>
+                        <div class="spec-content">
+                            <div class="spec-label">Blade Weight</div>
+                            <div class="spec-value">34 tonnes</div>
+                        </div>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-icon">📐</span>
+                        <div class="spec-content">
+                            <div class="spec-label">Hub Height</div>
+                            <div class="spec-value">104 m</div>
+                        </div>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-icon">⚙️</span>
+                        <div class="spec-content">
+                            <div class="spec-label">Total Mass</div>
+                            <div class="spec-value">500 tonnes</div>
+                            <div class="spec-note">(rotor assembly, mast, nacelle)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="specs-category">
+                <h3>Floating Platform</h3>
+                <div class="specs-grid">
+                    <div class="spec-item">
+                        <span class="spec-icon">🔷</span>
+                        <div class="spec-content">
+                            <div class="spec-label">Technology</div>
+                            <div class="spec-value">BW Ideol Semi-Submersible Barge</div>
+                        </div>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-icon">📦</span>
+                        <div class="spec-content">
+                            <div class="spec-label">Optimized Dimensions</div>
+                            <div class="spec-value">45m × 45m × 17m</div>
+                            <div class="spec-note">(for easy port integration)</div>
+                        </div>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-icon">↕️</span>
+                        <div class="spec-content">
+                            <div class="spec-label">Total Height</div>
+                            <div class="spec-value">17 m</div>
+                        </div>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-icon">⚓</span>
+                        <div class="spec-content">
+                            <div class="spec-label">Operating Draft</div>
+                            <div class="spec-value">7 - 10 m</div>
+                            <div class="spec-note">(shallow draft design)</div>
+                        </div>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-icon">⭕</span>
+                        <div class="spec-content">
+                            <div class="spec-label">Hull Design</div>
+                            <div class="spec-value">Ring with Central Opening</div>
+                            <div class="spec-note">(Damping pool© for swell dampening)</div>
+                        </div>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-icon">🌊</span>
+                        <div class="spec-content">
+                            <div class="spec-label">Swell Management</div>
+                            <div class="spec-value">Extended Bottom Structure</div>
+                            <div class="spec-note">(dampens swell frequencies)</div>
+                        </div>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-icon">🔗</span>
+                        <div class="spec-content">
+                            <div class="spec-label">Turbine Connection</div>
+                            <div class="spec-value">Transition Piece to Deck</div>
+                            <div class="spec-note">(rear deck attachment)</div>
+                        </div>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-icon">🏗️</span>
+                        <div class="spec-content">
+                            <div class="spec-label">Construction</div>
+                            <div class="spec-value">Semi-Submersible Steel Barge</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="specs-category">
+                <h3>Installation Site Characteristics</h3>
+                <div class="specs-grid">
+                    <div class="spec-item">
+                        <span class="spec-icon">🌍</span>
+                        <div class="spec-content">
+                            <div class="spec-label">Location</div>
+                            <div class="spec-value">Mediterranean Sea</div>
+                            <div class="spec-note">(off Gruissan, Southern France)</div>
+                        </div>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-icon">📍</span>
+                        <div class="spec-content">
+                            <div class="spec-label">Distance to Coast</div>
+                            <div class="spec-value">18 km</div>
+                            <div class="spec-note">(Gruissan coastline)</div>
+                        </div>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-icon">🌊</span>
+                        <div class="spec-content">
+                            <div class="spec-label">Sea Depth Range</div>
+                            <div class="spec-value">60 - 90 m</div>
+                            <div class="spec-note">(anchored around 60m depth)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="specs-category">
+                <h3>Assembly Facility & Equipment</h3>
+                <div class="specs-grid">
+                    <div class="spec-item">
+                        <span class="spec-icon">🏭</span>
+                        <div class="spec-content">
+                            <div class="spec-label">Assembly Port</div>
+                            <div class="spec-value">Port-La Nouvelle</div>
+                        </div>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-icon">🏗️</span>
+                        <div class="spec-content">
+                            <div class="spec-label">Crane Model</div>
+                            <div class="spec-value">Mammoet CC8800-1 Crawler Crane</div>
+                        </div>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-icon">📏</span>
+                        <div class="spec-content">
+                            <div class="spec-label">Boom Height</div>
+                            <div class="spec-value">>145 m</div>
+                            <div class="spec-note">(over 145 meters)</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
