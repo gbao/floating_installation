@@ -796,6 +796,92 @@ td {
     font-style: italic;
 }
 
+/* Combined Learning Curve Styles */
+.total-improvement-banner {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    padding: 1.5rem 2rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.banner-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    opacity: 0.9;
+    margin-bottom: 0.5rem;
+}
+
+.banner-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.banner-detail {
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+.combined-insights {
+    margin-top: 2rem;
+}
+
+.combined-insights .insight-box {
+    margin-bottom: 1rem;
+}
+
+.site-penalty-box {
+    background: #fef3c7;
+    border-left-color: #f59e0b;
+}
+
+.improvement-metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.improvement-metrics .metric-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--light-bg);
+    border-radius: 8px;
+    border: 2px solid var(--border-color);
+}
+
+.improvement-metrics .metric-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+}
+
+.improvement-metrics .metric-label {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.improvement-metrics .metric-value {
+    font-size: 1.25rem;
+    color: var(--text-primary);
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.improvement-metrics .metric-note {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
 /* Footer */
 footer {
     text-align: center;
@@ -862,5 +948,22 @@ footer p {
 
     .specs-category h3 {
         font-size: 1rem;
+    }
+
+    .total-improvement-banner {
+        padding: 1rem 1.5rem;
+    }
+
+    .banner-value {
+        font-size: 2rem;
+    }
+
+    .improvement-metrics {
+        grid-template-columns: 1fr;
+    }
+
+    .combined-insights .insight-box {
+        padding: 0.875rem;
+        font-size: 0.9rem;
     }
 }

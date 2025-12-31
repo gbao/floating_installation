@@ -1757,6 +1757,178 @@ function createComparisonCharts() {
             }
         });
     }
+
+    // Combined Learning Curve Across Projects
+    const combinedCtx = document.getElementById('combined-learning-curve');
+    if (combinedCtx) {
+        // Sequential data points: EFGL F1, F2, F3, then Eolmed F1, F2, F3
+        // Using original F1-P1 value (58.33h) for total improvement visualization
+        const combinedData = [
+            { x: 1, y: 58.33, label: 'F1-P1', project: 'EFGL', note: 'Original (pre-correction)' },
+            { x: 2, y: 32.33, label: 'F2-P1', project: 'EFGL' },
+            { x: 3, y: 26.67, label: 'F3-P1', project: 'EFGL' },
+            { x: 4, y: 28.00, label: 'F1-P2', project: 'Eolmed', note: 'Site setup penalty' },
+            { x: 5, y: 21.67, label: 'F2-P2', project: 'Eolmed' },
+            { x: 6, y: 20.00, label: 'F3-P2', project: 'Eolmed' }
+        ];
+
+        comparisonCharts.combined = new Chart(combinedCtx.getContext('2d'), {
+            type: 'line',
+            data: {
+                datasets: [
+                    {
+                        label: 'EFGL Project (P1)',
+                        data: combinedData.slice(0, 3),
+                        borderColor: '#3b82f6',
+                        backgroundColor: '#3b82f6',
+                        pointRadius: 8,
+                        pointHoverRadius: 12,
+                        borderWidth: 3,
+                        segment: {
+                            borderDash: [0, 0]
+                        }
+                    },
+                    {
+                        label: 'Eolmed Project (P2)',
+                        data: combinedData.slice(3, 6),
+                        borderColor: '#10b981',
+                        backgroundColor: '#10b981',
+                        pointRadius: 8,
+                        pointHoverRadius: 12,
+                        borderWidth: 3
+                    },
+                    {
+                        label: 'Project Transition',
+                        data: [combinedData[2], combinedData[3]],
+                        borderColor: '#f59e0b',
+                        backgroundColor: '#f59e0b',
+                        borderWidth: 2,
+                        borderDash: [10, 5],
+                        pointRadius: 0,
+                        showLine: true
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: {
+                    mode: 'nearest',
+                    axis: 'x',
+                    intersect: false
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Sequential Learning Progression: EFGL → Eolmed',
+                        font: { size: 16, weight: 'bold' }
+                    },
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            title: function(context) {
+                                const dataPoint = context[0].raw;
+                                return dataPoint.label + (dataPoint.note ? ' (' + dataPoint.note + ')' : '');
+                            },
+                            label: function(context) {
+                                const dataPoint = context.raw;
+                                const lines = [
+                                    `Assembly Time: ${dataPoint.y.toFixed(2)} hours`,
+                                    `Project: ${dataPoint.project}`
+                                ];
+
+                                // Add improvement calculation
+                                if (context.dataIndex > 0) {
+                                    const prevY = combinedData[context.dataIndex - 1 + (context.datasetIndex === 1 ? 3 : 0)].y;
+                                    const improvement = ((prevY - dataPoint.y) / prevY * 100);
+                                    if (context.datasetIndex < 2) {
+                                        lines.push(`Improvement from previous: ${improvement > 0 ? '+' : ''}${improvement.toFixed(1)}%`);
+                                    }
+                                }
+
+                                // Add total improvement from F1-P1
+                                const totalImprovement = ((58.33 - dataPoint.y) / 58.33 * 100);
+                                lines.push(`Total improvement from start: ${totalImprovement.toFixed(1)}%`);
+
+                                return lines;
+                            }
+                        }
+                    },
+                    annotation: {
+                        annotations: {
+                            projectDivider: {
+                                type: 'line',
+                                xMin: 3.5,
+                                xMax: 3.5,
+                                borderColor: '#9ca3af',
+                                borderWidth: 2,
+                                borderDash: [10, 5],
+                                label: {
+                                    content: 'Project Boundary',
+                                    display: true,
+                                    position: 'start',
+                                    backgroundColor: 'rgba(156, 163, 175, 0.8)',
+                                    color: 'white'
+                                }
+                            },
+                            siteSetupPenalty: {
+                                type: 'label',
+                                xValue: 4,
+                                yValue: 30,
+                                content: ['⚠️ Site Setup', 'Penalty', '+5.0%'],
+                                backgroundColor: 'rgba(245, 158, 11, 0.9)',
+                                color: 'white',
+                                font: {
+                                    size: 11,
+                                    weight: 'bold'
+                                },
+                                padding: 6,
+                                borderRadius: 4
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        type: 'linear',
+                        min: 0.5,
+                        max: 6.5,
+                        ticks: {
+                            stepSize: 1,
+                            callback: function(value) {
+                                const labels = ['', 'F1', 'F2', 'F3', 'F1', 'F2', 'F3', ''];
+                                return labels[value] || '';
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Sequential Assembly (◄─ EFGL (P1) ─►  ◄─ Eolmed (P2) ─►)',
+                            font: { size: 12 }
+                        },
+                        grid: {
+                            color: function(context) {
+                                return context.tick.value === 3.5 ? '#9ca3af' : 'rgba(0, 0, 0, 0.1)';
+                            },
+                            lineWidth: function(context) {
+                                return context.tick.value === 3.5 ? 2 : 1;
+                            }
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        max: 65,
+                        title: {
+                            display: true,
+                            text: 'Assembly Time (hours)'
+                        }
+                    }
+                }
+            }
+        });
+    }
 }
 
 function populateInsights() {

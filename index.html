@@ -6,6 +6,7 @@
     <title>Floating Wind Turbine Assembly - Project Comparison</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -468,6 +469,56 @@
                 <h2>Overall Assembly Time Progression</h2>
                 <div class="chart-container">
                     <canvas id="comparison-total-time"></canvas>
+                </div>
+            </section>
+
+            <!-- Combined Learning Curve Across Projects -->
+            <section class="chart-section">
+                <h2>Combined Learning Curve Across Projects</h2>
+                <div class="total-improvement-banner">
+                    <div class="banner-label">Total Improvement Across Both Projects</div>
+                    <div class="banner-value">65.7% reduction</div>
+                    <div class="banner-detail">58.33h (F1-P1 original) → 20.00h (F3-P2)</div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="combined-learning-curve"></canvas>
+                </div>
+                <div class="combined-insights">
+                    <div class="insight-box">
+                        <strong>📊 Sequential Learning Journey:</strong> This chart shows the complete learning progression across both projects,
+                        demonstrating continuous improvement from EFGL's first floater (58.33h original) to Eolmed's third floater (20.00h).
+                    </div>
+                    <div class="insight-box site-penalty-box">
+                        <strong>⚠️ Site Setup Penalty:</strong> F1-P2 (Eolmed's first floater at 28.00h) is 5.0% higher than
+                        F3-P1 (EFGL's third at 26.67h) due to new site setup and familiarization. However, it's still 52.0% better than
+                        the original F1-P1 (58.33h), demonstrating strong knowledge transfer between projects despite the site change.
+                    </div>
+                    <div class="improvement-metrics">
+                        <div class="metric-item">
+                            <span class="metric-icon">🔵</span>
+                            <div>
+                                <div class="metric-label">EFGL Project (P1)</div>
+                                <div class="metric-value">54.3% improvement</div>
+                                <div class="metric-note">F1→F3 within project</div>
+                            </div>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-icon">🟢</span>
+                            <div>
+                                <div class="metric-label">Eolmed Project (P2)</div>
+                                <div class="metric-value">28.6% improvement</div>
+                                <div class="metric-note">F1→F3 within project</div>
+                            </div>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-icon">🔄</span>
+                            <div>
+                                <div class="metric-label">Cross-Project Transfer</div>
+                                <div class="metric-value">+5.0% penalty</div>
+                                <div class="metric-note">F3-P1 → F1-P2 (site setup)</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
 
