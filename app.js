@@ -1036,7 +1036,8 @@ function initializeEolmedTab() {
                         <span class="spec-icon">🏗️</span>
                         <div class="spec-content">
                             <div class="spec-label">Crane Model</div>
-                            <div class="spec-value">Mammoet CC8800-1 Crawler Crane</div>
+                            <div class="spec-value">Mammoet Terex Demag CC 8800-1</div>
+                            <div class="spec-note">(Crawler crane, 1,600 tonne capacity)</div>
                         </div>
                     </div>
                     <div class="spec-item">
