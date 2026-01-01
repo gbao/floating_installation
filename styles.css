@@ -990,6 +990,139 @@ footer p {
     border: 2px solid #f59e0b;
 }
 
+/* Operational Pattern Analysis Section - McKinsey Gold/Amber Style */
+.pattern-analysis-section {
+    background: var(--card-bg);
+    border-radius: 12px;
+    box-shadow: var(--shadow-lg);
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.pattern-analysis-section h2 {
+    font-size: 1.75rem;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+    border-bottom: 3px solid #D4AF37;
+    padding-bottom: 0.75rem;
+}
+
+.executive-summary {
+    background: linear-gradient(135deg, #D4AF37, #B8941F);
+    color: white;
+    padding: 1.5rem 2rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    font-size: 1rem;
+    line-height: 1.6;
+    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+}
+
+.insights-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.insight-column {
+    background: linear-gradient(135deg, #FFF8DC, #FFE4B5);
+    border: 2px solid #DAA520;
+    border-radius: 8px;
+    padding: 1.5rem;
+}
+
+.insight-column h3 {
+    font-size: 1.125rem;
+    color: #B8941F;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    border-bottom: 2px solid #D4AF37;
+    padding-bottom: 0.5rem;
+}
+
+.insight-item {
+    margin-bottom: 1.25rem;
+}
+
+.insight-item:last-child {
+    margin-bottom: 0;
+}
+
+.insight-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.insight-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.insight-list li {
+    padding: 0.375rem 0;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    border-bottom: 1px solid rgba(218, 165, 32, 0.2);
+}
+
+.insight-list li:last-child {
+    border-bottom: none;
+}
+
+.key-insights-box {
+    background: linear-gradient(135deg, #FFF8DC, #F4E4C1);
+    border: 2px solid #D4AF37;
+    border-radius: 8px;
+    padding: 1.5rem;
+}
+
+.key-insights-box h4 {
+    font-size: 1rem;
+    color: #B8941F;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.key-insights-box ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.key-insights-box ul li {
+    padding: 0.5rem 0 0.5rem 1.5rem;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    position: relative;
+}
+
+.key-insights-box ul li:before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: #D4AF37;
+    font-weight: 700;
+}
+
+/* Scenario Chart inside Scenario Planning */
+.scenario-chart {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 2px solid var(--border-color);
+}
+
+.scenario-chart h3 {
+    font-size: 1.25rem;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .container {
@@ -1073,5 +1206,23 @@ footer p {
 
     .method-info-box .lr-value {
         font-size: 1.5rem;
+    }
+
+    .insights-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .insight-column {
+        padding: 1rem;
+    }
+
+    .executive-summary {
+        padding: 1rem 1.5rem;
+        font-size: 0.9rem;
+    }
+
+    .pattern-analysis-section {
+        padding: 1.5rem;
     }
 }

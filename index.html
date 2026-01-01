@@ -204,7 +204,7 @@
             <div class="metric-card">
                 <div class="metric-label">Overall Improvement</div>
                 <div class="metric-value" id="overall-improvement">36.88%</div>
-                <div class="metric-desc">Floater 1 → 3</div>
+                <div class="metric-desc">F1 → F3 reduction</div>
             </div>
             <div class="metric-card">
                 <div class="metric-label">Learning Rate</div>
@@ -217,63 +217,140 @@
                 <div class="metric-desc">Corrected baseline</div>
             </div>
             <div class="metric-card">
+                <div class="metric-label">Floater 2 Time</div>
+                <div class="metric-value" id="f2-time">32.3h</div>
+                <div class="metric-desc">-23.5% vs F1</div>
+            </div>
+            <div class="metric-card">
                 <div class="metric-label">Floater 3 Time</div>
                 <div class="metric-value" id="f3-time">26.7h</div>
-                <div class="metric-desc">Latest performance</div>
+                <div class="metric-desc">-36.9% vs F1</div>
             </div>
         </section>
 
-        <!-- Learning Rate Methodology -->
-        <section class="methodology-section">
-            <h2>Learning Rate Methodology</h2>
-            <p class="methodology-intro">
-                The learning rate of 79.5% is calculated using two complementary mathematical methods,
-                rather than Wright's Law which assumes production doubling. This approach is more appropriate
-                for sequential foundation assembly where production doesn't double.
-            </p>
-            <div class="methodology-grid">
-                <div class="method-card">
-                    <h3>Method 1: Sequential Transition Analysis</h3>
-                    <div class="calculation-box">
-                        <div class="calc-step">
-                            <span class="calc-label">F1 → F2 Transition:</span>
-                            <span class="calc-value">32.33 / 42.25* = 76.5%</span>
-                        </div>
-                        <div class="calc-step">
-                            <span class="calc-label">F2 → F3 Transition:</span>
-                            <span class="calc-value">26.67 / 32.33 = 82.5%</span>
-                        </div>
-                        <div class="calc-step final">
-                            <span class="calc-label">Average Learning Rate:</span>
-                            <span class="calc-value">~79.5%</span>
-                        </div>
+        <!-- Component Timeline Comparison -->
+        <section class="chart-section">
+            <h2>Component Assembly Timeline - All Floaters</h2>
+            <div class="chart-container">
+                <canvas id="timeline-chart"></canvas>
+            </div>
+        </section>
+
+        <!-- Operational Pattern Analysis -->
+        <section class="pattern-analysis-section">
+            <h2>Operational Pattern Analysis</h2>
+
+            <!-- Executive Summary -->
+            <div class="executive-summary">
+                <strong>Executive Summary:</strong> Analysis of 3 EFGL floater assemblies reveals a 79.5%
+                learning rate with 36.88% overall improvement. Crane utilization at 4.05% indicates
+                significant scheduling opportunity.
+            </div>
+
+            <!-- Three Column Insights -->
+            <div class="insights-grid">
+                <div class="insight-column">
+                    <h3>Timing Patterns</h3>
+
+                    <div class="insight-item">
+                        <div class="insight-label">Component Mix</div>
+                        <ul class="insight-list">
+                            <li>Towers: 62%</li>
+                            <li>Blades: 29%</li>
+                            <li>Nacelle: 9%</li>
+                        </ul>
                     </div>
-                    <p class="method-desc">
-                        This method analyzes the sequential improvement between consecutive foundations,
-                        providing insight into the rate of improvement at each stage of the project.
-                    </p>
-                </div>
-                <div class="method-card">
-                    <h3>Method 2: Power Law Regression</h3>
-                    <div class="calculation-box">
-                        <div class="calc-step">
-                            <span class="calc-label">Regression Model:</span>
-                            <span class="calc-value">Y = aX<sup>b</sup></span>
-                        </div>
-                        <div class="calc-step">
-                            <span class="calc-label">Power Coefficient:</span>
-                            <span class="calc-value">b = -0.332</span>
-                        </div>
-                        <div class="calc-step final">
-                            <span class="calc-label">Learning Rate:</span>
-                            <span class="calc-value">2<sup>b</sup> = 79.5%</span>
-                        </div>
+
+                    <div class="insight-item">
+                        <div class="insight-label">Top Performers</div>
+                        <ul class="insight-list">
+                            <li>Blade 3: -48%</li>
+                            <li>Tower 3: -44%</li>
+                            <li>Blade 1: -40%</li>
+                        </ul>
                     </div>
-                    <p class="method-desc">
-                        Power law regression fits the assembly time data to a mathematical curve,
-                        capturing the overall learning trend across all three foundations.
-                    </p>
+
+                    <div class="insight-item">
+                        <div class="insight-label">Workflow Insights</div>
+                        <ul class="insight-list">
+                            <li>Sequential flow</li>
+                            <li>No overlap</li>
+                            <li>Weather-dependent</li>
+                        </ul>
+                    </div>
                 </div>
+
+                <div class="insight-column">
+                    <h3>Learning Dynamics</h3>
+
+                    <div class="insight-item">
+                        <div class="insight-label">Learning Phases</div>
+                        <ul class="insight-list">
+                            <li>F1→F2: 23.5%</li>
+                            <li>F2→F3: 17.5%</li>
+                        </ul>
+                    </div>
+
+                    <div class="insight-item">
+                        <div class="insight-label">Convergence</div>
+                        <ul class="insight-list">
+                            <li>Tower: slowing</li>
+                            <li>Blades: sustained</li>
+                            <li>Nacelle: stable</li>
+                        </ul>
+                    </div>
+
+                    <div class="insight-item">
+                        <div class="insight-label">Rate Consistency</div>
+                        <ul class="insight-list">
+                            <li>7 methods tested</li>
+                            <li>Range: 69%-83%</li>
+                            <li>Stable at ~79%</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="insight-column">
+                    <h3>Resource Efficiency</h3>
+
+                    <div class="insight-item">
+                        <div class="insight-label">Crane Utilization</div>
+                        <ul class="insight-list">
+                            <li>Active: 4.05%</li>
+                            <li>Idle: 95.95%</li>
+                            <li>Opportunity: 2,400h</li>
+                        </ul>
+                    </div>
+
+                    <div class="insight-item">
+                        <div class="insight-label">Current Gaps</div>
+                        <ul class="insight-list">
+                            <li>Sequential ops</li>
+                            <li>Weather delays</li>
+                            <li>Transit time</li>
+                        </ul>
+                    </div>
+
+                    <div class="insight-item">
+                        <div class="insight-label">Key Observations</div>
+                        <ul class="insight-list">
+                            <li>No parallelization</li>
+                            <li>Scheduling gaps</li>
+                            <li>Learning plateau</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Insights -->
+            <div class="key-insights-box">
+                <h4>Key Insights</h4>
+                <ul>
+                    <li>Consistent 79.5% learning rate across multiple methods</li>
+                    <li>Blade installation shows strongest learning potential</li>
+                    <li>Tower sections dominate time but show diminishing returns</li>
+                    <li>Crane utilization represents largest efficiency gap</li>
+                </ul>
             </div>
         </section>
 
@@ -343,13 +420,13 @@
                     </div>
                 </div>
             </div>
-        </section>
 
-        <!-- Component Timeline Comparison -->
-        <section class="chart-section">
-            <h2>Component Assembly Timeline - All Floaters</h2>
-            <div class="chart-container">
-                <canvas id="timeline-chart"></canvas>
+            <!-- Scaling Predictions Chart (moved inside Scenario Planning) -->
+            <div class="scenario-chart">
+                <h3>Scaling Predictions (10, 20, 30+ Turbines)</h3>
+                <div class="chart-container">
+                    <canvas id="scaling-chart"></canvas>
+                </div>
             </div>
         </section>
 
@@ -366,14 +443,6 @@
             <h2>Component-Level Efficiency Improvements</h2>
             <div class="chart-container">
                 <canvas id="component-chart"></canvas>
-            </div>
-        </section>
-
-        <!-- Scaling Predictions -->
-        <section class="chart-section">
-            <h2>Scaling Predictions (10, 20, 30+ Turbines)</h2>
-            <div class="chart-container">
-                <canvas id="scaling-chart"></canvas>
             </div>
         </section>
 
