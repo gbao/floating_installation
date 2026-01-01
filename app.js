@@ -175,6 +175,75 @@ function calculatePredictions(count, learningRate) {
     return predictions;
 }
 
+// ==================== LEARNING RATE CALCULATION METHODS ====================
+function calculateLearningRateMethods() {
+    const f1 = efglData.floaters[0].total_hours;  // 42.25
+    const f2 = efglData.floaters[1].total_hours;  // 32.33
+    const f3 = efglData.floaters[2].total_hours;  // 26.67
+
+    const lr_f1_f2 = f2 / f1;  // 0.765
+    const lr_f2_f3 = f3 / f2;  // 0.825
+
+    return {
+        'sequential-avg': {
+            name: 'Sequential Transition Average',
+            value: (lr_f1_f2 + lr_f2_f3) / 2,
+            description: 'Average of F1→F2 (76.5%) and F2→F3 (82.5%) transitions',
+            formula: '(LR_F1→F2 + LR_F2→F3) / 2'
+        },
+        'f1-f2-only': {
+            name: 'F1→F2 Transition Only',
+            value: lr_f1_f2,
+            description: 'Early learning phase (more conservative)',
+            formula: 'F2 / F1 = 32.33 / 42.25'
+        },
+        'f2-f3-only': {
+            name: 'F2→F3 Transition Only',
+            value: lr_f2_f3,
+            description: 'Later learning phase (slower improvement)',
+            formula: 'F3 / F2 = 26.67 / 32.33'
+        },
+        'power-law': {
+            name: 'Power Law Regression',
+            value: Math.pow(2, Math.log(f3/f1) / Math.log(3)),
+            description: 'Regression fit to all 3 data points',
+            formula: '2^b where b = log(F3/F1) / log(3)'
+        },
+        'geometric-mean': {
+            name: 'Geometric Mean',
+            value: Math.sqrt(lr_f1_f2 * lr_f2_f3),
+            description: 'Geometric average of both transitions',
+            formula: '√(LR_F1→F2 × LR_F2→F3)'
+        },
+        'weighted-avg': {
+            name: 'Weighted Transition Average',
+            value: calculateWeightedLR(f1, f2, f3),
+            description: 'Weighted by time reduction magnitude',
+            formula: 'Weighted by reduction: F1→F2 (63.7%), F2→F3 (36.3%)'
+        },
+        'steady-state': {
+            name: 'Steady State (F2+F3 Avg)',
+            value: ((f2 + f3) / 2) / f1,
+            description: 'Excludes first-unit effects (more aggressive)',
+            formula: '((F2 + F3) / 2) / F1'
+        }
+    };
+}
+
+function calculateWeightedLR(f1, f2, f3) {
+    const reduction_f1_f2 = f1 - f2;
+    const reduction_f2_f3 = f2 - f3;
+    const total_reduction = reduction_f1_f2 + reduction_f2_f3;
+
+    const weight_f1_f2 = reduction_f1_f2 / total_reduction;
+    const weight_f2_f3 = reduction_f2_f3 / total_reduction;
+
+    const lr_f1_f2 = f2 / f1;
+    const lr_f2_f3 = f3 / f2;
+
+    return (lr_f1_f2 * weight_f1_f2) + (lr_f2_f3 * weight_f2_f3);
+}
+
 function calculateComponentImprovements() {
     const components = turbineData.floaters[0].operations.map(op => op.name);
     const improvements = [];
@@ -615,6 +684,25 @@ function updatePredictions() {
 }
 
 // ==================== EVENT LISTENERS ====================
+function initializeLearningRateMethod() {
+    const methodSelector = document.getElementById('learning-rate-method');
+    const learningRateMethods = calculateLearningRateMethods();
+
+    // Set default to sequential-avg
+    methodSelector.value = 'sequential-avg';
+
+    // Initialize display
+    const method = learningRateMethods['sequential-avg'];
+    document.getElementById('method-name').textContent = method.name;
+    document.getElementById('method-formula').textContent = method.formula;
+    document.getElementById('method-description').textContent = method.description;
+    document.getElementById('calculated-lr-value').textContent = `${(method.value * 100).toFixed(1)}%`;
+
+    // Set current settings
+    currentSettings.learningRate = method.value;
+    currentSettings.bCoefficient = Math.log(method.value) / Math.log(2);
+}
+
 function setupEventListeners() {
     // Turbine count slider
     const turbineCountInput = document.getElementById('turbine-count');
@@ -630,9 +718,69 @@ function setupEventListeners() {
     const learningRateValue = document.getElementById('learning-rate-adjust-value');
 
     learningRateInput.addEventListener('input', (e) => {
-        currentSettings.learningRate = parseFloat(e.target.value);
-        learningRateValue.textContent = `${(currentSettings.learningRate * 100).toFixed(0)}%`;
-        currentSettings.bCoefficient = Math.log(currentSettings.learningRate) / Math.log(2);
+        if (document.getElementById('learning-rate-method').value === 'custom') {
+            currentSettings.learningRate = parseFloat(e.target.value);
+            learningRateValue.textContent = `${(currentSettings.learningRate * 100).toFixed(0)}%`;
+            document.getElementById('calculated-lr-value').textContent = `${(currentSettings.learningRate * 100).toFixed(1)}%`;
+            currentSettings.bCoefficient = Math.log(currentSettings.learningRate) / Math.log(2);
+
+            // Update main metric card
+            document.getElementById('learning-rate').textContent = `${(currentSettings.learningRate * 100).toFixed(0)}%`;
+
+            // Auto-update predictions and charts
+            updatePredictions();
+            updateCharts();
+        }
+    });
+
+    // Learning rate method selector
+    const methodSelector = document.getElementById('learning-rate-method');
+    const methodInfoName = document.getElementById('method-name');
+    const methodInfoFormula = document.getElementById('method-formula');
+    const methodInfoDescription = document.getElementById('method-description');
+    const calculatedLRValue = document.getElementById('calculated-lr-value');
+    const manualLRControl = document.getElementById('manual-lr-control');
+
+    const learningRateMethods = calculateLearningRateMethods();
+
+    methodSelector.addEventListener('change', (e) => {
+        const selectedMethod = e.target.value;
+
+        if (selectedMethod === 'custom') {
+            // Show manual slider
+            manualLRControl.style.display = 'block';
+
+            // Use current slider value
+            currentSettings.learningRate = parseFloat(learningRateInput.value);
+            calculatedLRValue.textContent = `${(currentSettings.learningRate * 100).toFixed(1)}%`;
+
+            methodInfoName.textContent = 'Custom (Manual Override)';
+            methodInfoFormula.textContent = 'User-specified value';
+            methodInfoDescription.textContent = 'Use the slider below to set a custom learning rate';
+        } else {
+            // Hide manual slider
+            manualLRControl.style.display = 'none';
+
+            // Get method data
+            const method = learningRateMethods[selectedMethod];
+
+            // Update learning rate
+            currentSettings.learningRate = method.value;
+            currentSettings.bCoefficient = Math.log(method.value) / Math.log(2);
+
+            // Update info display
+            methodInfoName.textContent = method.name;
+            methodInfoFormula.textContent = method.formula;
+            methodInfoDescription.textContent = method.description;
+            calculatedLRValue.textContent = `${(method.value * 100).toFixed(1)}%`;
+
+            // Update main metric card
+            document.getElementById('learning-rate').textContent = `${(method.value * 100).toFixed(0)}%`;
+        }
+
+        // Auto-update predictions and charts
+        updatePredictions();
+        updateCharts();
     });
 
     // Calculate button
@@ -651,6 +799,20 @@ function setupEventListeners() {
         turbineCountValue.textContent = '10';
         learningRateInput.value = 0.7945;
         learningRateValue.textContent = '79%';
+
+        // Reset method dropdown to default
+        methodSelector.value = 'sequential-avg';
+        manualLRControl.style.display = 'none';
+
+        // Reset method info display
+        const defaultMethod = learningRateMethods['sequential-avg'];
+        methodInfoName.textContent = defaultMethod.name;
+        methodInfoFormula.textContent = defaultMethod.formula;
+        methodInfoDescription.textContent = defaultMethod.description;
+        calculatedLRValue.textContent = `${(defaultMethod.value * 100).toFixed(1)}%`;
+
+        // Update main metric card
+        document.getElementById('learning-rate').textContent = `${(defaultMethod.value * 100).toFixed(0)}%`;
 
         updatePredictions();
         updateCharts();
@@ -1973,6 +2135,9 @@ function init() {
 
     // Update predictions
     updatePredictions();
+
+    // Initialize learning rate method selector
+    initializeLearningRateMethod();
 
     // Setup event listeners
     setupEventListeners();

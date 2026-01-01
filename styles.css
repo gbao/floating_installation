@@ -894,6 +894,102 @@ footer p {
     margin: 0.5rem 0;
 }
 
+/* Learning Rate Method Selector */
+.method-selector {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 6px;
+    background: white;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
+
+.method-selector:hover {
+    border-color: var(--primary-color);
+}
+
+.method-selector:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* Method Info Box */
+.method-info-box {
+    background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+    border: 2px solid #0ea5e9;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-top: 1rem;
+}
+
+.method-info-box .info-label {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.25rem;
+}
+
+.method-info-box .info-name {
+    font-size: 1.25rem;
+    color: var(--primary-color);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.method-info-box .info-formula {
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    background: white;
+    padding: 0.5rem;
+    border-radius: 4px;
+    margin-bottom: 0.75rem;
+    border: 1px solid var(--border-color);
+}
+
+.method-info-box .info-lr {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+    padding: 0.75rem;
+    background: white;
+    border-radius: 6px;
+}
+
+.method-info-box .lr-label {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+.method-info-box .lr-value {
+    font-size: 1.75rem;
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+.method-info-box .info-description {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    font-style: italic;
+}
+
+/* Manual LR Control */
+#manual-lr-control {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: var(--light-bg);
+    border-radius: 8px;
+    border: 2px solid #f59e0b;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .container {
@@ -965,5 +1061,17 @@ footer p {
     .combined-insights .insight-box {
         padding: 0.875rem;
         font-size: 0.9rem;
+    }
+
+    .method-info-box {
+        padding: 1rem;
+    }
+
+    .method-info-box .info-name {
+        font-size: 1rem;
+    }
+
+    .method-info-box .lr-value {
+        font-size: 1.5rem;
     }
 }

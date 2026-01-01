@@ -286,8 +286,38 @@
                     <input type="range" id="turbine-count" min="3" max="50" value="10" step="1">
                     <span id="turbine-count-value">10</span>
                 </div>
+                <!-- Learning Rate Method Selector -->
                 <div class="control-group">
-                    <label for="learning-rate-adjust">Learning Rate Adjustment:</label>
+                    <label for="learning-rate-method">Learning Rate Calculation Method:</label>
+                    <select id="learning-rate-method" class="method-selector">
+                        <option value="sequential-avg" selected>Sequential Transition Average (79.5%)</option>
+                        <option value="f1-f2-only">F1→F2 Only (76.5%) - Conservative</option>
+                        <option value="f2-f3-only">F2→F3 Only (82.5%) - Later Phase</option>
+                        <option value="power-law">Power Law Regression (79.5%)</option>
+                        <option value="geometric-mean">Geometric Mean (79.5%)</option>
+                        <option value="weighted-avg">Weighted Average (78.7%)</option>
+                        <option value="steady-state">Steady State (69.8%) - Aggressive</option>
+                        <option value="custom">Custom (Manual Slider)</option>
+                    </select>
+                </div>
+
+                <!-- Method Info Display -->
+                <div class="method-info-box" id="method-info">
+                    <div class="info-label">Selected Method:</div>
+                    <div class="info-name" id="method-name">Sequential Transition Average</div>
+                    <div class="info-formula" id="method-formula">(LR_F1→F2 + LR_F2→F3) / 2</div>
+                    <div class="info-lr">
+                        <span class="lr-label">Calculated Learning Rate:</span>
+                        <span class="lr-value" id="calculated-lr-value">79.5%</span>
+                    </div>
+                    <div class="info-description" id="method-description">
+                        Average of F1→F2 (76.5%) and F2→F3 (82.5%) transitions
+                    </div>
+                </div>
+
+                <!-- Manual Override Slider (shown only for "Custom" mode) -->
+                <div class="control-group" id="manual-lr-control" style="display: none;">
+                    <label for="learning-rate-adjust">Manual Learning Rate:</label>
                     <input type="range" id="learning-rate-adjust" min="0.5" max="1.0" value="0.7945" step="0.01">
                     <span id="learning-rate-adjust-value">79%</span>
                 </div>
