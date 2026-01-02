@@ -280,6 +280,80 @@ Consecutive days - Best performance, **2 days total**
 
 ---
 
+## Component-Level Performance Analysis
+
+### Component Group Breakdown
+
+Breaking down total crane working hours by major component groups reveals differentiated learning rates and improvement potential.
+
+| Component Group      | F1 Hours | F2 Hours | F3 Hours | Average | Learning Rate | % of Total Time |
+|----------------------|----------|----------|----------|---------|---------------|-----------------|
+| **All Tower Sections** | 25.92h   | 16.84h   | 15.33h   | 19.36h  | **78%**       | 57% (avg)       |
+| **All Blades**        | 12.00h   | 12.00h   | 8.17h    | 10.72h  | **85%**       | 32% (avg)       |
+| **Nacelle**           | 4.33h    | 3.50h    | 3.17h    | 3.67h   | **86%**       | 11% (avg)       |
+| **Total Crane Hours** | **42.25h** | **32.33h** | **26.67h** | **33.75h** | **79.5%** | **100%**    |
+
+### Component-Specific Insights
+
+#### Tower Sections (78% Learning Rate)
+- **Slowest learning rate** but **largest time component** (57% of total)
+- **41% improvement F1→F3** (25.92h → 15.33h)
+- Greatest opportunity for further optimization through:
+  - Better sequencing and preparation
+  - Reduced gaps between sections
+  - Parallel positioning activities
+
+#### Blades (85% Learning Rate)
+- **Strong late-stage learning** with breakthrough in F3
+- **F1→F2: No improvement** (12.00h both floaters)
+- **F2→F3: 32% reduction** (12.00h → 8.17h)
+- Demonstrates that learning is not always linear
+- Shows significant potential for consecutive installation (achieved in F3)
+
+#### Nacelle (86% Learning Rate)
+- **Best learning rate** despite technical constraints
+- **27% improvement F1→F3** (4.33h → 3.17h)
+- Smallest time component (11%) but most efficient
+- Constrained to same-day installation with Tower Section 3 (no vibration damper)
+- Demonstrates efficiency even with limited scheduling flexibility
+
+### Steady-State Performance Analysis
+
+**Definition**: F2-F3 average performance (excluding first-unit learning effects)
+
+**Calculation**:
+- F2 Average: 32.33h
+- F3 Average: 26.67h
+- **F2-F3 Average: 29.50h**
+- vs F1 Original: 42.25h
+- **Steady-State Improvement: 69.8%**
+
+**Interpretation**:
+- Excludes first-unit learning effects
+- Represents **sustainable operational efficiency** achieved after initial learning curve
+- 69.8% steady-state performance indicates significant maturity in execution processes by F2-F3
+- This metric is useful for projecting performance on future floaters (Eolmed project)
+
+### Key Takeaways
+
+1. **Towers dominate execution time** (57%) but show **slowest learning** (78% LR)
+   - Focus operational improvements here for maximum impact
+
+2. **Blades show breakthrough potential** - 32% improvement in single transition (F2→F3)
+   - F3 achieved consecutive daily installations
+   - Replicating F3 blade sequencing should be standard practice
+
+3. **Nacelle efficiency despite constraints** - 86% LR even with same-day requirement
+   - Demonstrates that technical constraints don't prevent learning
+   - Team adapted well to fixed sequencing requirements
+
+4. **Steady-state efficiency (69.8%) validates learning transfer**
+   - F2-F3 average significantly better than F1
+   - Indicates sustainable improvement, not one-time gains
+   - Strong foundation for Eolmed project predictions
+
+---
+
 ## Cross-Project Setup Terminology
 
 ### Per-Floater Preparation (EFGL Internal)
