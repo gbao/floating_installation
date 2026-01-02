@@ -761,6 +761,132 @@
                 </div>
             </div>
 
+            <!-- Component-Level Performance Analysis -->
+            <div class="pattern-detail-box">
+                <h3>Component-Level Performance Analysis</h3>
+                <p class="pattern-intro">Breaking down crane working hours by major component groups reveals differentiated learning rates and improvement potential.</p>
+
+                <div class="component-analysis-grid">
+                    <table class="pattern-comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Component Group</th>
+                                <th>F1 Hours</th>
+                                <th>F2 Hours</th>
+                                <th>F3 Hours</th>
+                                <th>Average</th>
+                                <th>Learning Rate</th>
+                                <th>% of Total Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>All Tower Sections</strong></td>
+                                <td>25.92h</td>
+                                <td>16.84h</td>
+                                <td>15.33h</td>
+                                <td>19.36h</td>
+                                <td class="lr-value towers">78%</td>
+                                <td>57% (avg)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>All Blades</strong></td>
+                                <td>12.00h</td>
+                                <td>12.00h</td>
+                                <td>8.17h</td>
+                                <td>10.72h</td>
+                                <td class="lr-value blades">85%</td>
+                                <td>32% (avg)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Nacelle</strong></td>
+                                <td>4.33h</td>
+                                <td>3.50h</td>
+                                <td>3.17h</td>
+                                <td>3.67h</td>
+                                <td class="lr-value nacelle">86%</td>
+                                <td>11% (avg)</td>
+                            </tr>
+                            <tr class="table-highlight">
+                                <td><strong>Total Crane Hours</strong></td>
+                                <td><strong>42.25h</strong></td>
+                                <td><strong>32.33h</strong></td>
+                                <td><strong>26.67h</strong></td>
+                                <td><strong>33.75h</strong></td>
+                                <td class="lr-value overall"><strong>79.5%</strong></td>
+                                <td><strong>100%</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="component-insights">
+                    <div class="insight-card towers-card">
+                        <div class="insight-header">
+                            <span class="insight-icon">🗼</span>
+                            <strong>Tower Sections (78% LR)</strong>
+                        </div>
+                        <div class="insight-body">
+                            Slowest learning rate but largest time component (57% of total). <strong>41% improvement F1→F3</strong> (25.92h → 15.33h). Greatest opportunity for further optimization through better sequencing and preparation.
+                        </div>
+                    </div>
+
+                    <div class="insight-card blades-card">
+                        <div class="insight-header">
+                            <span class="insight-icon">⚡</span>
+                            <strong>Blades (85% LR)</strong>
+                        </div>
+                        <div class="insight-body">
+                            Strong late-stage learning. <strong>F1-F2: No improvement</strong> (12.00h both), then <strong>F2→F3: 32% reduction</strong> (12.00h → 8.17h). Shows breakthrough in F3 execution efficiency.
+                        </div>
+                    </div>
+
+                    <div class="insight-card nacelle-card">
+                        <div class="insight-header">
+                            <span class="insight-icon">⚙️</span>
+                            <strong>Nacelle (86% LR)</strong>
+                        </div>
+                        <div class="insight-body">
+                            Best learning rate despite technical constraints (same-day with Tower Sec 3). <strong>27% improvement F1→F3</strong> (4.33h → 3.17h). Smallest time component (11%) but most efficient.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="steady-state-box">
+                    <div class="steady-state-header">
+                        <strong>Steady-State Performance Analysis</strong>
+                        <span class="steady-state-badge">F2-F3 Average (Excluding First-Unit Effects)</span>
+                    </div>
+                    <div class="steady-state-content">
+                        <div class="steady-state-calc">
+                            <div class="calc-row">
+                                <span class="calc-label">F2 Average:</span>
+                                <span class="calc-value">32.33h</span>
+                            </div>
+                            <div class="calc-row">
+                                <span class="calc-label">F3 Average:</span>
+                                <span class="calc-value">26.67h</span>
+                            </div>
+                            <div class="calc-row highlight">
+                                <span class="calc-label">F2-F3 Average:</span>
+                                <span class="calc-value">29.50h</span>
+                            </div>
+                            <div class="calc-row">
+                                <span class="calc-label">vs F1 Original:</span>
+                                <span class="calc-value">42.25h</span>
+                            </div>
+                            <div class="calc-row result">
+                                <span class="calc-label">Steady-State Improvement:</span>
+                                <span class="calc-value improvement">69.8%</span>
+                            </div>
+                        </div>
+                        <div class="steady-state-note">
+                            This metric excludes first-unit learning effects and represents the <strong>sustainable operational efficiency</strong> achieved after initial learning curve. The 69.8% steady-state performance indicates significant maturity in execution processes by F2-F3.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Constraints & Factors -->
             <div class="pattern-factors-grid">
                 <div class="factor-box controllable">
