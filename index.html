@@ -439,6 +439,356 @@
             </div>
         </section>
 
+        <!-- Detailed Pattern Analysis -->
+        <section class="detailed-pattern-section">
+            <h2>Operational Patterns & Execution Analysis</h2>
+
+            <!-- Executive Summary Banner -->
+            <div class="pattern-exec-summary">
+                <strong>Key Achievements:</strong>
+                87% tower completion improvement (15d → 2d) •
+                44% calendar compression (39d → 22d) •
+                12.4% peak crane utilization (F2)
+            </div>
+
+            <!-- Pattern 1: Sequencing Efficiency -->
+            <div class="pattern-detail-box">
+                <h3>Pattern 1: Sequencing Efficiency & Timeline Compression</h3>
+
+                <div class="pattern-metrics-row">
+                    <div class="pattern-metric-card">
+                        <div class="pattern-metric-label">Per-Floater Preparation</div>
+                        <div class="pattern-metric-value">5d → 3d</div>
+                        <div class="pattern-metric-change">↓ 40%</div>
+                    </div>
+                    <div class="pattern-metric-card">
+                        <div class="pattern-metric-label">Tower Completion</div>
+                        <div class="pattern-metric-value">15d → 2d</div>
+                        <div class="pattern-metric-change">↓ 87%</div>
+                    </div>
+                    <div class="pattern-metric-card">
+                        <div class="pattern-metric-label">Total Calendar Days</div>
+                        <div class="pattern-metric-value">39d → 22d</div>
+                        <div class="pattern-metric-change">↓ 44%</div>
+                    </div>
+                </div>
+
+                <div class="pattern-flow-section">
+                    <h4>Tower Section Sequencing Flow</h4>
+                    <div class="flow-comparison">
+                        <div class="flow-item">
+                            <div class="flow-label">F1 (Learning Phase)</div>
+                            <div class="flow-timeline">
+                                <span class="flow-step">Sec 1</span>
+                                <span class="flow-gap long">+12d</span>
+                                <span class="flow-step">Sec 2</span>
+                                <span class="flow-gap">+3d</span>
+                                <span class="flow-step">Sec 3</span>
+                            </div>
+                            <div class="flow-result warning">15 days total</div>
+                        </div>
+                        <div class="flow-item">
+                            <div class="flow-label">F2 (Improvement)</div>
+                            <div class="flow-timeline">
+                                <span class="flow-step">Sec 1</span>
+                                <span class="flow-gap">+1d</span>
+                                <span class="flow-step">Sec 2</span>
+                                <span class="flow-gap">+1d</span>
+                                <span class="flow-step">Sec 3</span>
+                            </div>
+                            <div class="flow-result success">2 days total ✓✓</div>
+                        </div>
+                        <div class="flow-item">
+                            <div class="flow-label">F3 (Breakthrough)</div>
+                            <div class="flow-timeline">
+                                <span class="flow-step">Sec 1</span>
+                                <span class="flow-gap zero">0d</span>
+                                <span class="flow-step">Sec 2</span>
+                                <span class="flow-gap">+2d</span>
+                                <span class="flow-step">Sec 3</span>
+                            </div>
+                            <div class="flow-result success">2 days total ✓✓✓ (Same-day S1+S2!)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pattern-insights-list">
+                    <div class="insight-item">
+                        <strong>F1 Challenge:</strong> 12-day gap between Tower Sec 1→2 (weather/learning)
+                    </div>
+                    <div class="insight-item">
+                        <strong>F2 Improvement:</strong> Achieved consecutive tower sections (1-day gaps)
+                    </div>
+                    <div class="insight-item">
+                        <strong>F3 Breakthrough:</strong> Same-day installation of Sec 1+2 (opportunistic optimization)
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pattern 2: Morning Start Preference -->
+            <div class="pattern-detail-box">
+                <h3>Pattern 2: Morning Start Time Preference</h3>
+
+                <div class="start-time-grid">
+                    <div class="start-time-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Activity</th>
+                                    <th>F1 Start</th>
+                                    <th>F2 Start</th>
+                                    <th>F3 Start</th>
+                                    <th>Pattern</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="pattern-good">
+                                    <td>Tower Sec 1</td>
+                                    <td>10:10</td>
+                                    <td>11:00</td>
+                                    <td>07:30</td>
+                                    <td>✓ Morning (7-11am)</td>
+                                </tr>
+                                <tr class="pattern-mixed">
+                                    <td>Tower Sec 2</td>
+                                    <td>07:50</td>
+                                    <td>09:30</td>
+                                    <td>13:50</td>
+                                    <td>⚠ Mixed (F3 same-day opt.)</td>
+                                </tr>
+                                <tr class="pattern-good">
+                                    <td>Tower Sec 3</td>
+                                    <td>05:25</td>
+                                    <td>07:30</td>
+                                    <td>07:30</td>
+                                    <td>✓ Early morning</td>
+                                </tr>
+                                <tr class="pattern-constraint">
+                                    <td>Nacelle</td>
+                                    <td>16:20</td>
+                                    <td>16:50</td>
+                                    <td>15:20</td>
+                                    <td>🔒 Constrained (after Sec 3)</td>
+                                </tr>
+                                <tr class="pattern-mixed">
+                                    <td>Blade 1</td>
+                                    <td>07:00</td>
+                                    <td>12:30</td>
+                                    <td>11:40</td>
+                                    <td>⚠ Flexible</td>
+                                </tr>
+                                <tr class="pattern-good">
+                                    <td>Blade 2</td>
+                                    <td>06:30</td>
+                                    <td>05:40</td>
+                                    <td>08:50</td>
+                                    <td>✓ Early morning</td>
+                                </tr>
+                                <tr class="pattern-mixed">
+                                    <td>Blade 3</td>
+                                    <td>06:30</td>
+                                    <td>13:00</td>
+                                    <td>07:10</td>
+                                    <td>⚠ Flexible</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="pattern-insights-list">
+                    <div class="insight-item">
+                        <strong>Strategy:</strong> 80% of tower sections start 05:00-11:00 (morning preference)
+                    </div>
+                    <div class="insight-item">
+                        <strong>Rationale:</strong> Risk mitigation - full working day buffer for unexpected issues
+                    </div>
+                    <div class="insight-item">
+                        <strong>Constraint:</strong> Nacelle must follow Tower Sec 3 (no vibration damper) - afternoon starts
+                    </div>
+                    <div class="insight-item">
+                        <strong>Flexibility:</strong> Blade installations adjusted for weather windows and crew availability
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pattern 3: Utilization Analysis -->
+            <div class="pattern-detail-box">
+                <h3>Pattern 3: Crane Utilization & Scheduling Opportunity</h3>
+
+                <div class="utilization-comparison">
+                    <div class="util-floater">
+                        <div class="util-header">Floater 1 (39 days)</div>
+                        <div class="util-bar-container">
+                            <div class="util-bar-active" style="width: 10.8%">10.8%</div>
+                            <div class="util-bar-idle" style="width: 89.2%">89.2% idle</div>
+                        </div>
+                        <div class="util-details">42.25h crane work / 390h available</div>
+                    </div>
+                    <div class="util-floater">
+                        <div class="util-header">Floater 2 (26 days)</div>
+                        <div class="util-bar-container">
+                            <div class="util-bar-active" style="width: 12.4%">12.4%</div>
+                            <div class="util-bar-idle" style="width: 87.6%">87.6% idle</div>
+                        </div>
+                        <div class="util-details">32.33h crane work / 260h available</div>
+                    </div>
+                    <div class="util-floater">
+                        <div class="util-header">Floater 3 (22 days)</div>
+                        <div class="util-bar-container">
+                            <div class="util-bar-active" style="width: 12.1%">12.1%</div>
+                            <div class="util-bar-idle" style="width: 87.9%">87.9% idle</div>
+                        </div>
+                        <div class="util-details">26.67h crane work / 220h available</div>
+                    </div>
+                </div>
+
+                <div class="pattern-insights-list">
+                    <div class="insight-item">
+                        <strong>Current State:</strong> 10-12% crane utilization (10h working day basis)
+                    </div>
+                    <div class="insight-item">
+                        <strong>Improvement:</strong> +15% increase F1→F2 shows learning effect
+                    </div>
+                    <div class="insight-item">
+                        <strong>Opportunity:</strong> Target 25-30% utilization = 2.5x improvement potential
+                    </div>
+                    <div class="insight-item">
+                        <strong>Actions:</strong> Reduce gaps (achieved in F3), pre-book tow-out vessels, weather forecasting
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed Comparison Table -->
+            <div class="pattern-detail-box">
+                <h3>Detailed Performance Comparison</h3>
+
+                <div class="table-responsive">
+                    <table class="pattern-comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Metric</th>
+                                <th>F1</th>
+                                <th>F2</th>
+                                <th>F3</th>
+                                <th>Improvement F1→F3</th>
+                                <th>Best</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Per-floater preparation</td>
+                                <td>5 days</td>
+                                <td>4 days</td>
+                                <td>3 days</td>
+                                <td class="improvement">↓ 40%</td>
+                                <td>F3 ✓</td>
+                            </tr>
+                            <tr>
+                                <td>Tower Sec 1→2 gap</td>
+                                <td>+12 days</td>
+                                <td>+1 day</td>
+                                <td>0 days</td>
+                                <td class="improvement">↓ 100%</td>
+                                <td>F3 ✓✓</td>
+                            </tr>
+                            <tr>
+                                <td>Tower Sec 2→3 gap</td>
+                                <td>+3 days</td>
+                                <td>+1 day</td>
+                                <td>+2 days</td>
+                                <td class="improvement">↓ 33%</td>
+                                <td>F2 ✓</td>
+                            </tr>
+                            <tr>
+                                <td>Tower completion time</td>
+                                <td>15 days</td>
+                                <td>2 days</td>
+                                <td>2 days</td>
+                                <td class="improvement">↓ 87%</td>
+                                <td>F2/F3 ✓✓</td>
+                            </tr>
+                            <tr>
+                                <td>Blade 1→2 gap</td>
+                                <td>+1 day</td>
+                                <td>+6 days</td>
+                                <td>+1 day</td>
+                                <td class="neutral">±0%</td>
+                                <td>F1/F3</td>
+                            </tr>
+                            <tr>
+                                <td>Blade 2→3 gap</td>
+                                <td>+3 days</td>
+                                <td>+1 day</td>
+                                <td>+1 day</td>
+                                <td class="improvement">↓ 67%</td>
+                                <td>F2/F3 ✓</td>
+                            </tr>
+                            <tr>
+                                <td>Blade completion time</td>
+                                <td>4 days</td>
+                                <td>7 days</td>
+                                <td>2 days</td>
+                                <td class="improvement">↓ 50%</td>
+                                <td>F3 ✓✓</td>
+                            </tr>
+                            <tr class="table-highlight">
+                                <td><strong>Total calendar days</strong></td>
+                                <td><strong>39 days</strong></td>
+                                <td><strong>26 days</strong></td>
+                                <td><strong>22 days</strong></td>
+                                <td class="improvement"><strong>↓ 44%</strong></td>
+                                <td><strong>F3 ✓✓✓</strong></td>
+                            </tr>
+                            <tr class="table-highlight">
+                                <td><strong>Crane utilization</strong></td>
+                                <td><strong>10.8%</strong></td>
+                                <td><strong>12.4%</strong></td>
+                                <td><strong>12.1%</strong></td>
+                                <td class="improvement"><strong>↑ 12%</strong></td>
+                                <td><strong>F2 ✓</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Crane working hours</td>
+                                <td>42.25h</td>
+                                <td>32.33h</td>
+                                <td>26.67h</td>
+                                <td class="improvement">↓ 37%</td>
+                                <td>F3 ✓</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Constraints & Factors -->
+            <div class="pattern-factors-grid">
+                <div class="factor-box controllable">
+                    <h4>✓ Controllable Factors (Learning Observed)</h4>
+                    <ul>
+                        <li>Per-floater preparation: 5d → 3d (-40%)</li>
+                        <li>Tower sequencing: 15d → 2d (-87%)</li>
+                        <li>Blade sequencing: Best at F3 (consecutive)</li>
+                    </ul>
+                </div>
+                <div class="factor-box constraint">
+                    <h4>🔒 Technical Constraints (No Control)</h4>
+                    <ul>
+                        <li>Nacelle same-day with Tower Sec 3 (no vibration damper)</li>
+                        <li>4-day gap before Blade 1 (appears consistent)</li>
+                    </ul>
+                </div>
+                <div class="factor-box external">
+                    <h4>🚢 External Dependencies (No Control)</h4>
+                    <ul>
+                        <li>Tow-out vessel availability (9-11 day variation)</li>
+                        <li>Weather windows (Mediterranean conditions)</li>
+                        <li>Supply chain timing</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
         <!-- Learning Curve Visualization -->
         <section class="chart-section">
             <h2>Learning Curve Progression</h2>
