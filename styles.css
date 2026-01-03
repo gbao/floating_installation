@@ -2500,8 +2500,281 @@ footer p {
     color: #dc2626;
 }
 
-/* Responsive - Prototype B */
+/* ==================== REORGANIZED SCENARIO PLANNING LAYOUT ==================== */
+
+.section-description {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+    font-style: italic;
+}
+
+/* Two-Column Layout */
+.scenario-layout {
+    display: grid;
+    grid-template-columns: 3fr 5fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+/* LEFT COLUMN: Compact Controls */
+.scenario-controls {
+    background: var(--light-bg);
+    border-radius: 8px;
+    padding: 1.5rem;
+    border: 1px solid var(--border-color);
+}
+
+.control-group-compact {
+    margin-bottom: 1.25rem;
+}
+
+.control-group-compact label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.control-input-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.control-input-row input[type="range"] {
+    flex: 1;
+}
+
+.control-value {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    min-width: 35px;
+    text-align: right;
+}
+
+.method-selector-compact {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 0.85rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background: white;
+    cursor: pointer;
+}
+
+.control-buttons {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+}
+
+.btn-secondary-compact,
+.btn-primary-compact {
+    flex: 1;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-secondary-compact {
+    background: white;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+}
+
+.btn-secondary-compact:hover {
+    background: var(--light-bg);
+    border-color: var(--primary-color);
+}
+
+.btn-primary-compact {
+    background: linear-gradient(135deg, #2563eb, #0ea5e9);
+    border: none;
+    color: white;
+}
+
+.btn-primary-compact:hover {
+    background: linear-gradient(135deg, #1d4ed8, #0284c7);
+}
+
+/* RIGHT COLUMN: Method Info + Results */
+.scenario-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.method-info-box-compact {
+    background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+    border: 2px solid #0ea5e9;
+    border-radius: 8px;
+    padding: 1.25rem;
+}
+
+.method-header-compact {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.method-header-compact strong {
+    font-size: 1.05rem;
+    color: var(--text-primary);
+}
+
+.lr-badge {
+    background: linear-gradient(135deg, #0ea5e9, #2563eb);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.method-formula-compact {
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    background: white;
+    padding: 0.5rem;
+    border-radius: 4px;
+    margin-bottom: 0.75rem;
+    border: 1px solid #bae6fd;
+}
+
+.method-description-compact {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+/* Predicted Results Box */
+.predicted-results-box {
+    background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+    border: 2px solid #059669;
+    border-radius: 8px;
+    padding: 1.25rem;
+}
+
+.results-header {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #065f46;
+    margin-bottom: 1rem;
+}
+
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.result-item {
+    background: white;
+    padding: 0.75rem;
+    border-radius: 6px;
+    border: 1px solid #a7f3d0;
+}
+
+.result-label {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.25rem;
+}
+
+.result-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #059669;
+    font-family: 'Courier New', monospace;
+}
+
+.results-deviation {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    background: rgba(239, 68, 68, 0.1);
+    border-radius: 4px;
+    border-left: 3px solid #ef4444;
+}
+
+.deviation-text {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+#f2-deviation,
+#f3-deviation {
+    font-weight: 700;
+    color: #dc2626;
+}
+
+/* Chart Legend - Compact Inline Version */
+.chart-legend-compact {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    padding: 1rem;
+    background: var(--light-bg);
+    border-radius: 8px;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+
+.legend-item-inline {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+}
+
+.legend-item-inline strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+/* Cumulative average line legend update */
+.legend-line.cumulative {
+    background: #10b981;  /* Green instead of orange */
+}
+
+/* Responsive - Reorganized Layout */
+@media (max-width: 1024px) {
+    .scenario-layout {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .results-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 @media (max-width: 768px) {
+    .chart-legend-compact {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+
+    .result-value {
+        font-size: 1.25rem;
+    }
+
     .interpretation-grid {
         grid-template-columns: 1fr;
         gap: 0.75rem;

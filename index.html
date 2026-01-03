@@ -352,140 +352,114 @@
         <!-- SUB-TAB 3: FORECASTING -->
         <div class="efgl-sub-tab-content" id="subtab-forecasting">
 
-        <!-- Interactive Controls -->
+        <!-- Scenario Planning -->
         <section class="controls-section">
-            <h2>Scenario Planning & Learning Rate Analysis</h2>
-            <div class="controls-grid">
-                <div class="control-group">
-                    <label for="turbine-count">Number of Turbines:</label>
-                    <input type="range" id="turbine-count" min="3" max="50" value="10" step="1">
-                    <span id="turbine-count-value">10</span>
-                </div>
-                <!-- Learning Rate Method Selector -->
-                <div class="control-group">
-                    <label for="learning-rate-method">Learning Rate Calculation Method:</label>
-                    <select id="learning-rate-method" class="method-selector">
-                        <option value="sequential-avg" selected>Sequential Transition Average (79.5%)</option>
-                        <option value="f1-f2-only">F1→F2 Only (76.5%) - Conservative</option>
-                        <option value="f2-f3-only">F2→F3 Only (82.5%) - Later Phase</option>
-                        <option value="power-law">Power Law Regression (79.5%)</option>
-                        <option value="geometric-mean">Geometric Mean (79.5%)</option>
-                        <option value="weighted-avg">Weighted Average (78.7%)</option>
-                        <option value="steady-state">Steady State (69.8%) - Aggressive</option>
-                        <option value="custom">Custom (Manual Slider)</option>
-                    </select>
+            <h2>Scenario Planning</h2>
+            <p class="section-description">Explore how assembly time improves with additional floaters using Wright's learning curve formula</p>
+
+            <!-- Two-Column Layout: Controls (Left) + Method/Results (Right) -->
+            <div class="scenario-layout">
+                <!-- LEFT COLUMN: Controls -->
+                <div class="scenario-controls">
+                    <div class="control-group-compact">
+                        <label for="turbine-count">Number of Floaters:</label>
+                        <div class="control-input-row">
+                            <input type="range" id="turbine-count" min="3" max="50" value="10" step="1">
+                            <span id="turbine-count-value" class="control-value">10</span>
+                        </div>
+                    </div>
+
+                    <div class="control-group-compact">
+                        <label for="learning-rate-method">Learning Rate Method:</label>
+                        <select id="learning-rate-method" class="method-selector-compact">
+                            <option value="sequential-avg" selected>Sequential Transition Average</option>
+                            <option value="f1-f2-only">F1→F2 Only</option>
+                            <option value="f2-f3-only">F2→F3 Only</option>
+                            <option value="power-law">Power Law Regression</option>
+                            <option value="geometric-mean">Geometric Mean</option>
+                            <option value="weighted-avg">Weighted Average</option>
+                            <option value="steady-state">Steady State</option>
+                            <option value="custom">Custom</option>
+                        </select>
+                    </div>
+
+                    <!-- Manual Override Slider (shown only for "Custom" mode) -->
+                    <div class="control-group-compact" id="manual-lr-control" style="display: none;">
+                        <label for="learning-rate-adjust">Manual Learning Rate:</label>
+                        <div class="control-input-row">
+                            <input type="range" id="learning-rate-adjust" min="0.5" max="1.0" value="0.7945" step="0.01">
+                            <span id="learning-rate-adjust-value" class="control-value">79%</span>
+                        </div>
+                    </div>
+
+                    <div class="control-buttons">
+                        <button id="reset-btn" class="btn-secondary-compact">Reset</button>
+                        <button id="calculate-btn" class="btn-primary-compact">Recalculate</button>
+                    </div>
                 </div>
 
-                <!-- Method Info Display -->
-                <div class="method-info-box" id="method-info">
-                    <div class="info-label">Selected Method:</div>
-                    <div class="info-name" id="method-name">Sequential Transition Average</div>
-                    <div class="info-formula" id="method-formula">(LR_F1→F2 + LR_F2→F3) / 2</div>
-                    <div class="info-lr">
-                        <span class="lr-label">Calculated Learning Rate:</span>
-                        <span class="lr-value" id="calculated-lr-value">79.5%</span>
+                <!-- RIGHT COLUMN: Method Info + Results -->
+                <div class="scenario-info">
+                    <!-- Selected Method Box -->
+                    <div class="method-info-box-compact" id="method-info">
+                        <div class="method-header-compact">
+                            <strong id="method-name">Sequential Transition Average</strong>
+                            <span class="lr-badge" id="calculated-lr-value">79.5%</span>
+                        </div>
+                        <div class="method-formula-compact" id="method-formula">(LR_F1→F2 + LR_F2→F3) / 2</div>
+                        <div class="method-description-compact" id="method-description">
+                            Average of F1→F2 (76.5%) and F2→F3 (82.5%) transitions
+                        </div>
                     </div>
-                    <div class="info-description" id="method-description">
-                        Average of F1→F2 (76.5%) and F2→F3 (82.5%) transitions
-                    </div>
-                </div>
 
-                <!-- Manual Override Slider (shown only for "Custom" mode) -->
-                <div class="control-group" id="manual-lr-control" style="display: none;">
-                    <label for="learning-rate-adjust">Manual Learning Rate:</label>
-                    <input type="range" id="learning-rate-adjust" min="0.5" max="1.0" value="0.7945" step="0.01">
-                    <span id="learning-rate-adjust-value">79%</span>
-                </div>
-                <div class="control-group">
-                    <button id="reset-btn" class="btn-secondary">Reset to Default</button>
-                    <button id="calculate-btn" class="btn-primary">Recalculate Predictions</button>
+                    <!-- Predicted Results -->
+                    <div class="predicted-results-box">
+                        <div class="results-header">Predicted for <span id="predicted-turbines">10</span> Floaters:</div>
+                        <div class="results-grid">
+                            <div class="result-item">
+                                <div class="result-label">Floater 10 Time:</div>
+                                <div class="result-value" id="formula-f10-display">18.1h</div>
+                            </div>
+                            <div class="result-item">
+                                <div class="result-label">Cumulative Avg (F1-10):</div>
+                                <div class="result-value" id="formula-avg-display">24.5h</div>
+                            </div>
+                        </div>
+                        <div class="results-deviation">
+                            <span class="warning-icon">⚠️</span>
+                            <span class="deviation-text">
+                                Formula deviation: F2 (<span id="f2-deviation">-3.7%</span>), F3 (<span id="f3-deviation">-7.4%</span>)
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="prediction-summary">
-                <h3>Predicted Results for <span id="predicted-turbines">10</span> Turbines:</h3>
-                <div class="prediction-grid">
-                    <div class="prediction-item">
-                        <span class="pred-label">Avg Assembly Time:</span>
-                        <span class="pred-value" id="pred-avg-time">28.0 hours</span>
-                    </div>
-                    <div class="prediction-item">
-                        <span class="pred-label">Total Project Time:</span>
-                        <span class="pred-value" id="pred-total-time">280.2 hours</span>
-                    </div>
-                    <div class="prediction-item">
-                        <span class="pred-label">Time Savings:</span>
-                        <span class="pred-value" id="pred-savings">52.0%</span>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Scaling Predictions Chart (moved inside Scenario Planning) -->
+            <!-- Chart Section -->
             <div class="scenario-chart">
-                <h3>Future Project Forecasting (Eolmed & Beyond)</h3>
-
-                <!-- Chart Interpretation Guide -->
-                <div class="chart-interpretation">
-                    <div class="interpretation-header">📊 How to interpret this chart:</div>
-                    <div class="interpretation-grid">
-                        <div class="interpretation-item">
-                            <span class="legend-dot actual"></span>
-                            <strong>Orange dots</strong> = EFGL Actual Data (F1:42.25h, F2:32.33h, F3:26.67h)<br>
-                            <span class="legend-note">Historical performance from Port-La Nouvelle</span>
-                        </div>
-                        <div class="interpretation-item">
-                            <span class="legend-line solid"></span>
-                            <strong>Blue solid line (F1-F3)</strong> = Wright's formula fit to your selected learning rate<br>
-                            <span class="legend-note">Shows how well formula matches reality</span>
-                        </div>
-                        <div class="interpretation-item">
-                            <span class="legend-line dashed"></span>
-                            <strong>Blue dashed line (F4+)</strong> = Prediction zone<br>
-                            <span class="legend-note">Extrapolation assumes learning rate continues</span>
-                        </div>
-                        <div class="interpretation-item">
-                            <span class="legend-line cumulative"></span>
-                            <strong>Orange line</strong> = Cumulative average<br>
-                            <span class="legend-note">Running average across all floaters (smooths variations)</span>
-                        </div>
-                    </div>
-                </div>
+                <h3>Assembly Time Projection</h3>
 
                 <div class="chart-container">
                     <canvas id="scaling-chart"></canvas>
                 </div>
 
-                <!-- Formula Details Box -->
-                <div class="formula-details-box">
-                    <div class="formula-header">
-                        <strong>Formula Details</strong>
-                        <span class="formula-method-label" id="formula-method-display">Sequential Average (79.5%)</span>
+                <!-- Chart Legend (Below Chart) -->
+                <div class="chart-legend-compact">
+                    <div class="legend-item-inline">
+                        <span class="legend-dot actual"></span>
+                        <strong>EFGL Actual</strong> (F1-F3)
                     </div>
-                    <div class="formula-content">
-                        <div class="formula-row">
-                            <span class="formula-label">Learning Rate:</span>
-                            <span class="formula-value" id="formula-lr-display">79.5%</span>
-                        </div>
-                        <div class="formula-row">
-                            <span class="formula-label">Wright's Formula:</span>
-                            <span class="formula-value" id="formula-equation-display">T<sub>n</sub> = 42.25 × n<sup>-0.332</sup></span>
-                        </div>
-                        <div class="formula-divider"></div>
-                        <div class="formula-row prediction">
-                            <span class="formula-label">Prediction for Floater 10:</span>
-                            <span class="formula-value" id="formula-f10-display">18.1h</span>
-                        </div>
-                        <div class="formula-row">
-                            <span class="formula-label">Cumulative Average (F1-F10):</span>
-                            <span class="formula-value" id="formula-avg-display">24.5h</span>
-                        </div>
-                        <div class="formula-divider"></div>
-                        <div class="formula-warning">
-                            <span class="warning-icon">⚠️</span>
-                            <div class="warning-text">
-                                <strong>Deviation from actual:</strong> F2 (<span id="f2-deviation">-3.7%</span>), F3 (<span id="f3-deviation">-7.4%</span>)<br>
-                                <em>Predictions inherit this uncertainty. Based on only 3 EFGL floaters.</em>
-                            </div>
-                        </div>
+                    <div class="legend-item-inline">
+                        <span class="legend-line solid"></span>
+                        <strong>Wright's Formula</strong> (F1-F3 fit)
+                    </div>
+                    <div class="legend-item-inline">
+                        <span class="legend-line dashed"></span>
+                        <strong>Prediction Zone</strong> (F4+)
+                    </div>
+                    <div class="legend-item-inline">
+                        <span class="legend-line cumulative"></span>
+                        <strong>Cumulative Average</strong>
                     </div>
                 </div>
             </div>
@@ -978,14 +952,6 @@
 
         <!-- SUB-TAB 3 CONTINUED: FORECASTING (Charts) -->
         <div class="efgl-sub-tab-content" id="subtab-forecasting-charts" data-parent="forecasting">
-
-        <!-- Learning Curve Visualization -->
-        <section class="chart-section">
-            <h2>Learning Curve Progression</h2>
-            <div class="chart-container">
-                <canvas id="learning-curve-chart"></canvas>
-            </div>
-        </section>
 
         <!-- Component Breakdown -->
         <section class="chart-section">

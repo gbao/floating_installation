@@ -549,17 +549,29 @@ function createScalingChart() {
                     pointRadius: 0,
                     order: 3
                 },
-                // Dataset 4: Cumulative Average (Orange Line)
+                // Dataset 4: Cumulative Average F1-F3 (Solid Green - based on actual data)
                 {
-                    label: 'Cumulative Average',
-                    data: cumulativeAvg,
-                    borderColor: '#f97316',
-                    backgroundColor: 'rgba(249, 115, 22, 0.1)',
+                    label: 'Cumulative Average (F1-F3)',
+                    data: cumulativeAvg.slice(0, 3),
+                    borderColor: '#10b981',
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
                     borderWidth: 2,
                     fill: false,
                     borderDash: [], // Solid line
                     pointRadius: 0,
                     order: 4
+                },
+                // Dataset 5: Cumulative Average F3+ (Dashed Green - based on predictions)
+                {
+                    label: 'Cumulative Average (F4+)',
+                    data: cumulativeAvg.slice(2), // Start from F3 for continuity
+                    borderColor: '#10b981',
+                    backgroundColor: 'rgba(16, 185, 129, 0.05)',
+                    borderWidth: 2,
+                    fill: false,
+                    borderDash: [5, 5], // Dashed line
+                    pointRadius: 0,
+                    order: 5
                 }
             ]
         },
@@ -571,13 +583,7 @@ function createScalingChart() {
                     display: false // Removed - using HTML title instead
                 },
                 legend: {
-                    display: true,
-                    position: 'top',
-                    labels: {
-                        usePointStyle: true,
-                        padding: 15,
-                        font: { size: 11 }
-                    }
+                    display: false // Hidden - using custom HTML legend below chart
                 },
                 tooltip: {
                     callbacks: {
@@ -606,8 +612,8 @@ function createScalingChart() {
                     annotations: {
                         line1: {
                             type: 'line',
-                            xMin: 3.5,
-                            xMax: 3.5,
+                            xMin: 3,
+                            xMax: 3,
                             borderColor: '#94a3b8',
                             borderWidth: 2,
                             borderDash: [5, 5],
@@ -1061,11 +1067,11 @@ function updateCharts() {
     }
     createScalingChart();
 
-    // Update learning curve chart
-    if (charts.learningCurve) {
-        charts.learningCurve.destroy();
-    }
-    createLearningCurveChart();
+    // Update learning curve chart - REMOVED (redundant with scaling chart)
+    // if (charts.learningCurve) {
+    //     charts.learningCurve.destroy();
+    // }
+    // createLearningCurveChart();
 }
 
 // ==================== EOLMED TAB INITIALIZATION ====================
@@ -2361,7 +2367,7 @@ function init() {
 
     // Create EFGL charts (Tab 1)
     createTimelineChart();
-    createLearningCurveChart();
+    // createLearningCurveChart(); // REMOVED - redundant with scaling chart
     createComponentChart();
     createScalingChart();
     createUtilizationChart();
