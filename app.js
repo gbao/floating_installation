@@ -1003,9 +1003,14 @@ function setupEventListeners() {
     const efglSubTabBtns = document.querySelectorAll('.efgl-sub-tab-btn');
     const efglSubTabContents = document.querySelectorAll('.efgl-sub-tab-content');
 
+    console.log('Setting up EFGL sub-tab navigation...');
+    console.log('Found sub-tab buttons:', efglSubTabBtns.length);
+    console.log('Found sub-tab contents:', efglSubTabContents.length);
+
     efglSubTabBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             const targetSubTab = btn.getAttribute('data-subtab');
+            console.log('Sub-tab clicked:', targetSubTab);
 
             // Remove active class from all sub-tab buttons
             efglSubTabBtns.forEach(b => b.classList.remove('active'));
