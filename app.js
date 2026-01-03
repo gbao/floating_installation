@@ -817,6 +817,72 @@ function setupEventListeners() {
         updatePredictions();
         updateCharts();
     });
+
+    // ========== OPTION C: SUB-TAB NAVIGATION ==========
+    // EFGL Sub-tab switching
+    const efglSubTabBtns = document.querySelectorAll('.efgl-sub-tab-btn');
+    const efglSubTabContents = document.querySelectorAll('.efgl-sub-tab-content');
+
+    efglSubTabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const targetSubTab = btn.getAttribute('data-subtab');
+
+            // Remove active class from all sub-tab buttons
+            efglSubTabBtns.forEach(b => b.classList.remove('active'));
+
+            // Add active class to clicked button
+            btn.classList.add('active');
+
+            // Hide all sub-tab contents
+            efglSubTabContents.forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Show target sub-tab content
+            // Handle special case: Forecasting is split into two divs
+            if (targetSubTab === 'forecasting') {
+                // Show both forecasting divs
+                document.getElementById('subtab-forecasting').classList.add('active');
+                const forecastingCharts = document.getElementById('subtab-forecasting-charts');
+                if (forecastingCharts) {
+                    forecastingCharts.classList.add('active');
+                }
+            } else {
+                // Show single sub-tab
+                const targetElement = document.getElementById(`subtab-${targetSubTab}`);
+                if (targetElement) {
+                    targetElement.classList.add('active');
+                }
+            }
+        });
+    });
+
+    // ========== METRIC TOOLTIP TOGGLES ==========
+    const metricInfoBtns = document.querySelectorAll('.metric-info-btn');
+
+    metricInfoBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+
+            // Toggle active state
+            const isActive = btn.classList.contains('active');
+
+            // Close all other tooltips
+            metricInfoBtns.forEach(b => b.classList.remove('active'));
+
+            // Toggle current tooltip
+            if (!isActive) {
+                btn.classList.add('active');
+            }
+        });
+    });
+
+    // Close tooltips when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.metric-card')) {
+            metricInfoBtns.forEach(btn => btn.classList.remove('active'));
+        }
+    });
 }
 
 function updateCharts() {

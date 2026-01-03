@@ -39,7 +39,7 @@
                 </div>
                 <div class="overview-item">
                     <span class="overview-label">Period:</span>
-                    <span class="overview-value">13 May 2025 - 14 Aug 2025</span>
+                    <span class="overview-value">13 May 2025 - 15 Aug 2025</span>
                 </div>
                 <div class="overview-item">
                     <span class="overview-label">Scope:</span>
@@ -48,194 +48,177 @@
             </div>
         </section>
 
-        <!-- Technical Specifications -->
-        <section class="tech-specs-section">
+        <!-- Key Performance Metrics Dashboard -->
+        <section class="key-metrics-dashboard">
+            <h2>Key Performance Metrics</h2>
+            <div class="metrics-grid">
+                <!-- Metric 1: Task Time Improvement -->
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <span class="metric-title">Task Time Improvement</span>
+                        <button class="metric-info-btn" data-tooltip="metric1">?</button>
+                    </div>
+                    <div class="metric-value-large">37%</div>
+                    <div class="metric-subtitle">↓ F1→F3</div>
+                    <div class="metric-detail">42.25h → 26.67h</div>
+                    <div class="metric-note">(Crane working hours)</div>
+
+                    <!-- Tooltip -->
+                    <div class="metric-tooltip" id="tooltip-metric1">
+                        <strong>Task Time Improvement</strong><br>
+                        Improvement in crane working hours from F1 to F3.<br>
+                        Excludes waiting time for weather, vessels, or gaps between tasks.<br>
+                        Measures pure execution efficiency.
+                    </div>
+                </div>
+
+                <!-- Metric 2: Crane Utilization -->
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <span class="metric-title">Crane Utilization</span>
+                        <button class="metric-info-btn" data-tooltip="metric2">?</button>
+                    </div>
+                    <div class="metric-value-large">10.7%</div>
+                    <div class="metric-subtitle">Overall (3 units)</div>
+                    <div class="metric-detail">101.25h / 950h available</div>
+                    <div class="metric-note">(95 project days × 10h/day)</div>
+
+                    <!-- Tooltip -->
+                    <div class="metric-tooltip" id="tooltip-metric2">
+                        <strong>Crane Utilization</strong><br>
+                        Overall crane utilization across entire EFGL campaign.<br>
+                        Total crane hours: 101.25h (F1:42.25h + F2:32.33h + F3:26.67h)<br>
+                        Available hours: 950h (95 project days × 10-hour working day)<br><br>
+                        95 days = Full project from F1 arrival (13 May) to F3 completion (15 Aug)<br>
+                        INCLUDES gaps between floaters and weather waits.<br><br>
+                        Per-floater utilization: F1: 10.8% → F2: 12.4% → F3: 12.1%
+                    </div>
+                </div>
+
+                <!-- Metric 3: Total Calendar / Avg per Unit -->
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <span class="metric-title">Total Calendar / Avg per Unit</span>
+                        <button class="metric-info-btn" data-tooltip="metric3">?</button>
+                    </div>
+                    <div class="metric-value-large">95d / 29d</div>
+                    <div class="metric-subtitle">(3 floaters / per floater)</div>
+                    <div class="metric-detail">13 May - 15 Aug 2025</div>
+                    <div class="metric-note">F1:39d • F2:26d • F3:22d</div>
+
+                    <!-- Tooltip -->
+                    <div class="metric-tooltip" id="tooltip-metric3">
+                        <strong>Total Calendar / Avg per Unit</strong><br>
+                        Total project duration including all gaps between floaters.<br>
+                        Average = (39 + 26 + 22) / 3 = 29 days per floater<br><br>
+                        Includes arrival-to-departure time for each floater,<br>
+                        gaps between floaters, and weather waits.
+                    </div>
+                </div>
+
+                <!-- Metric 4: Crane Hours / Avg per Unit -->
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <span class="metric-title">Crane Hours / Avg per Unit</span>
+                        <button class="metric-info-btn" data-tooltip="metric4">?</button>
+                    </div>
+                    <div class="metric-value-large">101h / 34h</div>
+                    <div class="metric-subtitle">(Total / per floater)</div>
+                    <div class="metric-detail">Pure execution time</div>
+                    <div class="metric-note">F1:42.25h • F2:32.33h • F3:26.67h</div>
+
+                    <!-- Tooltip -->
+                    <div class="metric-tooltip" id="tooltip-metric4">
+                        <strong>Crane Working Hours</strong><br>
+                        Total crane working hours excluding gaps, weather waits,<br>
+                        and vessel delays.<br><br>
+                        Average = (42.25 + 32.33 + 26.67) / 3 = 33.75h<br><br>
+                        Measures actual productive time only.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Specifications - Condensed -->
+        <section class="tech-specs-condensed">
             <h2>Technical Specifications</h2>
-
-            <div class="specs-category">
-                <h3>Wind Turbine Generator (WTG)</h3>
-                <div class="specs-grid">
-                    <div class="spec-item">
-                        <span class="spec-icon">⚡</span>
-                        <div class="spec-content">
-                            <div class="spec-label">Model</div>
-                            <div class="spec-value">V164-10.0 MW<sup>TM</sup></div>
-                        </div>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-icon">🔌</span>
-                        <div class="spec-content">
-                            <div class="spec-label">Unit Power</div>
-                            <div class="spec-value">10 MW</div>
-                        </div>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-icon">↔️</span>
-                        <div class="spec-content">
-                            <div class="spec-label">Rotor Diameter</div>
-                            <div class="spec-value">164 m</div>
-                        </div>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-icon">📏</span>
-                        <div class="spec-content">
-                            <div class="spec-label">Blade Length</div>
-                            <div class="spec-value">80 m</div>
-                        </div>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-icon">⚖️</span>
-                        <div class="spec-content">
-                            <div class="spec-label">Blade Weight</div>
-                            <div class="spec-value">34 tonnes</div>
-                        </div>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-icon">📐</span>
-                        <div class="spec-content">
-                            <div class="spec-label">Hub Height</div>
-                            <div class="spec-value">104 m</div>
-                        </div>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-icon">⚙️</span>
-                        <div class="spec-content">
-                            <div class="spec-label">Total Mass</div>
-                            <div class="spec-value">500 tonnes</div>
-                            <div class="spec-note">(rotor assembly, mast, nacelle)</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="specs-category">
-                <h3>Floating Platform</h3>
-                <div class="specs-grid">
-                    <div class="spec-item">
-                        <span class="spec-icon">🌟</span>
-                        <div class="spec-content">
-                            <div class="spec-label">Technology</div>
-                            <div class="spec-value">WindFloat<sup>®</sup></div>
-                            <div class="spec-note">(Principle Power)</div>
-                        </div>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-icon">🔷</span>
-                        <div class="spec-content">
-                            <div class="spec-label">Structure</div>
-                            <div class="spec-value">Three Cylindrical Columns</div>
-                        </div>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-icon">↕️</span>
-                        <div class="spec-content">
-                            <div class="spec-label">Total Height</div>
-                            <div class="spec-value">24 m</div>
-                        </div>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-icon">🌊</span>
-                        <div class="spec-content">
-                            <div class="spec-label">Draft at Sea</div>
-                            <div class="spec-value">14 m</div>
-                        </div>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-icon">⚓</span>
-                        <div class="spec-content">
-                            <div class="spec-label">Draft in Port</div>
-                            <div class="spec-value">10 m</div>
-                        </div>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-icon">📐</span>
-                        <div class="spec-content">
-                            <div class="spec-label">Column Spacing</div>
-                            <div class="spec-value">~70 m</div>
-                            <div class="spec-note">(approx. distance between columns)</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="specs-category">
-                <h3>Installation Site Characteristics</h3>
-                <div class="specs-grid">
-                    <div class="spec-item">
-                        <span class="spec-icon">🌍</span>
-                        <div class="spec-content">
-                            <div class="spec-label">Distance to Coast</div>
-                            <div class="spec-value">16 km</div>
-                        </div>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-icon">🌊</span>
-                        <div class="spec-content">
-                            <div class="spec-label">Sea Depth Range</div>
-                            <div class="spec-value">68 - 70 m</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="specs-category">
-                <h3>Assembly Facility & Equipment</h3>
-                <div class="specs-grid">
-                    <div class="spec-item">
-                        <span class="spec-icon">🏭</span>
-                        <div class="spec-content">
-                            <div class="spec-label">Assembly Port</div>
-                            <div class="spec-value">Port-La Nouvelle</div>
-                        </div>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-icon">🏗️</span>
-                        <div class="spec-content">
-                            <div class="spec-label">Crane Model</div>
-                            <div class="spec-value">Mammoet Terex Demag CC 8800-1</div>
-                            <div class="spec-note">(Crawler crane, 1,600 tonne capacity)</div>
-                        </div>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-icon">📏</span>
-                        <div class="spec-content">
-                            <div class="spec-label">Boom Height</div>
-                            <div class="spec-value">>145 m</div>
-                            <div class="spec-note">(over 145 meters)</div>
-                        </div>
-                    </div>
-                </div>
+            <div class="specs-table-container">
+                <table class="specs-table">
+                    <thead>
+                        <tr>
+                            <th>Turbine (V164-10.0 MW)</th>
+                            <th>Floating Platform (WindFloat®)</th>
+                            <th>Installation Crane</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="spec-row"><strong>Rotor:</strong> 164m diameter</div>
+                                <div class="spec-row"><strong>Hub:</strong> 104m | <strong>Blades:</strong> 3 × 80m</div>
+                            </td>
+                            <td>
+                                <div class="spec-row"><strong>Type:</strong> Semi-submersible</div>
+                                <div class="spec-row"><strong>Structure:</strong> 3 columns, ~70m spacing</div>
+                            </td>
+                            <td>
+                                <div class="spec-row"><strong>Model:</strong> Mammoet CC 8800-1</div>
+                                <div class="spec-row"><strong>Type:</strong> Crawler crane</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="spec-row"><strong>Component Weights:</strong></div>
+                                <div class="spec-row">• Nacelle: 390t</div>
+                                <div class="spec-row">• Blades: 34t each (102t total)</div>
+                                <div class="spec-row">• Tower: ~100t per section</div>
+                                <div class="spec-row"><strong>RNA Total: 500t</strong> (excludes tower)</div>
+                            </td>
+                            <td>
+                                <div class="spec-row"><strong>Platform Mass:</strong> 10,000t</div>
+                                <div class="spec-row"><strong>Height:</strong> 24m total</div>
+                                <div class="spec-row"><strong>Draft:</strong> 10m (port) / 14m (sea)</div>
+                                <div class="spec-row"><em>(Principle Power)</em></div>
+                            </td>
+                            <td>
+                                <div class="spec-row"><strong>Capacity:</strong> 1,600t</div>
+                                <div class="spec-row"><strong>Boom:</strong> >145m height</div>
+                                <div class="spec-row"><strong>Max Lift:</strong> 390t (nacelle)</div>
+                                <div class="spec-row">✓ All components within capacity</div>
+                            </td>
+                        </tr>
+                        <tr class="specs-footer">
+                            <td colspan="3">
+                                <div class="spec-row"><strong>Assembly Port:</strong> Port-La Nouvelle | <strong>Distance to Site:</strong> 16 km | <strong>Sea Depth:</strong> 68-70m</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </section>
 
-        <!-- Key Metrics Summary -->
-        <section class="metrics-grid">
-            <div class="metric-card">
-                <div class="metric-label">Overall Improvement</div>
-                <div class="metric-value" id="overall-improvement">36.88%</div>
-                <div class="metric-desc">F1 → F3 reduction</div>
+        <!-- Sub-Tab Navigation for EFGL -->
+        <nav class="efgl-sub-tabs">
+            <button class="efgl-sub-tab-btn active" data-subtab="overview">Overview</button>
+            <button class="efgl-sub-tab-btn" data-subtab="timeline">Timeline</button>
+            <button class="efgl-sub-tab-btn" data-subtab="patterns">Patterns</button>
+            <button class="efgl-sub-tab-btn" data-subtab="forecasting">Forecasting</button>
+        </nav>
+
+        <!-- Sub-Tab Content Areas -->
+
+        <!-- SUB-TAB 1: OVERVIEW -->
+        <div class="efgl-sub-tab-content active" id="subtab-overview">
+            <!-- Technical Specifications are already above, no additional content needed here -->
+            <div class="subtab-placeholder">
+                <p style="text-align: center; color: #64748b; padding: 2rem;">
+                    Technical specifications displayed above. Additional overview content can be added here.
+                </p>
             </div>
-            <div class="metric-card">
-                <div class="metric-label">Learning Rate</div>
-                <div class="metric-value" id="learning-rate">79%</div>
-                <div class="metric-desc">Mathematical Relationship</div>
-            </div>
-            <div class="metric-card">
-                <div class="metric-label">Floater 1 Time</div>
-                <div class="metric-value" id="f1-time">42.3h*</div>
-                <div class="metric-desc">Corrected baseline</div>
-            </div>
-            <div class="metric-card">
-                <div class="metric-label">Floater 2 Time</div>
-                <div class="metric-value" id="f2-time">32.3h</div>
-                <div class="metric-desc">-23.5% vs F1</div>
-            </div>
-            <div class="metric-card">
-                <div class="metric-label">Floater 3 Time</div>
-                <div class="metric-value" id="f3-time">26.7h</div>
-                <div class="metric-desc">-36.9% vs F1</div>
-            </div>
-        </section>
+        </div>
+
+        <!-- SUB-TAB 2: TIMELINE -->
+        <div class="efgl-sub-tab-content" id="subtab-timeline">
 
         <!-- Component Timeline Comparison -->
         <section class="chart-section">
@@ -363,9 +346,15 @@
             </div>
         </section>
 
+        </div>
+        <!-- END SUB-TAB: TIMELINE -->
+
+        <!-- SUB-TAB 3: FORECASTING -->
+        <div class="efgl-sub-tab-content" id="subtab-forecasting">
+
         <!-- Interactive Controls -->
         <section class="controls-section">
-            <h2>Scenario Planning</h2>
+            <h2>Scenario Planning & Learning Rate Analysis</h2>
             <div class="controls-grid">
                 <div class="control-group">
                     <label for="turbine-count">Number of Turbines:</label>
@@ -438,6 +427,12 @@
                 </div>
             </div>
         </section>
+
+        </div>
+        <!-- END SUB-TAB: FORECASTING (Part 1) -->
+
+        <!-- SUB-TAB 4: PATTERNS -->
+        <div class="efgl-sub-tab-content" id="subtab-patterns">
 
         <!-- Detailed Pattern Analysis -->
         <section class="detailed-pattern-section">
@@ -915,6 +910,12 @@
             </div>
         </section>
 
+        </div>
+        <!-- END SUB-TAB: PATTERNS -->
+
+        <!-- SUB-TAB 3 CONTINUED: FORECASTING (Charts) -->
+        <div class="efgl-sub-tab-content" id="subtab-forecasting-charts" data-parent="forecasting">
+
         <!-- Learning Curve Visualization -->
         <section class="chart-section">
             <h2>Learning Curve Progression</h2>
@@ -982,6 +983,10 @@
                 represents actual crane-active assembly time, providing more accurate learning curve analysis.</p>
             </div>
         </section>
+
+        </div>
+        <!-- END SUB-TAB: FORECASTING (Charts) -->
+
         </div>
         <!-- END TAB 1: EFGL PROJECT -->
 
