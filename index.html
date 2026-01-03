@@ -410,6 +410,19 @@
                         <div class="method-description-compact" id="method-description">
                             Average of F1→F2 (76.5%) and F2→F3 (82.5%) transitions
                         </div>
+
+                        <!-- Detailed Calculation Steps -->
+                        <div class="method-calculation-detail" id="method-calculation">
+                            <div class="calc-step">
+                                <strong>Step 1:</strong> LR<sub>F1→F2</sub> = 32.33h / 42.25h = 76.5%
+                            </div>
+                            <div class="calc-step">
+                                <strong>Step 2:</strong> LR<sub>F2→F3</sub> = 26.67h / 32.33h = 82.5%
+                            </div>
+                            <div class="calc-step">
+                                <strong>Step 3:</strong> Average LR = (76.5% + 82.5%) / 2 = <strong>79.5%</strong>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Predicted Results -->
@@ -421,9 +434,21 @@
                                 <div class="result-value" id="formula-f10-display">18.1h</div>
                             </div>
                             <div class="result-item">
-                                <div class="result-label">Cumulative Avg (F1-10):</div>
+                                <div class="result-label">Cumulative Avg:</div>
                                 <div class="result-value" id="formula-avg-display">24.5h</div>
                             </div>
+                            <div class="result-item">
+                                <div class="result-label">Total Project Time:</div>
+                                <div class="result-value" id="pred-total-time">245.0h</div>
+                            </div>
+                            <div class="result-item">
+                                <div class="result-label">Time Savings:</div>
+                                <div class="result-value" id="pred-savings">42.0%</div>
+                            </div>
+                        </div>
+                        <div class="results-explanation">
+                            <strong>Time Savings</strong> = Compared to building all floaters at F1 speed (42.25h each),
+                            how much time saved by applying learning curve improvement
                         </div>
                         <div class="results-deviation">
                             <span class="warning-icon">⚠️</span>

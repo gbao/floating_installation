@@ -871,6 +871,93 @@ function updatePredictions() {
     if (formulaAvgDisplay) {
         formulaAvgDisplay.textContent = `${lastPrediction.average.toFixed(1)}h`;
     }
+
+    // Update total project time (sum of all floater times)
+    const predTotalTime = document.getElementById('pred-total-time');
+    if (predTotalTime) {
+        predTotalTime.textContent = `${lastPrediction.cumulative.toFixed(1)}h`;
+    }
+
+    // Update time savings (compared to baseline of F1 speed for all floaters)
+    const predSavings = document.getElementById('pred-savings');
+    if (predSavings) {
+        const baseTime = turbineData.floaters[0].total_hours; // F1 = 42.25h
+        const baselineTotal = baseTime * currentSettings.turbineCount; // If all floaters took 42.25h
+        const actualTotal = lastPrediction.cumulative; // With learning curve
+        const savings = ((baselineTotal - actualTotal) / baselineTotal) * 100;
+        predSavings.textContent = `${savings.toFixed(1)}%`;
+    }
+}
+
+// ==================== UPDATE CALCULATION DETAIL BOX ====================
+function updateCalculationDetail(methodKey) {
+    const calculationBox = document.getElementById('method-calculation');
+    if (!calculationBox) return;
+
+    const f1 = 42.25;
+    const f2 = 32.33;
+    const f3 = 26.67;
+
+    let html = '';
+
+    switch(methodKey) {
+        case 'sequential-avg':
+            html = `
+                <div class="calc-step"><strong>Step 1:</strong> LR<sub>F1→F2</sub> = ${f2}h / ${f1}h = 76.5%</div>
+                <div class="calc-step"><strong>Step 2:</strong> LR<sub>F2→F3</sub> = ${f3}h / ${f2}h = 82.5%</div>
+                <div class="calc-step"><strong>Step 3:</strong> Average LR = (76.5% + 82.5%) / 2 = <strong>79.5%</strong></div>
+            `;
+            break;
+        case 'f1-f2-only':
+            html = `
+                <div class="calc-step"><strong>Step 1:</strong> LR<sub>F1→F2</sub> = ${f2}h / ${f1}h = <strong>76.5%</strong></div>
+                <div class="calc-step">Uses only the first transition (early learning phase)</div>
+            `;
+            break;
+        case 'f2-f3-only':
+            html = `
+                <div class="calc-step"><strong>Step 1:</strong> LR<sub>F2→F3</sub> = ${f3}h / ${f2}h = <strong>82.5%</strong></div>
+                <div class="calc-step">Uses only the second transition (later learning phase)</div>
+            `;
+            break;
+        case 'power-law':
+            html = `
+                <div class="calc-step"><strong>Step 1:</strong> b = log(${f3}/${f1}) / log(3) = -0.332</div>
+                <div class="calc-step"><strong>Step 2:</strong> LR = 2<sup>b</sup> = 2<sup>-0.332</sup> = <strong>79.5%</strong></div>
+                <div class="calc-step">Regression fit to all 3 data points</div>
+            `;
+            break;
+        case 'geometric-mean':
+            html = `
+                <div class="calc-step"><strong>Step 1:</strong> LR<sub>F1→F2</sub> = 76.5%, LR<sub>F2→F3</sub> = 82.5%</div>
+                <div class="calc-step"><strong>Step 2:</strong> Geometric Mean = √(76.5% × 82.5%) = <strong>79.5%</strong></div>
+            `;
+            break;
+        case 'weighted-avg':
+            html = `
+                <div class="calc-step"><strong>Step 1:</strong> Reduction F1→F2 = 9.92h (63.7% weight)</div>
+                <div class="calc-step"><strong>Step 2:</strong> Reduction F2→F3 = 5.66h (36.3% weight)</div>
+                <div class="calc-step"><strong>Step 3:</strong> Weighted LR = (76.5% × 0.637) + (82.5% × 0.363) = <strong>78.7%</strong></div>
+            `;
+            break;
+        case 'steady-state':
+            html = `
+                <div class="calc-step"><strong>Step 1:</strong> Steady state avg = (${f2}h + ${f3}h) / 2 = 29.5h</div>
+                <div class="calc-step"><strong>Step 2:</strong> LR = 29.5h / ${f1}h = <strong>69.8%</strong></div>
+                <div class="calc-step">Excludes first-unit learning effects</div>
+            `;
+            break;
+        case 'custom':
+            html = `
+                <div class="calc-step">Manual override - user-specified learning rate</div>
+                <div class="calc-step">Use the slider below to adjust</div>
+            `;
+            break;
+        default:
+            html = '<div class="calc-step">Calculation details will appear here</div>';
+    }
+
+    calculationBox.innerHTML = html;
 }
 
 // ==================== EVENT LISTENERS ====================
@@ -887,6 +974,9 @@ function initializeLearningRateMethod() {
     document.getElementById('method-formula').textContent = method.formula;
     document.getElementById('method-description').textContent = method.description;
     document.getElementById('calculated-lr-value').textContent = `${(method.value * 100).toFixed(1)}%`;
+
+    // Initialize calculation detail box
+    updateCalculationDetail('sequential-avg');
 
     // Set current settings
     currentSettings.learningRate = method.value;
@@ -947,6 +1037,9 @@ function setupEventListeners() {
             methodInfoName.textContent = 'Custom (Manual Override)';
             methodInfoFormula.textContent = 'User-specified value';
             methodInfoDescription.textContent = 'Use the slider below to set a custom learning rate';
+
+            // Update calculation detail box for custom mode
+            updateCalculationDetail('custom');
         } else {
             // Hide manual slider
             manualLRControl.style.display = 'none';
@@ -963,6 +1056,9 @@ function setupEventListeners() {
             methodInfoFormula.textContent = method.formula;
             methodInfoDescription.textContent = method.description;
             calculatedLRValue.textContent = `${(method.value * 100).toFixed(1)}%`;
+
+            // Update calculation detail box
+            updateCalculationDetail(selectedMethod);
 
             // Update main metric card
             document.getElementById('learning-rate').textContent = `${(method.value * 100).toFixed(0)}%`;
