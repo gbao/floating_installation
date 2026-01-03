@@ -421,9 +421,72 @@
 
             <!-- Scaling Predictions Chart (moved inside Scenario Planning) -->
             <div class="scenario-chart">
-                <h3>Scaling Predictions (10, 20, 30+ Turbines)</h3>
+                <h3>Future Project Forecasting (Eolmed & Beyond)</h3>
+
+                <!-- Chart Interpretation Guide -->
+                <div class="chart-interpretation">
+                    <div class="interpretation-header">📊 How to interpret this chart:</div>
+                    <div class="interpretation-grid">
+                        <div class="interpretation-item">
+                            <span class="legend-dot actual"></span>
+                            <strong>Orange dots</strong> = EFGL Actual Data (F1:42.25h, F2:32.33h, F3:26.67h)<br>
+                            <span class="legend-note">Historical performance from Port-La Nouvelle</span>
+                        </div>
+                        <div class="interpretation-item">
+                            <span class="legend-line solid"></span>
+                            <strong>Blue solid line (F1-F3)</strong> = Wright's formula fit to your selected learning rate<br>
+                            <span class="legend-note">Shows how well formula matches reality</span>
+                        </div>
+                        <div class="interpretation-item">
+                            <span class="legend-line dashed"></span>
+                            <strong>Blue dashed line (F4+)</strong> = Prediction zone<br>
+                            <span class="legend-note">Extrapolation assumes learning rate continues</span>
+                        </div>
+                        <div class="interpretation-item">
+                            <span class="legend-line cumulative"></span>
+                            <strong>Orange line</strong> = Cumulative average<br>
+                            <span class="legend-note">Running average across all floaters (smooths variations)</span>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="chart-container">
                     <canvas id="scaling-chart"></canvas>
+                </div>
+
+                <!-- Formula Details Box -->
+                <div class="formula-details-box">
+                    <div class="formula-header">
+                        <strong>Formula Details</strong>
+                        <span class="formula-method-label" id="formula-method-display">Sequential Average (79.5%)</span>
+                    </div>
+                    <div class="formula-content">
+                        <div class="formula-row">
+                            <span class="formula-label">Learning Rate:</span>
+                            <span class="formula-value" id="formula-lr-display">79.5%</span>
+                        </div>
+                        <div class="formula-row">
+                            <span class="formula-label">Wright's Formula:</span>
+                            <span class="formula-value" id="formula-equation-display">T<sub>n</sub> = 42.25 × n<sup>-0.332</sup></span>
+                        </div>
+                        <div class="formula-divider"></div>
+                        <div class="formula-row prediction">
+                            <span class="formula-label">Prediction for Floater 10:</span>
+                            <span class="formula-value" id="formula-f10-display">18.1h</span>
+                        </div>
+                        <div class="formula-row">
+                            <span class="formula-label">Cumulative Average (F1-F10):</span>
+                            <span class="formula-value" id="formula-avg-display">24.5h</span>
+                        </div>
+                        <div class="formula-divider"></div>
+                        <div class="formula-warning">
+                            <span class="warning-icon">⚠️</span>
+                            <div class="warning-text">
+                                <strong>Deviation from actual:</strong> F2 (<span id="f2-deviation">-3.7%</span>), F3 (<span id="f3-deviation">-7.4%</span>)<br>
+                                <em>Predictions inherit this uncertainty. Based on only 3 EFGL floaters.</em>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>

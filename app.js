@@ -494,31 +494,72 @@ function createScalingChart() {
 
     const predictions = calculatePredictions(currentSettings.turbineCount, currentSettings.learningRate);
 
-    const timeData = predictions.map(p => p.time);
-    const avgData = predictions.map(p => p.average);
+    // Actual EFGL data points
+    const actualData = [
+        { x: 1, y: 42.25 },  // F1
+        { x: 2, y: 32.33 },  // F2
+        { x: 3, y: 26.67 }   // F3
+    ];
+
+    // Separate formula predictions into F1-F3 (solid) and F4+ (dashed)
+    const formulaF1toF3 = predictions.slice(0, 3).map((p, i) => ({ x: i + 1, y: p.time }));
+    const formulaF4Plus = predictions.slice(2).map((p, i) => ({ x: i + 3, y: p.time })); // Start from F3 for continuity
+
+    // Cumulative average line
+    const cumulativeAvg = predictions.map((p, i) => ({ x: i + 1, y: p.average }));
 
     charts.scaling = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: predictions.map(p => `T${p.turbine}`),
+            labels: predictions.map((p, i) => `F${i + 1}`),
             datasets: [
+                // Dataset 1: Actual EFGL Data (Orange Dots)
                 {
-                    label: 'Individual Assembly Time',
-                    data: timeData,
-                    borderColor: '#ef4444',
-                    backgroundColor: 'rgba(239, 68, 68, 0.1)',
-                    borderWidth: 2,
-                    fill: true,
-                    yAxisID: 'y'
+                    label: 'EFGL Actual Data (F1-F3)',
+                    data: actualData,
+                    borderColor: '#f97316',
+                    backgroundColor: '#f97316',
+                    pointRadius: 8,
+                    pointHoverRadius: 10,
+                    pointStyle: 'circle',
+                    showLine: false, // Only show dots, no connecting line
+                    order: 1 // Draw on top
                 },
+                // Dataset 2: Wright's Formula F1-F3 (Blue Solid Line)
                 {
-                    label: 'Average Assembly Time',
-                    data: avgData,
-                    borderColor: '#10b981',
-                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    label: "Wright's Formula (F1-F3)",
+                    data: formulaF1toF3,
+                    borderColor: '#2563eb',
+                    backgroundColor: 'rgba(37, 99, 235, 0.1)',
+                    borderWidth: 3,
+                    fill: false,
+                    borderDash: [], // Solid line
+                    pointRadius: 0,
+                    order: 2
+                },
+                // Dataset 3: Prediction Zone F4+ (Blue Dashed Line)
+                {
+                    label: 'Prediction Zone (F4+)',
+                    data: formulaF4Plus,
+                    borderColor: '#2563eb',
+                    backgroundColor: 'rgba(37, 99, 235, 0.05)',
+                    borderWidth: 3,
+                    fill: false,
+                    borderDash: [10, 5], // Dashed line
+                    pointRadius: 0,
+                    order: 3
+                },
+                // Dataset 4: Cumulative Average (Orange Line)
+                {
+                    label: 'Cumulative Average',
+                    data: cumulativeAvg,
+                    borderColor: '#f97316',
+                    backgroundColor: 'rgba(249, 115, 22, 0.1)',
                     borderWidth: 2,
-                    fill: true,
-                    yAxisID: 'y'
+                    fill: false,
+                    borderDash: [], // Solid line
+                    pointRadius: 0,
+                    order: 4
                 }
             ]
         },
@@ -527,18 +568,54 @@ function createScalingChart() {
             maintainAspectRatio: false,
             plugins: {
                 title: {
-                    display: true,
-                    text: `Predicted Performance for ${currentSettings.turbineCount} Turbines`,
-                    font: { size: 16, weight: 'bold' }
+                    display: false // Removed - using HTML title instead
                 },
                 legend: {
                     display: true,
-                    position: 'top'
+                    position: 'top',
+                    labels: {
+                        usePointStyle: true,
+                        padding: 15,
+                        font: { size: 11 }
+                    }
                 },
                 tooltip: {
                     callbacks: {
                         label: function(context) {
-                            return `${context.dataset.label}: ${context.parsed.y.toFixed(2)} hours`;
+                            const datasetLabel = context.dataset.label;
+                            const value = context.parsed.y.toFixed(2);
+
+                            // Show actual vs formula for F1-F3
+                            if (context.datasetIndex === 0) {
+                                // Actual data point
+                                const floaterNum = context.parsed.x;
+                                const formulaPred = predictions[floaterNum - 1].time;
+                                const deviation = ((context.parsed.y - formulaPred) / formulaPred * 100).toFixed(1);
+                                return [
+                                    `Actual: ${value}h`,
+                                    `Formula: ${formulaPred.toFixed(2)}h`,
+                                    `Deviation: ${deviation}%`
+                                ];
+                            }
+
+                            return `${datasetLabel}: ${value}h`;
+                        }
+                    }
+                },
+                annotation: {
+                    annotations: {
+                        line1: {
+                            type: 'line',
+                            xMin: 3.5,
+                            xMax: 3.5,
+                            borderColor: '#94a3b8',
+                            borderWidth: 2,
+                            borderDash: [5, 5],
+                            label: {
+                                display: true,
+                                content: 'Prediction Zone',
+                                position: 'start'
+                            }
                         }
                     }
                 }
@@ -548,18 +625,110 @@ function createScalingChart() {
                     beginAtZero: true,
                     title: {
                         display: true,
-                        text: 'Time (hours)'
+                        text: 'Assembly Time (hours)',
+                        font: { size: 12, weight: 'bold' }
+                    },
+                    grid: {
+                        color: '#e2e8f0'
                     }
                 },
                 x: {
+                    type: 'linear',
                     title: {
                         display: true,
-                        text: 'Turbine'
+                        text: 'Floater Number',
+                        font: { size: 12, weight: 'bold' }
+                    },
+                    ticks: {
+                        stepSize: 1,
+                        callback: function(value) {
+                            return `F${value}`;
+                        }
+                    },
+                    grid: {
+                        color: '#e2e8f0'
                     }
                 }
             }
         }
     });
+
+    // Update formula details box
+    updateFormulaDetailsBox();
+}
+
+// ==================== UPDATE FORMULA DETAILS BOX ====================
+function updateFormulaDetailsBox() {
+    const predictions = calculatePredictions(currentSettings.turbineCount, currentSettings.learningRate);
+
+    // Actual EFGL data
+    const actualF1 = 42.25;
+    const actualF2 = 32.33;
+    const actualF3 = 26.67;
+
+    // Formula predictions for F1-F3
+    const formulaF2 = predictions[1].time;  // Index 1 = F2
+    const formulaF3 = predictions[2].time;  // Index 2 = F3
+
+    // Calculate deviations (actual vs formula)
+    const deviationF2 = ((actualF2 - formulaF2) / formulaF2 * 100);
+    const deviationF3 = ((actualF3 - formulaF3) / formulaF3 * 100);
+
+    // Get F10 prediction (if available)
+    const f10Index = Math.min(9, predictions.length - 1); // Index 9 = F10
+    const f10Prediction = predictions[f10Index];
+
+    // Calculate cumulative average for F1-F10
+    const cumulativeAvgF10 = f10Prediction ? f10Prediction.average : 0;
+
+    // Get current method name
+    const methodSelector = document.getElementById('learning-rate-method');
+    const selectedMethod = methodSelector ? methodSelector.value : 'sequential-avg';
+
+    // Get method details
+    const learningRateMethods = calculateLearningRateMethods();
+    const currentMethod = learningRateMethods[selectedMethod] || learningRateMethods['sequential-avg'];
+    const methodName = currentMethod ? currentMethod.name : 'Sequential Transition Average';
+
+    // Update display elements
+    const formulaMethodDisplay = document.getElementById('formula-method-display');
+    const formulaLrDisplay = document.getElementById('formula-lr-display');
+    const formulaEquationDisplay = document.getElementById('formula-equation-display');
+    const formulaF10Display = document.getElementById('formula-f10-display');
+    const formulaAvgDisplay = document.getElementById('formula-avg-display');
+    const f2DeviationDisplay = document.getElementById('f2-deviation');
+    const f3DeviationDisplay = document.getElementById('f3-deviation');
+
+    if (formulaMethodDisplay) {
+        formulaMethodDisplay.textContent = `${methodName} (${(currentSettings.learningRate * 100).toFixed(1)}%)`;
+    }
+
+    if (formulaLrDisplay) {
+        formulaLrDisplay.textContent = `${(currentSettings.learningRate * 100).toFixed(1)}%`;
+    }
+
+    if (formulaEquationDisplay) {
+        const bCoeffDisplay = currentSettings.bCoefficient.toFixed(3);
+        formulaEquationDisplay.innerHTML = `T<sub>n</sub> = 42.25 × n<sup>${bCoeffDisplay}</sup>`;
+    }
+
+    if (formulaF10Display && f10Prediction) {
+        formulaF10Display.textContent = `${f10Prediction.time.toFixed(1)}h`;
+    }
+
+    if (formulaAvgDisplay) {
+        formulaAvgDisplay.textContent = `${cumulativeAvgF10.toFixed(1)}h`;
+    }
+
+    if (f2DeviationDisplay) {
+        const sign = deviationF2 >= 0 ? '+' : '';
+        f2DeviationDisplay.textContent = `${sign}${deviationF2.toFixed(1)}%`;
+    }
+
+    if (f3DeviationDisplay) {
+        const sign = deviationF3 >= 0 ? '+' : '';
+        f3DeviationDisplay.textContent = `${sign}${deviationF3.toFixed(1)}%`;
+    }
 }
 
 function createUtilizationChart() {
