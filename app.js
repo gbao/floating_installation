@@ -337,7 +337,12 @@ function createTimelineChart() {
 }
 
 function createLearningCurveChart() {
-    const ctx = document.getElementById('learning-curve-chart').getContext('2d');
+    const chartElement = document.getElementById('learning-curve-chart');
+    if (!chartElement) {
+        console.log('Learning curve chart element not found - skipping (chart removed)');
+        return;
+    }
+    const ctx = chartElement.getContext('2d');
 
     const actualData = turbineData.floaters.map(f => ({
         x: f.id,
