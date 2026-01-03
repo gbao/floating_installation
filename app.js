@@ -854,13 +854,23 @@ function updatePredictions() {
     const predictions = calculatePredictions(currentSettings.turbineCount, currentSettings.learningRate);
     const lastPrediction = predictions[predictions.length - 1];
 
-    document.getElementById('predicted-turbines').textContent = currentSettings.turbineCount;
-    document.getElementById('pred-avg-time').textContent = `${lastPrediction.average.toFixed(1)} hours`;
-    document.getElementById('pred-total-time').textContent = `${lastPrediction.cumulative.toFixed(1)} hours`;
+    // Update predicted turbines count
+    const predictedTurbinesEl = document.getElementById('predicted-turbines');
+    if (predictedTurbinesEl) {
+        predictedTurbinesEl.textContent = currentSettings.turbineCount;
+    }
 
-    const baseTime = turbineData.floaters[0].total_hours;
-    const savings = ((baseTime - lastPrediction.average) / baseTime) * 100;
-    document.getElementById('pred-savings').textContent = `${savings.toFixed(1)}%`;
+    // Update Floater N time display (formula-f10-display shows time for the last floater)
+    const formulaFNDisplay = document.getElementById('formula-f10-display');
+    if (formulaFNDisplay) {
+        formulaFNDisplay.textContent = `${lastPrediction.time.toFixed(1)}h`;
+    }
+
+    // Update cumulative average display
+    const formulaAvgDisplay = document.getElementById('formula-avg-display');
+    if (formulaAvgDisplay) {
+        formulaAvgDisplay.textContent = `${lastPrediction.average.toFixed(1)}h`;
+    }
 }
 
 // ==================== EVENT LISTENERS ====================
