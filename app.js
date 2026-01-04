@@ -815,8 +815,8 @@ function createUtilizationBarChart() {
                     backgroundColor: '#059669',
                     borderColor: '#047857',
                     borderWidth: 1,
-                    barPercentage: 0.5,
-                    categoryPercentage: 0.8
+                    barPercentage: 0.6,
+                    categoryPercentage: 0.7
                 },
                 {
                     label: 'Idle',
@@ -824,8 +824,8 @@ function createUtilizationBarChart() {
                     backgroundColor: '#cbd5e1',
                     borderColor: '#94a3b8',
                     borderWidth: 1,
-                    barPercentage: 0.5,
-                    categoryPercentage: 0.8
+                    barPercentage: 0.6,
+                    categoryPercentage: 0.7
                 }
             ]
         },

@@ -700,19 +700,14 @@
                     </div>
                 </div>
 
-                <div class="pattern-insights-list">
-                    <div class="insight-item">
-                        <strong>Strategy:</strong> 80% of tower sections start 05:00-11:00 (morning preference)
-                    </div>
-                    <div class="insight-item">
-                        <strong>Rationale:</strong> Risk mitigation - full working day buffer for unexpected issues
-                    </div>
-                    <div class="insight-item">
-                        <strong>Constraint:</strong> Nacelle must follow Tower Sec 3 (no vibration damper) - afternoon starts
-                    </div>
-                    <div class="insight-item">
-                        <strong>Flexibility:</strong> Blade installations adjusted for weather windows and crew availability
-                    </div>
+                <div class="pattern-2-observations">
+                    <h4>KEY OBSERVATIONS:</h4>
+                    <ul>
+                        <li>All tower sections prefer morning starts (7-11am)</li>
+                        <li>Nacelle constrained to afternoon (Tower Sec 3 dependency)</li>
+                        <li>Blade installations show mixed timing patterns</li>
+                        <li>F3 achieved same-day Tower Sec 1+2 optimization</li>
+                    </ul>
                 </div>
             </div>
 
@@ -755,8 +750,8 @@
             </div>
 
             <!-- Detailed Comparison Table -->
-            <div class="pattern-detail-box">
-                <h3>Detailed Performance Comparison</h3>
+            <div class="pattern-detail-box comparison-table-consulting">
+                <h3 class="comparison-table-title">Detailed Performance Comparison</h3>
 
                 <div class="table-responsive">
                     <table class="pattern-comparison-table">
@@ -766,8 +761,9 @@
                                 <th>F1</th>
                                 <th>F2</th>
                                 <th>F3</th>
-                                <th>Improvement F1→F3</th>
-                                <th>Best</th>
+                                <th>Δ F1→F2</th>
+                                <th>Δ F2→F3</th>
+                                <th>Δ F1→F3</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -776,24 +772,27 @@
                                 <td>5 days</td>
                                 <td>4 days</td>
                                 <td>3 days</td>
+                                <td class="improvement">↓ 20%</td>
+                                <td class="improvement">↓ 25%</td>
                                 <td class="improvement">↓ 40%</td>
-                                <td>F3 ✓</td>
                             </tr>
                             <tr>
                                 <td>Tower Sec 1→2 gap</td>
                                 <td>+12 days</td>
                                 <td>+1 day</td>
                                 <td>0 days</td>
+                                <td class="improvement">↓ 92%</td>
                                 <td class="improvement">↓ 100%</td>
-                                <td>F3 ✓✓</td>
+                                <td class="improvement">↓ 100%</td>
                             </tr>
                             <tr>
                                 <td>Tower Sec 2→3 gap</td>
                                 <td>+3 days</td>
                                 <td>+1 day</td>
                                 <td>+2 days</td>
+                                <td class="improvement">↓ 67%</td>
+                                <td class="decline">↑ 100%</td>
                                 <td class="improvement">↓ 33%</td>
-                                <td>F2 ✓</td>
                             </tr>
                             <tr>
                                 <td>Tower completion time</td>
@@ -801,15 +800,17 @@
                                 <td>2 days</td>
                                 <td>2 days</td>
                                 <td class="improvement">↓ 87%</td>
-                                <td>F2/F3 ✓✓</td>
+                                <td class="neutral">±0%</td>
+                                <td class="improvement">↓ 87%</td>
                             </tr>
                             <tr>
                                 <td>Blade 1→2 gap</td>
                                 <td>+1 day</td>
                                 <td>+6 days</td>
                                 <td>+1 day</td>
+                                <td class="decline">↑ 500%</td>
+                                <td class="improvement">↓ 83%</td>
                                 <td class="neutral">±0%</td>
-                                <td>F1/F3</td>
                             </tr>
                             <tr>
                                 <td>Blade 2→3 gap</td>
@@ -817,39 +818,44 @@
                                 <td>+1 day</td>
                                 <td>+1 day</td>
                                 <td class="improvement">↓ 67%</td>
-                                <td>F2/F3 ✓</td>
+                                <td class="neutral">±0%</td>
+                                <td class="improvement">↓ 67%</td>
                             </tr>
                             <tr>
                                 <td>Blade completion time</td>
                                 <td>4 days</td>
                                 <td>7 days</td>
                                 <td>2 days</td>
+                                <td class="decline">↑ 75%</td>
+                                <td class="improvement">↓ 71%</td>
                                 <td class="improvement">↓ 50%</td>
-                                <td>F3 ✓✓</td>
-                            </tr>
-                            <tr class="table-highlight">
-                                <td><strong>Total calendar days</strong></td>
-                                <td><strong>39 days</strong></td>
-                                <td><strong>26 days</strong></td>
-                                <td><strong>22 days</strong></td>
-                                <td class="improvement"><strong>↓ 44%</strong></td>
-                                <td><strong>F3 ✓✓✓</strong></td>
-                            </tr>
-                            <tr class="table-highlight">
-                                <td><strong>Crane utilization</strong></td>
-                                <td><strong>10.8%</strong></td>
-                                <td><strong>12.4%</strong></td>
-                                <td><strong>12.1%</strong></td>
-                                <td class="improvement"><strong>↑ 12%</strong></td>
-                                <td><strong>F2 ✓</strong></td>
                             </tr>
                             <tr>
                                 <td>Crane working hours</td>
                                 <td>42.25h</td>
                                 <td>32.33h</td>
                                 <td>26.67h</td>
+                                <td class="improvement">↓ 23%</td>
+                                <td class="improvement">↓ 18%</td>
                                 <td class="improvement">↓ 37%</td>
-                                <td>F3 ✓</td>
+                            </tr>
+                            <tr class="table-highlight">
+                                <td><strong>Total calendar days</strong></td>
+                                <td><strong>39 days</strong></td>
+                                <td><strong>26 days</strong></td>
+                                <td><strong>22 days</strong></td>
+                                <td class="improvement"><strong>↓ 33%</strong></td>
+                                <td class="improvement"><strong>↓ 15%</strong></td>
+                                <td class="improvement"><strong>↓ 44%</strong></td>
+                            </tr>
+                            <tr class="table-highlight">
+                                <td><strong>Crane utilization</strong></td>
+                                <td><strong>10.8%</strong></td>
+                                <td><strong>12.4%</strong></td>
+                                <td><strong>12.1%</strong></td>
+                                <td class="improvement"><strong>↑ 15%</strong></td>
+                                <td class="decline"><strong>↓ 2%</strong></td>
+                                <td class="improvement"><strong>↑ 12%</strong></td>
                             </tr>
                         </tbody>
                     </table>
