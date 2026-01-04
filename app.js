@@ -878,11 +878,14 @@ function updatePredictions() {
         predTotalTime.textContent = `${lastPrediction.cumulative.toFixed(1)}h`;
     }
 
-    // Update time savings (compared to baseline of F1 speed for all floaters)
+    // Update time savings (compared to baseline of average F1-F3 speed for all floaters)
     const predSavings = document.getElementById('pred-savings');
     if (predSavings) {
-        const baseTime = turbineData.floaters[0].total_hours; // F1 = 42.25h
-        const baselineTotal = baseTime * currentSettings.turbineCount; // If all floaters took 42.25h
+        // Use average of first 3 floaters as baseline (not just F1)
+        const avgF1F2F3 = (turbineData.floaters[0].total_hours +
+                          turbineData.floaters[1].total_hours +
+                          turbineData.floaters[2].total_hours) / 3; // = 33.75h
+        const baselineTotal = avgF1F2F3 * currentSettings.turbineCount; // Baseline without additional learning
         const actualTotal = lastPrediction.cumulative; // With learning curve
         const savings = ((baselineTotal - actualTotal) / baselineTotal) * 100;
         predSavings.textContent = `${savings.toFixed(1)}%`;

@@ -2055,7 +2055,8 @@ footer p {
     border-top-color: rgba(30, 41, 59, 0.98);
 }
 
-.metric-info-btn.active + .metric-tooltip {
+/* Show tooltip when button is active (changed from + to ~ for sibling anywhere in parent) */
+.metric-card:has(.metric-info-btn.active) .metric-tooltip {
     display: block;
 }
 
