@@ -396,6 +396,19 @@
                         <button id="reset-btn" class="btn-secondary-compact">Reset</button>
                         <button id="calculate-btn" class="btn-primary-compact">Recalculate</button>
                     </div>
+
+                    <!-- Detailed Calculation Steps (moved here for better layout balance) -->
+                    <div class="method-calculation-detail-sidebar" id="method-calculation">
+                        <div class="calc-step">
+                            <strong>Step 1:</strong> LR<sub>F1→F2</sub> = 32.33h / 42.25h = 76.5%
+                        </div>
+                        <div class="calc-step">
+                            <strong>Step 2:</strong> LR<sub>F2→F3</sub> = 26.67h / 32.33h = 82.5%
+                        </div>
+                        <div class="calc-step">
+                            <strong>Step 3:</strong> Average LR = (76.5% + 82.5%) / 2 = <strong>79.5%</strong>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- RIGHT COLUMN: Method Info + Results -->
@@ -409,19 +422,6 @@
                         <div class="method-formula-compact" id="method-formula">(LR_F1→F2 + LR_F2→F3) / 2</div>
                         <div class="method-description-compact" id="method-description">
                             Average of F1→F2 (76.5%) and F2→F3 (82.5%) transitions
-                        </div>
-
-                        <!-- Detailed Calculation Steps -->
-                        <div class="method-calculation-detail" id="method-calculation">
-                            <div class="calc-step">
-                                <strong>Step 1:</strong> LR<sub>F1→F2</sub> = 32.33h / 42.25h = 76.5%
-                            </div>
-                            <div class="calc-step">
-                                <strong>Step 2:</strong> LR<sub>F2→F3</sub> = 26.67h / 32.33h = 82.5%
-                            </div>
-                            <div class="calc-step">
-                                <strong>Step 3:</strong> Average LR = (76.5% + 82.5%) / 2 = <strong>79.5%</strong>
-                            </div>
                         </div>
                     </div>
 

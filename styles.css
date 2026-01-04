@@ -2654,9 +2654,31 @@ footer p {
     font-size: 0.85rem;
     color: var(--text-secondary);
     line-height: 1.5;
-    margin-bottom: 0.75rem;
 }
 
+/* Calculation Detail in Sidebar (LEFT COLUMN) */
+.method-calculation-detail-sidebar {
+    background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+    border: 2px solid #bae6fd;
+    border-radius: 6px;
+    padding: 1rem;
+    margin-top: 1.5rem;
+}
+
+.method-calculation-detail-sidebar::before {
+    content: '📊 Calculation Steps';
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #0369a1;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #bae6fd;
+}
+
+/* Old calculation detail class (unused but kept for compatibility) */
 .method-calculation-detail {
     background: white;
     border: 1px solid #bae6fd;
