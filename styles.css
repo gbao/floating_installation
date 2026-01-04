@@ -1301,6 +1301,109 @@ footer p {
     color: #065f46;
 }
 
+.flow-result.neutral {
+    background: #e0e7ff;
+    color: #3730a3;
+}
+
+/* ==================== NEW PATTERN 1 LAYOUT STYLES ==================== */
+
+/* Compact Pattern Title */
+.pattern-title-compact {
+    font-size: 1.1rem !important;
+    color: #B8941F;
+    margin-bottom: 1.25rem;
+    font-weight: 700;
+    border-bottom: 2px solid #D4AF37;
+    padding-bottom: 0.5rem;
+}
+
+/* Section Headers (TOWER WORKS / BLADE WORKS) */
+.pattern-section-header {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #B8941F;
+    background: linear-gradient(135deg, #FFF8DC, #FFEAA7);
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    border-left: 4px solid #D4AF37;
+    margin-top: 1rem;
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.05em;
+}
+
+/* Compact Metrics Row (2 columns) */
+.pattern-metrics-row-compact {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+/* Horizontal Flow Comparison (3 columns side by side) */
+.flow-comparison-horizontal {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.flow-column {
+    background: white;
+    padding: 1rem;
+    border-radius: 6px;
+    border: 2px solid #e5e7eb;
+    text-align: center;
+}
+
+.flow-column:nth-child(1) {
+    border-left: 4px solid #3b82f6;
+}
+
+.flow-column:nth-child(2) {
+    border-left: 4px solid #10b981;
+}
+
+.flow-column:nth-child(3) {
+    border-left: 4px solid #8b5cf6;
+}
+
+.flow-steps-vertical {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 1rem 0;
+}
+
+.flow-step-box {
+    background: #3b82f6;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    width: 80%;
+}
+
+.flow-arrow {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .flow-comparison-horizontal {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .pattern-metrics-row-compact {
+        grid-template-columns: 1fr;
+    }
+}
+
 /* Pattern Insights List */
 .pattern-insights-list {
     margin-top: 1.5rem;

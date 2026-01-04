@@ -510,9 +510,11 @@
 
             <!-- Pattern 1: Sequencing Efficiency -->
             <div class="pattern-detail-box">
-                <h3>Pattern 1: Sequencing Efficiency & Timeline Compression</h3>
+                <h3 class="pattern-title-compact">Pattern 1: Sequencing Efficiency & Timeline Compression</h3>
 
-                <div class="pattern-metrics-row">
+                <!-- Tower Works Metrics -->
+                <div class="pattern-section-header">TOWER WORKS</div>
+                <div class="pattern-metrics-row-compact">
                     <div class="pattern-metric-card">
                         <div class="pattern-metric-label">Per-Floater Preparation</div>
                         <div class="pattern-metric-value">5d → 3d</div>
@@ -523,61 +525,100 @@
                         <div class="pattern-metric-value">15d → 2d</div>
                         <div class="pattern-metric-change">↓ 87%</div>
                     </div>
+                </div>
+
+                <!-- Blade Works Metrics -->
+                <div class="pattern-section-header">BLADE WORKS</div>
+                <div class="pattern-metrics-row-compact">
                     <div class="pattern-metric-card">
-                        <div class="pattern-metric-label">Total Calendar Days</div>
-                        <div class="pattern-metric-value">39d → 22d</div>
-                        <div class="pattern-metric-change">↓ 44%</div>
+                        <div class="pattern-metric-label">Per-Floater Preparation</div>
+                        <div class="pattern-metric-value">4d (constant)</div>
+                        <div class="pattern-metric-change">(Nacelle→Blade 1)</div>
+                    </div>
+                    <div class="pattern-metric-card">
+                        <div class="pattern-metric-label">Blade Completion</div>
+                        <div class="pattern-metric-value">4d → 2d</div>
+                        <div class="pattern-metric-change">↓ 50%</div>
                     </div>
                 </div>
 
+                <!-- Tower Section Sequencing Flow -->
                 <div class="pattern-flow-section">
                     <h4>Tower Section Sequencing Flow</h4>
-                    <div class="flow-comparison">
-                        <div class="flow-item">
-                            <div class="flow-label">F1 (Learning Phase)</div>
-                            <div class="flow-timeline">
-                                <span class="flow-step">Sec 1</span>
-                                <span class="flow-gap long">+12d</span>
-                                <span class="flow-step">Sec 2</span>
-                                <span class="flow-gap">+3d</span>
-                                <span class="flow-step">Sec 3</span>
+                    <div class="flow-comparison-horizontal">
+                        <div class="flow-column">
+                            <div class="flow-label">F1 (Learning)</div>
+                            <div class="flow-steps-vertical">
+                                <div class="flow-step-box">Sec 1</div>
+                                <div class="flow-arrow">↓ +12d</div>
+                                <div class="flow-step-box">Sec 2</div>
+                                <div class="flow-arrow">↓ +3d</div>
+                                <div class="flow-step-box">Sec 3</div>
                             </div>
-                            <div class="flow-result warning">15 days total</div>
+                            <div class="flow-result warning">15 days total ⚠️</div>
                         </div>
-                        <div class="flow-item">
+                        <div class="flow-column">
                             <div class="flow-label">F2 (Improvement)</div>
-                            <div class="flow-timeline">
-                                <span class="flow-step">Sec 1</span>
-                                <span class="flow-gap">+1d</span>
-                                <span class="flow-step">Sec 2</span>
-                                <span class="flow-gap">+1d</span>
-                                <span class="flow-step">Sec 3</span>
+                            <div class="flow-steps-vertical">
+                                <div class="flow-step-box">Sec 1</div>
+                                <div class="flow-arrow">↓ +1d</div>
+                                <div class="flow-step-box">Sec 2</div>
+                                <div class="flow-arrow">↓ +1d</div>
+                                <div class="flow-step-box">Sec 3</div>
                             </div>
                             <div class="flow-result success">2 days total ✓✓</div>
                         </div>
-                        <div class="flow-item">
+                        <div class="flow-column">
                             <div class="flow-label">F3 (Breakthrough)</div>
-                            <div class="flow-timeline">
-                                <span class="flow-step">Sec 1</span>
-                                <span class="flow-gap zero">0d</span>
-                                <span class="flow-step">Sec 2</span>
-                                <span class="flow-gap">+2d</span>
-                                <span class="flow-step">Sec 3</span>
+                            <div class="flow-steps-vertical">
+                                <div class="flow-step-box">Sec 1</div>
+                                <div class="flow-arrow">↓ +0d</div>
+                                <div class="flow-step-box">Sec 2</div>
+                                <div class="flow-arrow">↓ +2d</div>
+                                <div class="flow-step-box">Sec 3</div>
                             </div>
-                            <div class="flow-result success">2 days total ✓✓✓ (Same-day S1+S2!)</div>
+                            <div class="flow-result success">2 days total ✓✓✓<br>(Same-day S1+S2!)</div>
                         </div>
                     </div>
                 </div>
 
-                <div class="pattern-insights-list">
-                    <div class="insight-item">
-                        <strong>F1 Challenge:</strong> 12-day gap between Tower Sec 1→2 (weather/learning)
-                    </div>
-                    <div class="insight-item">
-                        <strong>F2 Improvement:</strong> Achieved consecutive tower sections (1-day gaps)
-                    </div>
-                    <div class="insight-item">
-                        <strong>F3 Breakthrough:</strong> Same-day installation of Sec 1+2 (opportunistic optimization)
+                <!-- Blade Installation Sequencing Flow -->
+                <div class="pattern-flow-section">
+                    <h4>Blade Installation Sequencing Flow</h4>
+                    <div class="flow-comparison-horizontal">
+                        <div class="flow-column">
+                            <div class="flow-label">F1 (Learning)</div>
+                            <div class="flow-steps-vertical">
+                                <div class="flow-step-box">Blade 1</div>
+                                <div class="flow-arrow">↓ +1d</div>
+                                <div class="flow-step-box">Blade 2</div>
+                                <div class="flow-arrow">↓ +3d</div>
+                                <div class="flow-step-box">Blade 3</div>
+                            </div>
+                            <div class="flow-result neutral">4 days total</div>
+                        </div>
+                        <div class="flow-column">
+                            <div class="flow-label">F2 (Setback)</div>
+                            <div class="flow-steps-vertical">
+                                <div class="flow-step-box">Blade 1</div>
+                                <div class="flow-arrow">↓ +6d</div>
+                                <div class="flow-step-box">Blade 2</div>
+                                <div class="flow-arrow">↓ +1d</div>
+                                <div class="flow-step-box">Blade 3</div>
+                            </div>
+                            <div class="flow-result warning">7 days total ⚠️</div>
+                        </div>
+                        <div class="flow-column">
+                            <div class="flow-label">F3 (Breakthrough)</div>
+                            <div class="flow-steps-vertical">
+                                <div class="flow-step-box">Blade 1</div>
+                                <div class="flow-arrow">↓ +1d</div>
+                                <div class="flow-step-box">Blade 2</div>
+                                <div class="flow-arrow">↓ +1d</div>
+                                <div class="flow-step-box">Blade 3</div>
+                            </div>
+                            <div class="flow-result success">2 days total ✓✓✓<br>(Consecutive!)</div>
+                        </div>
                     </div>
                 </div>
             </div>
