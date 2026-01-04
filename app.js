@@ -812,16 +812,20 @@ function createUtilizationBarChart() {
                 {
                     label: 'Active (Crane Work)',
                     data: activePercentages,
-                    backgroundColor: '#10b981',
-                    borderColor: '#059669',
-                    borderWidth: 2
+                    backgroundColor: '#059669',
+                    borderColor: '#047857',
+                    borderWidth: 1,
+                    barPercentage: 0.5,
+                    categoryPercentage: 0.8
                 },
                 {
                     label: 'Idle',
                     data: idlePercentages,
-                    backgroundColor: '#e5e7eb',
-                    borderColor: '#9ca3af',
-                    borderWidth: 2
+                    backgroundColor: '#cbd5e1',
+                    borderColor: '#94a3b8',
+                    borderWidth: 1,
+                    barPercentage: 0.5,
+                    categoryPercentage: 0.8
                 }
             ]
         },
@@ -837,8 +841,8 @@ function createUtilizationBarChart() {
                     position: 'top',
                     labels: {
                         usePointStyle: true,
-                        padding: 15,
-                        font: { size: 12 }
+                        padding: 12,
+                        font: { size: 11 }
                     }
                 },
                 tooltip: {
@@ -856,6 +860,21 @@ function createUtilizationBarChart() {
                             return `Available: ${floater.available}h total`;
                         }
                     }
+                },
+                datalabels: {
+                    display: true,
+                    color: function(context) {
+                        return context.datasetIndex === 0 ? '#ffffff' : '#475569';
+                    },
+                    font: {
+                        size: 11,
+                        weight: 'bold'
+                    },
+                    formatter: function(value) {
+                        return value.toFixed(1) + '%';
+                    },
+                    anchor: 'center',
+                    align: 'center'
                 }
             },
             scales: {
@@ -864,10 +883,15 @@ function createUtilizationBarChart() {
                     title: {
                         display: true,
                         text: 'Floater',
-                        font: { size: 12, weight: 'bold' }
+                        font: { size: 11, weight: 'bold' },
+                        color: '#475569'
                     },
                     grid: {
                         display: false
+                    },
+                    ticks: {
+                        font: { size: 10 },
+                        color: '#64748b'
                     }
                 },
                 y: {
@@ -877,12 +901,15 @@ function createUtilizationBarChart() {
                     title: {
                         display: true,
                         text: 'Utilization (%)',
-                        font: { size: 12, weight: 'bold' }
+                        font: { size: 11, weight: 'bold' },
+                        color: '#475569'
                     },
                     ticks: {
                         callback: function(value) {
                             return value + '%';
-                        }
+                        },
+                        font: { size: 10 },
+                        color: '#64748b'
                     },
                     grid: {
                         color: '#e2e8f0'

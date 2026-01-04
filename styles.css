@@ -1497,6 +1497,319 @@ footer p {
     line-height: 1.6;
 }
 
+/* ==================== BCG CONSULTING COLOR SCHEMES ==================== */
+
+/* PATTERN 1: DEEP BLUE (#2C5282) - BCG Primary */
+.pattern-1-consulting {
+    background: white;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.pattern-1-title {
+    font-size: 1rem !important;
+    color: #2C5282;
+    border-bottom: 2px solid #2C5282;
+    margin-bottom: 1rem;
+}
+
+.pattern-1-side-by-side {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.tower-works-column,
+.blade-works-column {
+    background: #fafafa;
+    padding: 1rem;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+}
+
+.pattern-section-header-blue {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #2C5282;
+    background: linear-gradient(135deg, #EBF4FF, #DBEAFE);
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    border-left: 3px solid #2C5282;
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.05em;
+}
+
+.pattern-metrics-column-compact {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.pattern-metric-card-compact {
+    background: white;
+    padding: 0.75rem;
+    border-radius: 4px;
+    border: 1px solid #e2e8f0;
+    border-left: 3px solid #3B82F6;
+}
+
+.pattern-metric-label-compact {
+    font-size: 0.75rem;
+    color: #64748b;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.pattern-metric-value-compact {
+    font-size: 1.1rem;
+    color: #2C5282;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.pattern-metric-change-compact {
+    font-size: 0.75rem;
+    color: #059669;
+    font-weight: 600;
+}
+
+.pattern-flow-section-compact {
+    margin-top: 1rem;
+}
+
+.flow-title-compact {
+    font-size: 0.85rem;
+    color: #2C5282;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+.flow-comparison-horizontal-compact {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+}
+
+.flow-column-compact {
+    background: white;
+    padding: 0.75rem;
+    border-radius: 4px;
+    border: 1px solid #e2e8f0;
+    text-align: center;
+}
+
+.flow-column-compact:nth-child(1) {
+    border-left: 3px solid #3b82f6;
+}
+
+.flow-column-compact:nth-child(2) {
+    border-left: 3px solid #10b981;
+}
+
+.flow-column-compact:nth-child(3) {
+    border-left: 3px solid #8b5cf6;
+}
+
+.flow-label-compact {
+    font-size: 0.75rem;
+    color: #64748b;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.flow-steps-vertical-compact {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    margin: 0.5rem 0;
+}
+
+.flow-step-box-compact {
+    background: #2C5282;
+    color: white;
+    padding: 0.35rem 0.75rem;
+    border-radius: 3px;
+    font-weight: 600;
+    font-size: 0.75rem;
+    width: 70%;
+}
+
+.flow-arrow-compact {
+    font-size: 0.65rem;
+    color: #94a3b8;
+    font-weight: 600;
+}
+
+.flow-result-compact {
+    margin-top: 0.5rem;
+    padding: 0.35rem 0.5rem;
+    border-radius: 3px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.flow-result-compact.warning {
+    background: #FEF3C7;
+    color: #92400E;
+}
+
+.flow-result-compact.success {
+    background: #D1FAE5;
+    color: #065F46;
+}
+
+.flow-result-compact.neutral {
+    background: #E0E7FF;
+    color: #3730A3;
+}
+
+/* PATTERN 2: DEEP TEAL (#0E7490) - Analytical */
+.pattern-2-consulting {
+    background: white;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.pattern-2-title {
+    font-size: 1rem !important;
+    color: #0E7490;
+    border-bottom: 2px solid #0E7490;
+    margin-bottom: 1rem;
+}
+
+.pattern-2-consulting .start-time-table table {
+    font-size: 0.85rem;
+}
+
+.pattern-2-consulting .start-time-table th {
+    background: linear-gradient(135deg, #CFFAFE, #A5F3FC);
+    color: #0E7490;
+    font-size: 0.8rem;
+    padding: 0.6rem;
+}
+
+.pattern-2-consulting .start-time-table td {
+    font-size: 0.8rem;
+    padding: 0.6rem;
+}
+
+.pattern-2-consulting .pattern-good {
+    background: #ECFDF5;
+    border-left: 3px solid #059669;
+}
+
+.pattern-2-consulting .pattern-mixed {
+    background: #FEF3C7;
+    border-left: 3px solid #D97706;
+}
+
+.pattern-2-consulting .pattern-constraint {
+    background: #F3F4F6;
+    border-left: 3px solid #6B7280;
+}
+
+.pattern-2-consulting .insight-item {
+    font-size: 0.85rem;
+    padding: 0.75rem 0.9rem;
+    border-left: 3px solid #0E7490;
+}
+
+/* PATTERN 3: SLATE GRAY (#475569) - Executive */
+.pattern-3-consulting {
+    background: white;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.pattern-3-title {
+    font-size: 1rem !important;
+    color: #475569;
+    border-bottom: 2px solid #475569;
+    margin-bottom: 1rem;
+}
+
+.pattern-3-layout {
+    display: grid;
+    grid-template-columns: 5fr 1fr;
+    gap: 1.5rem;
+}
+
+.pattern-3-consulting .utilization-chart-section h4 {
+    font-size: 0.9rem;
+    color: #475569;
+    margin-bottom: 0.75rem;
+}
+
+.pattern-3-consulting .chart-note {
+    font-size: 0.75rem;
+    padding: 0.6rem;
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+}
+
+.utilization-observations-compact {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.observation-section-compact {
+    background: #F8FAFC;
+    padding: 0.75rem;
+    border-radius: 4px;
+    border-left: 3px solid #475569;
+}
+
+.observation-section-compact h4 {
+    font-size: 0.75rem;
+    color: #475569;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.observation-section-compact ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.observation-section-compact li {
+    font-size: 0.7rem;
+    color: #64748b;
+    line-height: 1.5;
+    padding-left: 0.9rem;
+    position: relative;
+    margin-bottom: 0.35rem;
+}
+
+.observation-section-compact li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: #475569;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .pattern-1-side-by-side {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .pattern-3-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .flow-comparison-horizontal-compact {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+}
+
 /* Start Time Table */
 .start-time-grid {
     margin-top: 1rem;
