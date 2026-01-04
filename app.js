@@ -784,6 +784,115 @@ function createUtilizationChart() {
     });
 }
 
+// ==================== PATTERN 3: UTILIZATION BAR CHART ====================
+function createUtilizationBarChart() {
+    const chartElement = document.getElementById('utilization-bar-chart');
+    if (!chartElement) {
+        console.log('Utilization bar chart element not found - skipping');
+        return;
+    }
+    const ctx = chartElement.getContext('2d');
+
+    // Floater data: work hours, available hours, calendar days
+    const floaters = [
+        { name: 'F1', days: 39, work: 42.25, available: 390 },
+        { name: 'F2', days: 26, work: 32.33, available: 260 },
+        { name: 'F3', days: 22, work: 26.67, available: 220 }
+    ];
+
+    // Calculate percentages
+    const activePercentages = floaters.map(f => (f.work / f.available) * 100);
+    const idlePercentages = floaters.map(f => 100 - (f.work / f.available) * 100);
+
+    charts.utilizationBar = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: floaters.map(f => `${f.name}\n(${f.days} days)`),
+            datasets: [
+                {
+                    label: 'Active (Crane Work)',
+                    data: activePercentages,
+                    backgroundColor: '#10b981',
+                    borderColor: '#059669',
+                    borderWidth: 2
+                },
+                {
+                    label: 'Idle',
+                    data: idlePercentages,
+                    backgroundColor: '#e5e7eb',
+                    borderColor: '#9ca3af',
+                    borderWidth: 2
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: {
+                    display: false
+                },
+                legend: {
+                    display: true,
+                    position: 'top',
+                    labels: {
+                        usePointStyle: true,
+                        padding: 15,
+                        font: { size: 12 }
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const floater = floaters[context.dataIndex];
+                            if (context.datasetIndex === 0) {
+                                return `Active: ${context.parsed.y.toFixed(1)}% (${floater.work}h work)`;
+                            } else {
+                                return `Idle: ${context.parsed.y.toFixed(1)}%`;
+                            }
+                        },
+                        afterLabel: function(context) {
+                            const floater = floaters[context.dataIndex];
+                            return `Available: ${floater.available}h total`;
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    stacked: true,
+                    title: {
+                        display: true,
+                        text: 'Floater',
+                        font: { size: 12, weight: 'bold' }
+                    },
+                    grid: {
+                        display: false
+                    }
+                },
+                y: {
+                    stacked: true,
+                    beginAtZero: true,
+                    max: 100,
+                    title: {
+                        display: true,
+                        text: 'Utilization (%)',
+                        font: { size: 12, weight: 'bold' }
+                    },
+                    ticks: {
+                        callback: function(value) {
+                            return value + '%';
+                        }
+                    },
+                    grid: {
+                        color: '#e2e8f0'
+                    }
+                }
+            }
+        }
+    });
+}
+
 // ==================== DATA TABLE ====================
 function populateDataTable() {
     const improvements = calculateComponentImprovements();
@@ -2490,6 +2599,7 @@ function init() {
     createComponentChart();
     createScalingChart();
     createUtilizationChart();
+    createUtilizationBarChart(); // Pattern 3 chart
 
     // Populate data table
     populateDataTable();

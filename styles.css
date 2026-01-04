@@ -1404,6 +1404,82 @@ footer p {
     }
 }
 
+/* ==================== PATTERN 3: UTILIZATION CHART ==================== */
+
+.utilization-chart-section {
+    margin-top: 1.5rem;
+}
+
+.utilization-chart-section h4 {
+    font-size: 1rem;
+    color: #B8941F;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.chart-note {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    text-align: center;
+    margin-top: 1rem;
+    padding: 0.75rem;
+    background: white;
+    border-radius: 6px;
+    border: 1px solid #e5e7eb;
+}
+
+.utilization-observations {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.observation-section {
+    background: white;
+    padding: 1.25rem;
+    border-radius: 6px;
+    border-left: 4px solid #D4AF37;
+}
+
+.observation-section h4 {
+    font-size: 0.9rem;
+    color: #B8941F;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+}
+
+.observation-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.observation-section li {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    padding-left: 1.25rem;
+    position: relative;
+    margin-bottom: 0.5rem;
+}
+
+.observation-section li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: #D4AF37;
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+@media (max-width: 768px) {
+    .utilization-observations {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+}
+
 /* Pattern Insights List */
 .pattern-insights-list {
     margin-top: 1.5rem;

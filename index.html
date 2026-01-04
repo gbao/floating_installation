@@ -712,47 +712,36 @@
 
             <!-- Pattern 3: Utilization Analysis -->
             <div class="pattern-detail-box">
-                <h3>Pattern 3: Crane Utilization & Scheduling Opportunity</h3>
+                <h3 class="pattern-title-compact">Pattern 3: Crane Utilization & Scheduling Opportunity</h3>
 
-                <div class="utilization-comparison">
-                    <div class="util-floater">
-                        <div class="util-header">Floater 1 (39 days)</div>
-                        <div class="util-bar-container">
-                            <div class="util-bar-active" style="width: 10.8%">10.8%</div>
-                            <div class="util-bar-idle" style="width: 89.2%">89.2% idle</div>
-                        </div>
-                        <div class="util-details">42.25h crane work / 390h available</div>
+                <!-- Crane Utilization Chart -->
+                <div class="utilization-chart-section">
+                    <h4>Crane Utilization Comparison</h4>
+                    <div class="chart-container" style="height: 400px;">
+                        <canvas id="utilization-bar-chart"></canvas>
                     </div>
-                    <div class="util-floater">
-                        <div class="util-header">Floater 2 (26 days)</div>
-                        <div class="util-bar-container">
-                            <div class="util-bar-active" style="width: 12.4%">12.4%</div>
-                            <div class="util-bar-idle" style="width: 87.6%">87.6% idle</div>
-                        </div>
-                        <div class="util-details">32.33h crane work / 260h available</div>
-                    </div>
-                    <div class="util-floater">
-                        <div class="util-header">Floater 3 (22 days)</div>
-                        <div class="util-bar-container">
-                            <div class="util-bar-active" style="width: 12.1%">12.1%</div>
-                            <div class="util-bar-idle" style="width: 87.9%">87.9% idle</div>
-                        </div>
-                        <div class="util-details">26.67h crane work / 220h available</div>
+                    <div class="chart-note">
+                        <strong>Note:</strong> F1: 42.25h work / 390h available • F2: 32.33h work / 260h available • F3: 26.67h work / 220h available
                     </div>
                 </div>
 
-                <div class="pattern-insights-list">
-                    <div class="insight-item">
-                        <strong>Current State:</strong> 10-12% crane utilization (10h working day basis)
+                <!-- Key Observations -->
+                <div class="utilization-observations">
+                    <div class="observation-section">
+                        <h4>Current State:</h4>
+                        <ul>
+                            <li>10-12% crane utilization (based on 10h working day)</li>
+                            <li>F1: 10.8% → F2: 12.4% → F3: 12.1%</li>
+                            <li>Large idle time dominates all three floaters (87-89%)</li>
+                        </ul>
                     </div>
-                    <div class="insight-item">
-                        <strong>Improvement:</strong> +15% increase F1→F2 shows learning effect
-                    </div>
-                    <div class="insight-item">
-                        <strong>Opportunity:</strong> Target 25-30% utilization = 2.5x improvement potential
-                    </div>
-                    <div class="insight-item">
-                        <strong>Actions:</strong> Reduce gaps (achieved in F3), pre-book tow-out vessels, weather forecasting
+                    <div class="observation-section">
+                        <h4>Improvement:</h4>
+                        <ul>
+                            <li>+15% increase F1→F2 shows learning effect</li>
+                            <li>Utilization remained consistent at F3 (12.1%)</li>
+                            <li>Reduced gaps in F3 did not significantly increase crane use</li>
+                        </ul>
                     </div>
                 </div>
             </div>
