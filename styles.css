@@ -1679,20 +1679,95 @@ footer p {
     margin-bottom: 1rem;
 }
 
+.pattern-2-layout {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 1.5rem;
+    align-items: start;
+}
+
+.start-time-table-section {
+    width: 100%;
+}
+
+.pattern-2-observations-compact {
+    background: #F8FAFC;
+    padding: 1rem;
+    border-radius: 6px;
+    border-left: 3px solid #0E7490;
+}
+
+.pattern-2-observations-compact h4 {
+    font-size: 0.85rem;
+    color: #1E293B;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.pattern-2-observations-compact ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.pattern-2-observations-compact li {
+    font-size: 0.85rem;
+    color: #475569;
+    line-height: 1.6;
+    padding-left: 1.25rem;
+    position: relative;
+    margin-bottom: 0.5rem;
+}
+
+.pattern-2-observations-compact li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: #0E7490;
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
 .pattern-2-consulting .start-time-table table {
     font-size: 0.85rem;
+    width: 100%;
 }
 
 .pattern-2-consulting .start-time-table th {
     background: linear-gradient(135deg, #CFFAFE, #A5F3FC);
     color: #0E7490;
     font-size: 0.8rem;
-    padding: 0.6rem;
+    padding: 0.5rem 0.6rem;
 }
 
 .pattern-2-consulting .start-time-table td {
     font-size: 0.8rem;
-    padding: 0.6rem;
+    padding: 0.4rem 0.6rem;
+}
+
+.start-time-table-compact {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.start-time-table-compact th,
+.start-time-table-compact td {
+    padding: 0.4rem 0.6rem;
+    text-align: left;
+    border-bottom: 1px solid #E2E8F0;
+}
+
+.start-time-table-compact th {
+    background: linear-gradient(135deg, #CFFAFE, #A5F3FC);
+    color: #0E7490;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.start-time-table-compact td {
+    font-size: 0.8rem;
 }
 
 .pattern-2-consulting .pattern-good {
@@ -1891,6 +1966,11 @@ footer p {
 /* Responsive adjustments */
 @media (max-width: 1024px) {
     .pattern-1-side-by-side {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .pattern-2-layout {
         grid-template-columns: 1fr;
         gap: 1rem;
     }

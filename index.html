@@ -228,123 +228,6 @@
             </div>
         </section>
 
-        <!-- Operational Pattern Analysis -->
-        <section class="pattern-analysis-section">
-            <h2>Operational Pattern Analysis</h2>
-
-            <!-- Executive Summary -->
-            <div class="executive-summary">
-                <strong>Executive Summary:</strong> Analysis of 3 EFGL floater assemblies reveals a 79.5%
-                learning rate with 36.88% overall improvement. Crane utilization at 4.05% indicates
-                significant scheduling opportunity.
-            </div>
-
-            <!-- Three Column Insights -->
-            <div class="insights-grid">
-                <div class="insight-column">
-                    <h3>Timing Patterns</h3>
-
-                    <div class="insight-item">
-                        <div class="insight-label">Component Mix</div>
-                        <ul class="insight-list">
-                            <li>Towers: 62%</li>
-                            <li>Blades: 29%</li>
-                            <li>Nacelle: 9%</li>
-                        </ul>
-                    </div>
-
-                    <div class="insight-item">
-                        <div class="insight-label">Top Performers</div>
-                        <ul class="insight-list">
-                            <li>Blade 3: -48%</li>
-                            <li>Tower 3: -44%</li>
-                            <li>Blade 1: -40%</li>
-                        </ul>
-                    </div>
-
-                    <div class="insight-item">
-                        <div class="insight-label">Workflow Insights</div>
-                        <ul class="insight-list">
-                            <li>Sequential flow</li>
-                            <li>No overlap</li>
-                            <li>Weather-dependent</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="insight-column">
-                    <h3>Learning Dynamics</h3>
-
-                    <div class="insight-item">
-                        <div class="insight-label">Learning Phases</div>
-                        <ul class="insight-list">
-                            <li>F1→F2: 23.5%</li>
-                            <li>F2→F3: 17.5%</li>
-                        </ul>
-                    </div>
-
-                    <div class="insight-item">
-                        <div class="insight-label">Convergence</div>
-                        <ul class="insight-list">
-                            <li>Tower: slowing</li>
-                            <li>Blades: sustained</li>
-                            <li>Nacelle: stable</li>
-                        </ul>
-                    </div>
-
-                    <div class="insight-item">
-                        <div class="insight-label">Rate Consistency</div>
-                        <ul class="insight-list">
-                            <li>7 methods tested</li>
-                            <li>Range: 69%-83%</li>
-                            <li>Stable at ~79%</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="insight-column">
-                    <h3>Resource Efficiency</h3>
-
-                    <div class="insight-item">
-                        <div class="insight-label">Crane Utilization</div>
-                        <ul class="insight-list">
-                            <li>Active: 4.05%</li>
-                            <li>Idle: 95.95%</li>
-                            <li>Opportunity: 2,400h</li>
-                        </ul>
-                    </div>
-
-                    <div class="insight-item">
-                        <div class="insight-label">Current Gaps</div>
-                        <ul class="insight-list">
-                            <li>Sequential ops</li>
-                            <li>Weather delays</li>
-                            <li>Transit time</li>
-                        </ul>
-                    </div>
-
-                    <div class="insight-item">
-                        <div class="insight-label">Key Observations</div>
-                        <ul class="insight-list">
-                            <li>No parallelization</li>
-                            <li>Scheduling gaps</li>
-                            <li>Learning plateau</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Key Insights -->
-            <div class="key-insights-box">
-                <h4>Key Insights</h4>
-                <ul>
-                    <li>Consistent 79.5% learning rate across multiple methods</li>
-                    <li>Blade installation shows strongest learning potential</li>
-                    <li>Tower sections dominate time but show diminishing returns</li>
-                    <li>Crane utilization represents largest efficiency gap</li>
-                </ul>
-            </div>
-        </section>
 
         </div>
         <!-- END SUB-TAB: TIMELINE -->
@@ -500,14 +383,6 @@
         <section class="detailed-pattern-section">
             <h2>Operational Patterns & Execution Analysis</h2>
 
-            <!-- Executive Summary Banner -->
-            <div class="pattern-exec-summary">
-                <strong>Key Achievements:</strong>
-                87% tower completion improvement (15d → 2d) •
-                44% calendar compression (39d → 22d) •
-                12.4% peak crane utilization (F2)
-            </div>
-
             <!-- Pattern 1: Sequencing Efficiency -->
             <div class="pattern-detail-box pattern-1-consulting">
                 <h3 class="pattern-title-compact pattern-1-title">Pattern 1: Sequencing Efficiency & Timeline Compression</h3>
@@ -633,15 +508,16 @@
             <div class="pattern-detail-box pattern-2-consulting">
                 <h3 class="pattern-title-compact pattern-2-title">Pattern 2: Morning Start Time Preference</h3>
 
-                <div class="start-time-grid">
-                    <div class="start-time-table">
-                        <table>
+                <div class="pattern-2-layout">
+                    <!-- LEFT: Start Time Table -->
+                    <div class="start-time-table-section">
+                        <table class="start-time-table-compact">
                             <thead>
                                 <tr>
                                     <th>Activity</th>
-                                    <th>F1 Start</th>
-                                    <th>F2 Start</th>
-                                    <th>F3 Start</th>
+                                    <th>F1</th>
+                                    <th>F2</th>
+                                    <th>F3</th>
                                     <th>Pattern</th>
                                 </tr>
                             </thead>
@@ -651,63 +527,64 @@
                                     <td>10:10</td>
                                     <td>11:00</td>
                                     <td>07:30</td>
-                                    <td>✓ Morning (7-11am)</td>
+                                    <td>✓ Morning</td>
                                 </tr>
                                 <tr class="pattern-mixed">
                                     <td>Tower Sec 2</td>
                                     <td>07:50</td>
                                     <td>09:30</td>
                                     <td>13:50</td>
-                                    <td>⚠ Mixed (F3 same-day opt.)</td>
+                                    <td>⚠ Mixed</td>
                                 </tr>
                                 <tr class="pattern-good">
                                     <td>Tower Sec 3</td>
                                     <td>05:25</td>
                                     <td>07:30</td>
                                     <td>07:30</td>
-                                    <td>✓ Early morning</td>
+                                    <td>✓ Early</td>
                                 </tr>
                                 <tr class="pattern-constraint">
                                     <td>Nacelle</td>
                                     <td>16:20</td>
                                     <td>16:50</td>
                                     <td>15:20</td>
-                                    <td>🔒 Constrained (after Sec 3)</td>
+                                    <td>🔒 PM</td>
                                 </tr>
                                 <tr class="pattern-mixed">
                                     <td>Blade 1</td>
                                     <td>07:00</td>
                                     <td>12:30</td>
                                     <td>11:40</td>
-                                    <td>⚠ Flexible</td>
+                                    <td>⚠ Flex</td>
                                 </tr>
                                 <tr class="pattern-good">
                                     <td>Blade 2</td>
                                     <td>06:30</td>
                                     <td>05:40</td>
                                     <td>08:50</td>
-                                    <td>✓ Early morning</td>
+                                    <td>✓ Early</td>
                                 </tr>
                                 <tr class="pattern-mixed">
                                     <td>Blade 3</td>
                                     <td>06:30</td>
                                     <td>13:00</td>
                                     <td>07:10</td>
-                                    <td>⚠ Flexible</td>
+                                    <td>⚠ Flex</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                </div>
 
-                <div class="pattern-2-observations">
-                    <h4>KEY OBSERVATIONS:</h4>
-                    <ul>
-                        <li>All tower sections prefer morning starts (7-11am)</li>
-                        <li>Nacelle constrained to afternoon (Tower Sec 3 dependency)</li>
-                        <li>Blade installations show mixed timing patterns</li>
-                        <li>F3 achieved same-day Tower Sec 1+2 optimization</li>
-                    </ul>
+                    <!-- RIGHT: Key Observations (Same Row) -->
+                    <div class="pattern-2-observations-compact">
+                        <h4>KEY OBSERVATIONS:</h4>
+                        <ul>
+                            <li>All tower sections prefer morning starts (7-11am)</li>
+                            <li>Nacelle constrained to afternoon (Tower Sec 3 dependency)</li>
+                            <li>Blade installations show mixed timing patterns</li>
+                            <li>F3 achieved same-day Tower Sec 1+2 optimization</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
@@ -716,7 +593,7 @@
                 <h3 class="pattern-title-compact pattern-3-title">Pattern 3: Crane Utilization & Scheduling Opportunity</h3>
 
                 <div class="pattern-3-layout">
-                    <!-- Crane Utilization Chart (5/6 width) -->
+                    <!-- Crane Utilization Chart (4/6 width) -->
                     <div class="utilization-chart-section">
                         <h4>Crane Utilization Comparison</h4>
                         <div class="chart-container" style="height: 400px;">
@@ -727,7 +604,7 @@
                         </div>
                     </div>
 
-                    <!-- Key Observations (1/6 width) -->
+                    <!-- Key Observations (2/6 width) -->
                     <div class="utilization-observations-compact">
                         <div class="observation-section-compact">
                             <h4>Current State:</h4>
@@ -862,9 +739,9 @@
                 </div>
             </div>
 
-            <!-- Component-Level Performance Analysis -->
-            <div class="pattern-detail-box">
-                <h3>Component-Level Performance Analysis</h3>
+            <!-- Component-Group Performance Analysis -->
+            <div class="pattern-detail-box component-group-consulting">
+                <h3 class="pattern-title-compact">Component-Group Performance Analysis</h3>
                 <p class="pattern-intro">Breaking down crane working hours by major component groups reveals differentiated learning rates and improvement potential.</p>
 
                 <div class="component-analysis-grid">
