@@ -743,7 +743,12 @@ function updateFormulaDetailsBox() {
 }
 
 function createUtilizationChart() {
-    const ctx = document.getElementById('utilization-chart').getContext('2d');
+    const chartElement = document.getElementById('utilization-chart');
+    if (!chartElement) {
+        console.log('Utilization chart element not found - skipping (was removed from layout)');
+        return;
+    }
+    const ctx = chartElement.getContext('2d');
 
     const utilized = turbineData.project_metrics.crane_utilization_pct;
     const idle = 100 - utilized;
