@@ -2603,10 +2603,21 @@ function setupEFGLSubTabs() {
 
             // Show target sub-tab content
             if (targetSubTab === 'forecasting') {
-                document.getElementById('subtab-forecasting').classList.add('active');
+                const forecastingMain = document.getElementById('subtab-forecasting');
                 const forecastingCharts = document.getElementById('subtab-forecasting-charts');
+
+                if (forecastingMain) {
+                    forecastingMain.classList.add('active');
+                    console.log('Activated: subtab-forecasting');
+                } else {
+                    console.error('Could not find: subtab-forecasting');
+                }
+
                 if (forecastingCharts) {
                     forecastingCharts.classList.add('active');
+                    console.log('Activated: subtab-forecasting-charts');
+                } else {
+                    console.error('Could not find: subtab-forecasting-charts');
                 }
             } else {
                 const targetElement = document.getElementById(`subtab-${targetSubTab}`);
