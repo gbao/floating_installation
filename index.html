@@ -209,12 +209,90 @@
 
         <!-- SUB-TAB 1: OVERVIEW -->
         <div class="efgl-sub-tab-content active" id="subtab-overview">
-            <!-- Technical Specifications are already above, no additional content needed here -->
-            <div class="subtab-placeholder">
-                <p style="text-align: center; color: #64748b; padding: 2rem;">
-                    Technical specifications displayed above. Additional overview content can be added here.
-                </p>
-            </div>
+
+            <!-- Component Performance Insights -->
+            <section class="overview-insights-section">
+                <h2>Component Performance Insights</h2>
+                <div class="overview-insights-grid">
+                    <div class="overview-insight-card towers">
+                        <div class="overview-card-header">
+                            <span class="overview-icon">🗼</span>
+                            <strong>Tower Sections</strong>
+                        </div>
+                        <div class="overview-card-metric">78% Learning Rate</div>
+                        <div class="overview-card-body">
+                            Slowest learning rate but largest time component (57% of total). <strong>41% improvement F1→F3</strong> (25.92h → 15.33h). Greatest opportunity for further optimization through better sequencing and preparation.
+                        </div>
+                    </div>
+
+                    <div class="overview-insight-card blades">
+                        <div class="overview-card-header">
+                            <span class="overview-icon">⚡</span>
+                            <strong>Blades</strong>
+                        </div>
+                        <div class="overview-card-metric">85% Learning Rate</div>
+                        <div class="overview-card-body">
+                            Strong late-stage learning. <strong>F1-F2: No improvement</strong> (12.00h both), then <strong>F2→F3: 32% reduction</strong> (12.00h → 8.17h). Shows breakthrough in F3 execution efficiency.
+                        </div>
+                    </div>
+
+                    <div class="overview-insight-card nacelle">
+                        <div class="overview-card-header">
+                            <span class="overview-icon">⚙️</span>
+                            <strong>Nacelle</strong>
+                        </div>
+                        <div class="overview-card-metric">86% Learning Rate</div>
+                        <div class="overview-card-body">
+                            Best learning rate despite technical constraints (same-day with Tower Sec 3). <strong>27% improvement F1→F3</strong> (4.33h → 3.17h). Smallest time component (11%) but most efficient.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Project Factors -->
+            <section class="overview-factors-section">
+                <h2>Project Execution Factors</h2>
+                <div class="overview-factors-grid">
+                    <div class="overview-factor-card controllable">
+                        <div class="overview-factor-header">
+                            <span class="overview-factor-icon">✓</span>
+                            <strong>Controllable Factors</strong>
+                        </div>
+                        <div class="overview-factor-subtitle">Learning Observed</div>
+                        <ul class="overview-factor-list">
+                            <li>Per-floater preparation: 5d → 3d (-40%)</li>
+                            <li>Tower sequencing: 15d → 2d (-87%)</li>
+                            <li>Blade sequencing: Best at F3 (consecutive)</li>
+                        </ul>
+                    </div>
+
+                    <div class="overview-factor-card constraints">
+                        <div class="overview-factor-header">
+                            <span class="overview-factor-icon">🔒</span>
+                            <strong>Technical Constraints</strong>
+                        </div>
+                        <div class="overview-factor-subtitle">No Control</div>
+                        <ul class="overview-factor-list">
+                            <li>Nacelle same-day with Tower Sec 3 (no vibration damper)</li>
+                            <li>4-day gap before Blade 1 (appears consistent)</li>
+                        </ul>
+                    </div>
+
+                    <div class="overview-factor-card external">
+                        <div class="overview-factor-header">
+                            <span class="overview-factor-icon">🚢</span>
+                            <strong>External Dependencies</strong>
+                        </div>
+                        <div class="overview-factor-subtitle">No Control</div>
+                        <ul class="overview-factor-list">
+                            <li>Tow-out vessel availability (9-11 day variation)</li>
+                            <li>Weather windows (Mediterranean conditions)</li>
+                            <li>Supply chain timing</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
         </div>
 
         <!-- SUB-TAB 2: TIMELINE -->
@@ -798,38 +876,6 @@
                     </table>
                 </div>
 
-                <div class="component-insights">
-                    <div class="insight-card towers-card">
-                        <div class="insight-header">
-                            <span class="insight-icon">🗼</span>
-                            <strong>Tower Sections (78% LR)</strong>
-                        </div>
-                        <div class="insight-body">
-                            Slowest learning rate but largest time component (57% of total). <strong>41% improvement F1→F3</strong> (25.92h → 15.33h). Greatest opportunity for further optimization through better sequencing and preparation.
-                        </div>
-                    </div>
-
-                    <div class="insight-card blades-card">
-                        <div class="insight-header">
-                            <span class="insight-icon">⚡</span>
-                            <strong>Blades (85% LR)</strong>
-                        </div>
-                        <div class="insight-body">
-                            Strong late-stage learning. <strong>F1-F2: No improvement</strong> (12.00h both), then <strong>F2→F3: 32% reduction</strong> (12.00h → 8.17h). Shows breakthrough in F3 execution efficiency.
-                        </div>
-                    </div>
-
-                    <div class="insight-card nacelle-card">
-                        <div class="insight-header">
-                            <span class="insight-icon">⚙️</span>
-                            <strong>Nacelle (86% LR)</strong>
-                        </div>
-                        <div class="insight-body">
-                            Best learning rate despite technical constraints (same-day with Tower Sec 3). <strong>27% improvement F1→F3</strong> (4.33h → 3.17h). Smallest time component (11%) but most efficient.
-                        </div>
-                    </div>
-                </div>
-
                 <div class="steady-state-box">
                     <div class="steady-state-header">
                         <strong>Steady-State Performance Analysis</strong>
@@ -864,33 +910,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Constraints & Factors -->
-            <div class="pattern-factors-grid">
-                <div class="factor-box controllable">
-                    <h4>✓ Controllable Factors (Learning Observed)</h4>
-                    <ul>
-                        <li>Per-floater preparation: 5d → 3d (-40%)</li>
-                        <li>Tower sequencing: 15d → 2d (-87%)</li>
-                        <li>Blade sequencing: Best at F3 (consecutive)</li>
-                    </ul>
-                </div>
-                <div class="factor-box constraint">
-                    <h4>🔒 Technical Constraints (No Control)</h4>
-                    <ul>
-                        <li>Nacelle same-day with Tower Sec 3 (no vibration damper)</li>
-                        <li>4-day gap before Blade 1 (appears consistent)</li>
-                    </ul>
-                </div>
-                <div class="factor-box external">
-                    <h4>🚢 External Dependencies (No Control)</h4>
-                    <ul>
-                        <li>Tow-out vessel availability (9-11 day variation)</li>
-                        <li>Weather windows (Mediterranean conditions)</li>
-                        <li>Supply chain timing</li>
-                    </ul>
-                </div>
-            </div>
         </section>
 
         </div>
@@ -904,29 +923,6 @@
             <h2>Component-Level Efficiency Improvements</h2>
             <div class="chart-container">
                 <canvas id="component-chart"></canvas>
-            </div>
-        </section>
-
-        <!-- Resource Utilization -->
-        <section class="chart-section">
-            <h2>Resource Utilization Analysis</h2>
-            <div class="chart-grid">
-                <div class="chart-container-small">
-                    <canvas id="utilization-chart"></canvas>
-                </div>
-                <div class="utilization-insights">
-                    <h3>Key Insights</h3>
-                    <ul>
-                        <li><strong>Crane Utilization:</strong> <span id="crane-util">4.67%</span> - Significant improvement opportunity</li>
-                        <li><strong>Total Project Duration:</strong> <span id="project-duration">104.8 days</span></li>
-                        <li><strong>Active Assembly Time:</strong> <span id="active-time">4.9 days</span> (4.67% of total)</li>
-                        <li><strong>Idle/Transit Time:</strong> <span id="idle-time">99.9 days</span> (95.33% of total)</li>
-                    </ul>
-                    <div class="insight-box">
-                        <strong>Recommendation:</strong> Optimize logistics and scheduling to increase crane utilization.
-                        Parallel operations and reduced transit times could significantly reduce overall project duration.
-                    </div>
-                </div>
             </div>
         </section>
 

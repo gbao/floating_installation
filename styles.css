@@ -3618,3 +3618,294 @@ footer p {
         gap: 0.5rem;
     }
 }
+
+/* ========================================
+   OVERVIEW TAB: ELEGANT PROFESSIONAL STYLING
+   ======================================== */
+
+/* Component Performance Insights Section */
+.overview-insights-section {
+    margin-bottom: 3rem;
+}
+
+.overview-insights-section h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 3px solid #e2e8f0;
+    letter-spacing: -0.025em;
+}
+
+.overview-insights-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+.overview-insight-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.75rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+    border-left: 4px solid;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.overview-insight-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100px;
+    height: 100px;
+    opacity: 0.05;
+    border-radius: 50%;
+    transform: translate(30%, -30%);
+    transition: all 0.3s ease;
+}
+
+.overview-insight-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.06);
+}
+
+.overview-insight-card:hover::before {
+    transform: translate(30%, -30%) scale(1.2);
+}
+
+/* Tower card - Navy Blue */
+.overview-insight-card.towers {
+    border-left-color: #1e40af;
+}
+
+.overview-insight-card.towers::before {
+    background: #1e40af;
+}
+
+/* Blades card - Amber */
+.overview-insight-card.blades {
+    border-left-color: #d97706;
+}
+
+.overview-insight-card.blades::before {
+    background: #d97706;
+}
+
+/* Nacelle card - Emerald */
+.overview-insight-card.nacelle {
+    border-left-color: #059669;
+}
+
+.overview-insight-card.nacelle::before {
+    background: #059669;
+}
+
+.overview-card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.overview-icon {
+    font-size: 1.75rem;
+    line-height: 1;
+}
+
+.overview-card-header strong {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #1e293b;
+    letter-spacing: -0.025em;
+}
+
+.overview-card-metric {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    letter-spacing: -0.025em;
+}
+
+.overview-insight-card.towers .overview-card-metric {
+    color: #1e40af;
+}
+
+.overview-insight-card.blades .overview-card-metric {
+    color: #d97706;
+}
+
+.overview-insight-card.nacelle .overview-card-metric {
+    color: #059669;
+}
+
+.overview-card-body {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: #475569;
+}
+
+.overview-card-body strong {
+    color: #1e293b;
+    font-weight: 600;
+}
+
+/* Project Execution Factors Section */
+.overview-factors-section {
+    margin-bottom: 3rem;
+}
+
+.overview-factors-section h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 3px solid #e2e8f0;
+    letter-spacing: -0.025em;
+}
+
+.overview-factors-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+.overview-factor-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.75rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+    border-top: 4px solid;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.overview-factor-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.06);
+}
+
+/* Controllable - Green */
+.overview-factor-card.controllable {
+    border-top-color: #10b981;
+    background: linear-gradient(to bottom, #f0fdf4 0%, white 100%);
+}
+
+/* Constraints - Slate */
+.overview-factor-card.constraints {
+    border-top-color: #64748b;
+    background: linear-gradient(to bottom, #f8fafc 0%, white 100%);
+}
+
+/* External - Blue */
+.overview-factor-card.external {
+    border-top-color: #3b82f6;
+    background: linear-gradient(to bottom, #eff6ff 0%, white 100%);
+}
+
+.overview-factor-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.overview-factor-icon {
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+.overview-factor-header strong {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #1e293b;
+    letter-spacing: -0.025em;
+}
+
+.overview-factor-subtitle {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1.25rem;
+    opacity: 0.6;
+}
+
+.overview-factor-card.controllable .overview-factor-subtitle {
+    color: #10b981;
+}
+
+.overview-factor-card.constraints .overview-factor-subtitle {
+    color: #64748b;
+}
+
+.overview-factor-card.external .overview-factor-subtitle {
+    color: #3b82f6;
+}
+
+.overview-factor-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.overview-factor-list li {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: #475569;
+    padding-left: 1.5rem;
+    position: relative;
+    margin-bottom: 0.75rem;
+}
+
+.overview-factor-list li:last-child {
+    margin-bottom: 0;
+}
+
+.overview-factor-list li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.overview-factor-card.controllable .overview-factor-list li::before {
+    color: #10b981;
+}
+
+.overview-factor-card.constraints .overview-factor-list li::before {
+    color: #64748b;
+}
+
+.overview-factor-card.external .overview-factor-list li::before {
+    color: #3b82f6;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .overview-insights-grid,
+    .overview-factors-grid {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .overview-insight-card,
+    .overview-factor-card {
+        padding: 1.25rem;
+    }
+
+    .overview-insights-section h2,
+    .overview-factors-section h2 {
+        font-size: 1.25rem;
+    }
+
+    .overview-card-metric {
+        font-size: 1.25rem;
+    }
+}
