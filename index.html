@@ -200,8 +200,8 @@
         <!-- Sub-Tab Navigation for EFGL -->
         <nav class="efgl-sub-tabs">
             <button class="efgl-sub-tab-btn active" data-subtab="overview">Overview</button>
-            <button class="efgl-sub-tab-btn" data-subtab="timeline">Timeline</button>
-            <button class="efgl-sub-tab-btn" data-subtab="patterns">Patterns</button>
+            <button class="efgl-sub-tab-btn" data-subtab="timeline">Productive Work Time</button>
+            <button class="efgl-sub-tab-btn" data-subtab="patterns">Calendar Time per Task</button>
             <button class="efgl-sub-tab-btn" data-subtab="forecasting">Forecasting</button>
         </nav>
 
@@ -306,6 +306,42 @@
             </div>
         </section>
 
+        <!-- Component Breakdown -->
+        <section class="chart-section">
+            <h2>Component-Level Efficiency Improvements</h2>
+            <div class="chart-container">
+                <canvas id="component-chart"></canvas>
+            </div>
+        </section>
+
+        <!-- Data Table -->
+        <section class="data-section">
+            <h2>Detailed Assembly Data</h2>
+            <div class="table-responsive">
+                <table id="data-table">
+                    <thead>
+                        <tr>
+                            <th>Component</th>
+                            <th>Floater 1 (hrs)</th>
+                            <th>Floater 2 (hrs)</th>
+                            <th>Floater 3 (hrs)</th>
+                            <th>F1→F2 Improvement</th>
+                            <th>F2→F3 Improvement</th>
+                            <th>Total Improvement</th>
+                        </tr>
+                    </thead>
+                    <tbody id="data-table-body">
+                        <!-- Populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="table-footnote">
+                <p><strong>*</strong> Tower Section 3 Floater 1 has been corrected from 24.33h to 8.25h to reflect pure assembly hours.
+                Original measurement of 24.33h included overnight gap (lift started in evening, completed next morning) with
+                non-productive time: night downtime, weather window waiting, and work hour restrictions. The corrected value of 8.25h
+                represents actual crane-active assembly time, providing more accurate learning curve analysis.</p>
+            </div>
+        </section>
 
         </div>
         <!-- END SUB-TAB: TIMELINE -->
@@ -917,43 +953,6 @@
 
         <!-- SUB-TAB 3 CONTINUED: FORECASTING (Charts) -->
         <div class="efgl-sub-tab-content" id="subtab-forecasting-charts" data-parent="forecasting">
-
-        <!-- Component Breakdown -->
-        <section class="chart-section">
-            <h2>Component-Level Efficiency Improvements</h2>
-            <div class="chart-container">
-                <canvas id="component-chart"></canvas>
-            </div>
-        </section>
-
-        <!-- Data Table -->
-        <section class="data-section">
-            <h2>Detailed Assembly Data</h2>
-            <div class="table-responsive">
-                <table id="data-table">
-                    <thead>
-                        <tr>
-                            <th>Component</th>
-                            <th>Floater 1 (hrs)</th>
-                            <th>Floater 2 (hrs)</th>
-                            <th>Floater 3 (hrs)</th>
-                            <th>F1→F2 Improvement</th>
-                            <th>F2→F3 Improvement</th>
-                            <th>Total Improvement</th>
-                        </tr>
-                    </thead>
-                    <tbody id="data-table-body">
-                        <!-- Populated by JavaScript -->
-                    </tbody>
-                </table>
-            </div>
-            <div class="table-footnote">
-                <p><strong>*</strong> Tower Section 3 Floater 1 has been corrected from 24.33h to 8.25h to reflect pure assembly hours.
-                Original measurement of 24.33h included overnight gap (lift started in evening, completed next morning) with
-                non-productive time: night downtime, weather window waiting, and work hour restrictions. The corrected value of 8.25h
-                represents actual crane-active assembly time, providing more accurate learning curve analysis.</p>
-            </div>
-        </section>
 
         </div>
         <!-- END SUB-TAB: FORECASTING (Charts) -->
