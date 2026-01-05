@@ -1243,50 +1243,6 @@ function setupEventListeners() {
         updateCharts();
     });
 
-    // ========== OPTION C: SUB-TAB NAVIGATION ==========
-    // EFGL Sub-tab switching
-    const efglSubTabBtns = document.querySelectorAll('.efgl-sub-tab-btn');
-    const efglSubTabContents = document.querySelectorAll('.efgl-sub-tab-content');
-
-    console.log('Setting up EFGL sub-tab navigation...');
-    console.log('Found sub-tab buttons:', efglSubTabBtns.length);
-    console.log('Found sub-tab contents:', efglSubTabContents.length);
-
-    efglSubTabBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const targetSubTab = btn.getAttribute('data-subtab');
-            console.log('Sub-tab clicked:', targetSubTab);
-
-            // Remove active class from all sub-tab buttons
-            efglSubTabBtns.forEach(b => b.classList.remove('active'));
-
-            // Add active class to clicked button
-            btn.classList.add('active');
-
-            // Hide all sub-tab contents
-            efglSubTabContents.forEach(content => {
-                content.classList.remove('active');
-            });
-
-            // Show target sub-tab content
-            // Handle special case: Forecasting is split into two divs
-            if (targetSubTab === 'forecasting') {
-                // Show both forecasting divs
-                document.getElementById('subtab-forecasting').classList.add('active');
-                const forecastingCharts = document.getElementById('subtab-forecasting-charts');
-                if (forecastingCharts) {
-                    forecastingCharts.classList.add('active');
-                }
-            } else {
-                // Show single sub-tab
-                const targetElement = document.getElementById(`subtab-${targetSubTab}`);
-                if (targetElement) {
-                    targetElement.classList.add('active');
-                }
-            }
-        });
-    });
-
     // ========== METRIC TOOLTIP TOGGLES ==========
     const metricInfoBtns = document.querySelectorAll('.metric-info-btn');
 
@@ -2614,11 +2570,67 @@ function populateInsights() {
 }
 
 // ==================== INITIALIZATION ====================
+function setupEFGLSubTabs() {
+    console.log('Setting up EFGL sub-tab navigation...');
+
+    const efglSubTabBtns = document.querySelectorAll('.efgl-sub-tab-btn');
+    const efglSubTabContents = document.querySelectorAll('.efgl-sub-tab-content');
+
+    console.log('Found sub-tab buttons:', efglSubTabBtns.length);
+    console.log('Found sub-tab contents:', efglSubTabContents.length);
+
+    if (efglSubTabBtns.length === 0) {
+        console.error('No EFGL sub-tab buttons found!');
+        return;
+    }
+
+    efglSubTabBtns.forEach((btn, index) => {
+        console.log(`Setting up button ${index}:`, btn.getAttribute('data-subtab'));
+        btn.addEventListener('click', () => {
+            const targetSubTab = btn.getAttribute('data-subtab');
+            console.log('Sub-tab clicked:', targetSubTab);
+
+            // Remove active class from all sub-tab buttons
+            efglSubTabBtns.forEach(b => b.classList.remove('active'));
+
+            // Add active class to clicked button
+            btn.classList.add('active');
+
+            // Hide all sub-tab contents
+            efglSubTabContents.forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Show target sub-tab content
+            if (targetSubTab === 'forecasting') {
+                document.getElementById('subtab-forecasting').classList.add('active');
+                const forecastingCharts = document.getElementById('subtab-forecasting-charts');
+                if (forecastingCharts) {
+                    forecastingCharts.classList.add('active');
+                }
+            } else {
+                const targetElement = document.getElementById(`subtab-${targetSubTab}`);
+                if (targetElement) {
+                    targetElement.classList.add('active');
+                    console.log(`Activated subtab: subtab-${targetSubTab}`);
+                } else {
+                    console.error(`Could not find element: subtab-${targetSubTab}`);
+                }
+            }
+        });
+    });
+
+    console.log('EFGL sub-tab navigation setup complete');
+}
+
 function init() {
     console.log('Initializing Turbine Assembly Visualization...');
 
     // Setup tab navigation first
     setupTabNavigation();
+
+    // Setup EFGL sub-tabs
+    setupEFGLSubTabs();
 
     // Create EFGL charts (Tab 1)
     createTimelineChart();
