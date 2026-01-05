@@ -964,42 +964,180 @@
         <!-- TAB 2: EOLMED PROJECT -->
         <div class="tab-content" id="tab-eolmed">
 
-        <!-- Technical Specifications -->
+        <!-- Project Overview Section -->
+        <section class="project-overview">
+            <h2>Project Overview</h2>
+            <div class="overview-grid">
+                <div class="overview-item">
+                    <span class="overview-label">Project:</span>
+                    <span class="overview-value">Eolmed Floating Wind Project</span>
+                </div>
+                <div class="overview-item">
+                    <span class="overview-label">Location:</span>
+                    <span class="overview-value">Mediterranean Sea, France</span>
+                </div>
+                <div class="overview-item">
+                    <span class="overview-label">Period:</span>
+                    <span class="overview-value">2024 - 2025</span>
+                </div>
+                <div class="overview-item">
+                    <span class="overview-label">Scope:</span>
+                    <span class="overview-value">3 floating wind foundations</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Performance Metrics Dashboard -->
+        <section class="key-metrics-dashboard">
+            <h2>Key Performance Metrics</h2>
+            <div class="metrics-grid">
+                <!-- Metric 1: Task Time Improvement -->
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <span class="metric-title">Task Time Improvement</span>
+                        <button class="metric-info-btn" data-tooltip="eolmed-metric1">?</button>
+                    </div>
+                    <div class="metric-value-large">28.6%</div>
+                    <div class="metric-subtitle">↓ F1→F3</div>
+                    <div class="metric-detail">28.0h → 20.0h</div>
+                    <div class="metric-note">(Crane working hours)</div>
+
+                    <!-- Tooltip -->
+                    <div class="metric-tooltip" id="tooltip-eolmed-metric1">
+                        <strong>Task Time Improvement</strong><br>
+                        Improvement in crane working hours from F1 to F3.<br>
+                        Benefits from vibration damper and propeller-assisted blade tool.<br>
+                        Measures pure execution efficiency.
+                    </div>
+                </div>
+
+                <!-- Metric 2: Learning Rate -->
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <span class="metric-title">Learning Rate</span>
+                        <button class="metric-info-btn" data-tooltip="eolmed-metric2">?</button>
+                    </div>
+                    <div class="metric-value-large">77.4%</div>
+                    <div class="metric-subtitle">Sequential Average</div>
+                    <div class="metric-detail">F1→F2: 77.4% | F2→F3: 92.3%</div>
+                    <div class="metric-note">(Wright's learning curve)</div>
+
+                    <!-- Tooltip -->
+                    <div class="metric-tooltip" id="tooltip-eolmed-metric2">
+                        <strong>Learning Rate</strong><br>
+                        Average learning rate: (LR_F1→F2 + LR_F2→F3) / 2<br>
+                        77.4% indicates strong learning progression.<br>
+                        Enabled by technological advances and knowledge transfer from EFGL.
+                    </div>
+                </div>
+
+                <!-- Metric 3: Total Project Days / Avg per Unit -->
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <span class="metric-title">Total Project Days / Avg per Unit</span>
+                        <button class="metric-info-btn" data-tooltip="eolmed-metric3">?</button>
+                    </div>
+                    <div class="metric-value-large">77d / 26d</div>
+                    <div class="metric-subtitle">(3 floaters / per floater)</div>
+                    <div class="metric-detail">2024 - 2025</div>
+                    <div class="metric-note">F1:1.17d • F2:0.90d • F3:0.83d</div>
+
+                    <!-- Tooltip -->
+                    <div class="metric-tooltip" id="tooltip-eolmed-metric3">
+                        <strong>Total Calendar / Avg per Unit</strong><br>
+                        Total project duration including all gaps between floaters.<br>
+                        Average = (1.17 + 0.90 + 0.83) / 3 = 0.97 days per floater<br><br>
+                        Note: Eolmed had more aggressive scheduling than EFGL.
+                    </div>
+                </div>
+
+                <!-- Metric 4: Total Task Hours / Avg per Unit -->
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <span class="metric-title">Total Task Hours / Avg per Unit</span>
+                        <button class="metric-info-btn" data-tooltip="eolmed-metric4">?</button>
+                    </div>
+                    <div class="metric-value-large">69.7h / 23.2h</div>
+                    <div class="metric-subtitle">(Total / per floater)</div>
+                    <div class="metric-detail">Pure execution time</div>
+                    <div class="metric-note">F1:28.0h • F2:21.67h • F3:20.0h</div>
+
+                    <!-- Tooltip -->
+                    <div class="metric-tooltip" id="tooltip-eolmed-metric4">
+                        <strong>Total Task Hours</strong><br>
+                        Total task hours excluding gaps, weather waits,<br>
+                        and vessel delays.<br><br>
+                        Average = (28.0 + 21.67 + 20.0) / 3 = 23.22h<br><br>
+                        31% faster average than EFGL (33.75h).
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Specifications - Condensed -->
         <section class="tech-specs-condensed">
-            <h2>Eolmed (PLN) Project - Technical Specifications</h2>
+            <h2>Technical Specifications</h2>
             <div class="specs-table-container">
                 <table class="specs-table">
-                    <tr>
-                        <th>Location</th>
-                        <td>Mediterranean Sea, France (Port-la-Nouvelle)</td>
-                        <th>Installation Period</th>
-                        <td>2024 - 2025</td>
-                    </tr>
-                    <tr>
-                        <th>Number of Floaters</th>
-                        <td>3 Units (F1, F2, F3)</td>
-                        <th>Turbine Model</th>
-                        <td>Vestas V164-10MW</td>
-                    </tr>
-                    <tr>
-                        <th>Foundation Type</th>
-                        <td>Semi-submersible Floating Platform</td>
-                        <th>Assembly Method</th>
-                        <td>Quayside Assembly with Crane</td>
-                    </tr>
-                    <tr>
-                        <th>Key Innovations</th>
-                        <td colspan="3">
-                            <strong>Vibration Damper:</strong> Enhanced stability during nacelle installation |
-                            <strong>Advanced Blade Tool:</strong> Propeller-assisted erection system for faster, safer blade installation
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Average Assembly Time</th>
-                        <td>23.22 hours per floater</td>
-                        <th>Learning Rate</th>
-                        <td>77.4% (28.6% total improvement)</td>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th>Turbine (V164-10.0 MW)</th>
+                            <th>Floating Platform (Semi-submersible)</th>
+                            <th>Installation Crane</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="spec-row"><strong>Rotor:</strong> 164m diameter</div>
+                                <div class="spec-row"><strong>Hub:</strong> 104m | <strong>Blades:</strong> 3 × 80m</div>
+                            </td>
+                            <td>
+                                <div class="spec-row"><strong>Type:</strong> Semi-submersible</div>
+                                <div class="spec-row"><strong>Structure:</strong> 3 columns, ~70m spacing</div>
+                            </td>
+                            <td>
+                                <div class="spec-row"><strong>Model:</strong> Similar crawler crane</div>
+                                <div class="spec-row"><strong>Type:</strong> Crawler crane</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="spec-row"><strong>Component Weights:</strong></div>
+                                <div class="spec-row">• Nacelle: 390t</div>
+                                <div class="spec-row">• Blades: 34t each (102t total)</div>
+                                <div class="spec-row">• Tower: ~100t per section</div>
+                                <div class="spec-row"><strong>RNA Total: 500t</strong> (excludes tower)</div>
+                            </td>
+                            <td>
+                                <div class="spec-row"><strong>Platform Mass:</strong> 10,000t</div>
+                                <div class="spec-row"><strong>Height:</strong> 24m total</div>
+                                <div class="spec-row"><strong>Draft:</strong> 10m (port) / 14m (sea)</div>
+                                <div class="spec-row"><em>(Floating platform design)</em></div>
+                            </td>
+                            <td>
+                                <div class="spec-row"><strong>Capacity:</strong> 1,600t</div>
+                                <div class="spec-row"><strong>Boom:</strong> >145m height</div>
+                                <div class="spec-row"><strong>Max Lift:</strong> 390t (nacelle)</div>
+                                <div class="spec-row">✓ All components within capacity</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <div class="spec-row"><strong>🔧 Key Innovation 1 - Vibration Damper:</strong> Enhanced stability during nacelle installation, enabling safer and more predictable execution (32% nacelle time reduction)</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <div class="spec-row"><strong>⚡ Key Innovation 2 - Propeller-Assisted Blade Tool:</strong> Advanced erection system with integrated propellers for active blade stabilization during lift (41% blade time reduction)</div>
+                            </td>
+                        </tr>
+                        <tr class="specs-footer">
+                            <td colspan="3">
+                                <div class="spec-row"><strong>Assembly Port:</strong> Port-La Nouvelle | <strong>Distance to Site:</strong> 16 km | <strong>Sea Depth:</strong> 68-70m</div>
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
         </section>
