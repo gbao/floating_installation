@@ -3620,6 +3620,106 @@ footer p {
 }
 
 /* ========================================
+   PRODUCTIVE WORK TIME TAB: COMPONENT ANALYSIS STYLING
+   ======================================== */
+
+/* Override component-group styling for Productive Work Time tab */
+#subtab-timeline .chart-section h2 {
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+#subtab-timeline .section-description {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+#subtab-timeline .component-analysis-grid {
+    margin-bottom: 2rem;
+}
+
+#subtab-timeline .pattern-comparison-table th {
+    background: linear-gradient(135deg, #DBEAFE, #BFDBFE);
+    color: #1e40af;
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 0.75rem;
+    border-bottom: 2px solid #2563eb;
+}
+
+#subtab-timeline .pattern-comparison-table td {
+    font-size: 0.85rem;
+    padding: 0.65rem;
+    color: #475569;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+#subtab-timeline .table-highlight {
+    background: #EFF6FF;
+    font-weight: 600;
+}
+
+#subtab-timeline .table-highlight td {
+    border-top: 2px solid #2563eb;
+    padding-top: 0.75rem;
+}
+
+#subtab-timeline .steady-state-box {
+    background: linear-gradient(135deg, #EFF6FF, #DBEAFE);
+    border: 2px solid #2563eb;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+#subtab-timeline .steady-state-header {
+    border-bottom: 2px solid #2563eb;
+}
+
+#subtab-timeline .steady-state-header strong {
+    color: #1e40af;
+}
+
+#subtab-timeline .steady-state-badge {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: white;
+}
+
+#subtab-timeline .calc-row.highlight {
+    background: #BFDBFE;
+    color: #1e40af;
+}
+
+#subtab-timeline .calc-row.result .calc-value.improvement {
+    color: #2563eb;
+    font-weight: 700;
+}
+
+#subtab-timeline .lr-value.towers {
+    color: #dc2626;
+    font-weight: 600;
+}
+
+#subtab-timeline .lr-value.blades {
+    color: #d97706;
+    font-weight: 600;
+}
+
+#subtab-timeline .lr-value.nacelle {
+    color: #059669;
+    font-weight: 600;
+}
+
+#subtab-timeline .lr-value.overall {
+    color: #2563eb;
+    font-weight: 700;
+}
+
+/* ========================================
    OVERVIEW TAB: ELEGANT PROFESSIONAL STYLING
    ======================================== */
 
