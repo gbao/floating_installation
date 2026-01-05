@@ -2639,6 +2639,503 @@ function setupEFGLSubTabs() {
     console.log('EFGL sub-tab navigation setup complete');
 }
 
+// ==================== EOLMED TAB FUNCTIONALITY ====================
+function setupEolmedSubTabs() {
+    console.log('Setting up Eolmed sub-tab navigation...');
+
+    const eolmedSubTabBtns = document.querySelectorAll('.eolmed-sub-tab-btn');
+    const eolmedSubTabContents = document.querySelectorAll('.eolmed-sub-tab-content');
+
+    console.log('Found Eolmed sub-tab buttons:', eolmedSubTabBtns.length);
+    console.log('Found Eolmed sub-tab contents:', eolmedSubTabContents.length);
+
+    if (eolmedSubTabBtns.length === 0) {
+        console.error('No Eolmed sub-tab buttons found!');
+        return;
+    }
+
+    eolmedSubTabBtns.forEach((btn, index) => {
+        console.log(`Setting up Eolmed button ${index}:`, btn.getAttribute('data-subtab'));
+        btn.addEventListener('click', () => {
+            const targetSubTab = btn.getAttribute('data-subtab');
+            console.log('Eolmed sub-tab clicked:', targetSubTab);
+
+            // Remove active class from all sub-tab buttons
+            eolmedSubTabBtns.forEach(b => b.classList.remove('active'));
+
+            // Add active class to clicked button
+            btn.classList.add('active');
+
+            // Hide all sub-tab contents
+            eolmedSubTabContents.forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Show target sub-tab content
+            const targetElement = document.getElementById(`eolmed-subtab-${targetSubTab}`);
+            if (targetElement) {
+                targetElement.classList.add('active');
+                console.log(`Activated Eolmed subtab: eolmed-subtab-${targetSubTab}`);
+            } else {
+                console.error(`Could not find element: eolmed-subtab-${targetSubTab}`);
+            }
+        });
+    });
+
+    console.log('Eolmed sub-tab navigation setup complete');
+}
+
+function createEolmedTimelineChart() {
+    const chartElement = document.getElementById('eolmed-timeline-chart');
+    if (!chartElement) {
+        console.log('Eolmed timeline chart element not found - skipping');
+        return;
+    }
+    const ctx = chartElement.getContext('2d');
+
+    const datasets = [];
+    const colors = ['#ef4444', '#f59e0b', '#10b981'];
+
+    eolmedData.floaters.forEach((floater, index) => {
+        floater.operations.forEach(op => {
+            let dataset = datasets.find(d => d.label === op.name);
+            if (!dataset) {
+                const colorIndex = datasets.length % colors.length;
+                dataset = {
+                    label: op.name,
+                    data: [],
+                    backgroundColor: colors[colorIndex],
+                    borderColor: colors[colorIndex],
+                    borderWidth: 2
+                };
+                datasets.push(dataset);
+            }
+            dataset.data.push(op.duration);
+        });
+    });
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Floater 1', 'Floater 2', 'Floater 3'],
+            datasets: datasets
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: {
+                    display: false
+                },
+                legend: {
+                    position: 'bottom'
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return context.dataset.label + ': ' + context.parsed.y.toFixed(2) + 'h';
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    stacked: true,
+                    grid: {
+                        display: false
+                    }
+                },
+                y: {
+                    stacked: true,
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Assembly Time (hours)'
+                    }
+                }
+            }
+        }
+    });
+}
+
+function createEolmedComponentChart() {
+    const chartElement = document.getElementById('eolmed-component-chart');
+    if (!chartElement) {
+        console.log('Eolmed component chart element not found - skipping');
+        return;
+    }
+    const ctx = chartElement.getContext('2d');
+
+    const componentData = {};
+    eolmedData.floaters.forEach((floater, fIndex) => {
+        floater.operations.forEach(op => {
+            if (!componentData[op.name]) {
+                componentData[op.name] = [];
+            }
+            componentData[op.name][fIndex] = op.duration;
+        });
+    });
+
+    const datasets = Object.keys(componentData).map((name, index) => {
+        const colors = ['#ef4444', '#f59e0b', '#10b981', '#3b82f6', '#8b5cf6', '#ec4899', '#06b6d4'];
+        return {
+            label: name,
+            data: componentData[name],
+            backgroundColor: colors[index % colors.length],
+            borderColor: colors[index % colors.length],
+            borderWidth: 2
+        };
+    });
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Floater 1', 'Floater 2', 'Floater 3'],
+            datasets: datasets
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: {
+                    display: false
+                },
+                legend: {
+                    position: 'bottom'
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return context.dataset.label + ': ' + context.parsed.y.toFixed(2) + 'h';
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Assembly Time (hours)'
+                    }
+                }
+            }
+        }
+    });
+}
+
+function populateEolmedDataTable() {
+    const tbody = document.getElementById('eolmed-data-table-body');
+    if (!tbody) {
+        console.log('Eolmed data table body not found - skipping');
+        return;
+    }
+
+    const componentData = {};
+    eolmedData.floaters.forEach((floater, index) => {
+        floater.operations.forEach(op => {
+            if (!componentData[op.name]) {
+                componentData[op.name] = [0, 0, 0];
+            }
+            componentData[op.name][index] = op.duration;
+        });
+    });
+
+    let rows = '';
+    Object.keys(componentData).forEach(name => {
+        const f1 = componentData[name][0];
+        const f2 = componentData[name][1];
+        const f3 = componentData[name][2];
+
+        const f1f2Improvement = ((f1 - f2) / f1 * 100);
+        const f2f3Improvement = ((f2 - f3) / f2 * 100);
+        const totalImprovement = ((f1 - f3) / f1 * 100);
+
+        const f1f2Class = f1f2Improvement > 0 ? 'improvement' : (f1f2Improvement < 0 ? 'decline' : 'neutral');
+        const f2f3Class = f2f3Improvement > 0 ? 'improvement' : (f2f3Improvement < 0 ? 'decline' : 'neutral');
+        const totalClass = totalImprovement > 0 ? 'improvement' : (totalImprovement < 0 ? 'decline' : 'neutral');
+
+        rows += `
+            <tr>
+                <td><strong>${name}</strong></td>
+                <td>${f1.toFixed(2)}</td>
+                <td>${f2.toFixed(2)}</td>
+                <td>${f3.toFixed(2)}</td>
+                <td class="${f1f2Class}">${f1f2Improvement >= 0 ? '+' : ''}${f1f2Improvement.toFixed(1)}%</td>
+                <td class="${f2f3Class}">${f2f3Improvement >= 0 ? '+' : ''}${f2f3Improvement.toFixed(1)}%</td>
+                <td class="${totalClass}">${totalImprovement >= 0 ? '+' : ''}${totalImprovement.toFixed(1)}%</td>
+            </tr>
+        `;
+    });
+
+    // Add total row
+    const f1Total = eolmedData.floaters[0].total_hours;
+    const f2Total = eolmedData.floaters[1].total_hours;
+    const f3Total = eolmedData.floaters[2].total_hours;
+
+    const f1f2TotalImprovement = ((f1Total - f2Total) / f1Total * 100);
+    const f2f3TotalImprovement = ((f2Total - f3Total) / f2Total * 100);
+    const overallImprovement = ((f1Total - f3Total) / f1Total * 100);
+
+    rows += `
+        <tr class="table-highlight">
+            <td><strong>Total Assembly Time</strong></td>
+            <td><strong>${f1Total.toFixed(2)}</strong></td>
+            <td><strong>${f2Total.toFixed(2)}</strong></td>
+            <td><strong>${f3Total.toFixed(2)}</strong></td>
+            <td class="improvement"><strong>+${f1f2TotalImprovement.toFixed(1)}%</strong></td>
+            <td class="improvement"><strong>+${f2f3TotalImprovement.toFixed(1)}%</strong></td>
+            <td class="improvement"><strong>+${overallImprovement.toFixed(1)}%</strong></td>
+        </tr>
+    `;
+
+    tbody.innerHTML = rows;
+}
+
+function createEolmedScalingChart() {
+    const chartElement = document.getElementById('eolmed-scaling-chart');
+    if (!chartElement) {
+        console.log('Eolmed scaling chart element not found - skipping');
+        return;
+    }
+    const ctx = chartElement.getContext('2d');
+
+    const turbineCount = 10;
+    const learningRate = eolmedData.learning_curve.avg_learning_rate;
+    const baseTime = eolmedData.floaters[0].total_hours;
+    const b = Math.log(learningRate) / Math.log(2);
+
+    const predictions = [];
+    const actualData = [
+        { x: 1, y: eolmedData.floaters[0].total_hours },
+        { x: 2, y: eolmedData.floaters[1].total_hours },
+        { x: 3, y: eolmedData.floaters[2].total_hours }
+    ];
+
+    for (let n = 1; n <= turbineCount; n++) {
+        const predictedTime = baseTime * Math.pow(n, b);
+        predictions.push({ x: n, y: predictedTime });
+    }
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            datasets: [
+                {
+                    label: 'Actual Data',
+                    data: actualData,
+                    backgroundColor: '#d97706',
+                    borderColor: '#d97706',
+                    borderWidth: 3,
+                    pointRadius: 6,
+                    pointHoverRadius: 8
+                },
+                {
+                    label: 'Projected (77.4% LR)',
+                    data: predictions,
+                    backgroundColor: '#fbbf24',
+                    borderColor: '#fbbf24',
+                    borderWidth: 2,
+                    borderDash: [5, 5],
+                    pointRadius: 4,
+                    pointHoverRadius: 6
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'top'
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return context.dataset.label + ': ' + context.parsed.y.toFixed(2) + 'h';
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    type: 'linear',
+                    title: {
+                        display: true,
+                        text: 'Floater Number'
+                    },
+                    ticks: {
+                        stepSize: 1
+                    }
+                },
+                y: {
+                    beginAtZero: false,
+                    title: {
+                        display: true,
+                        text: 'Assembly Time (hours)'
+                    }
+                }
+            }
+        }
+    });
+}
+
+function setupEolmedEventListeners() {
+    // Turbine count slider
+    const turbineCountInput = document.getElementById('eolmed-turbine-count');
+    const turbineCountValue = document.getElementById('eolmed-turbine-count-value');
+
+    if (turbineCountInput && turbineCountValue) {
+        turbineCountInput.addEventListener('input', (e) => {
+            const count = parseInt(e.target.value);
+            turbineCountValue.textContent = count;
+            updateEolmedScalingChart(count);
+        });
+    }
+
+    // Learning rate method selector
+    const methodSelector = document.getElementById('eolmed-learning-rate-method');
+    if (methodSelector) {
+        methodSelector.addEventListener('change', (e) => {
+            updateEolmedLearningRateDisplay(e.target.value);
+        });
+    }
+}
+
+function updateEolmedScalingChart(count) {
+    const chartElement = document.getElementById('eolmed-scaling-chart');
+    if (!chartElement) return;
+
+    // Destroy existing chart
+    const existingChart = Chart.getChart(chartElement);
+    if (existingChart) {
+        existingChart.destroy();
+    }
+
+    // Recreate with new count
+    const ctx = chartElement.getContext('2d');
+    const learningRate = eolmedData.learning_curve.avg_learning_rate;
+    const baseTime = eolmedData.floaters[0].total_hours;
+    const b = Math.log(learningRate) / Math.log(2);
+
+    const predictions = [];
+    const actualData = [
+        { x: 1, y: eolmedData.floaters[0].total_hours },
+        { x: 2, y: eolmedData.floaters[1].total_hours },
+        { x: 3, y: eolmedData.floaters[2].total_hours }
+    ];
+
+    for (let n = 1; n <= count; n++) {
+        const predictedTime = baseTime * Math.pow(n, b);
+        predictions.push({ x: n, y: predictedTime });
+    }
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            datasets: [
+                {
+                    label: 'Actual Data',
+                    data: actualData,
+                    backgroundColor: '#d97706',
+                    borderColor: '#d97706',
+                    borderWidth: 3,
+                    pointRadius: 6,
+                    pointHoverRadius: 8
+                },
+                {
+                    label: 'Projected (77.4% LR)',
+                    data: predictions,
+                    backgroundColor: '#fbbf24',
+                    borderColor: '#fbbf24',
+                    borderWidth: 2,
+                    borderDash: [5, 5],
+                    pointRadius: 4,
+                    pointHoverRadius: 6
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'top'
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return context.dataset.label + ': ' + context.parsed.y.toFixed(2) + 'h';
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    type: 'linear',
+                    title: {
+                        display: true,
+                        text: 'Floater Number'
+                    },
+                    ticks: {
+                        stepSize: 1
+                    }
+                },
+                y: {
+                    beginAtZero: false,
+                    title: {
+                        display: true,
+                        text: 'Assembly Time (hours)'
+                    }
+                }
+            }
+        }
+    });
+}
+
+function updateEolmedLearningRateDisplay(method) {
+    const f1 = eolmedData.floaters[0].total_hours;
+    const f2 = eolmedData.floaters[1].total_hours;
+    const f3 = eolmedData.floaters[2].total_hours;
+
+    const lr_f1_f2 = f2 / f1;
+    const lr_f2_f3 = f3 / f2;
+
+    const methods = {
+        'sequential-avg': {
+            name: 'Sequential Transition Average',
+            value: (lr_f1_f2 + lr_f2_f3) / 2,
+            description: 'Average of F1→F2 and F2→F3 transitions',
+            formula: '(LR_F1→F2 + LR_F2→F3) / 2'
+        },
+        'f1-f2-only': {
+            name: 'F1→F2 Transition Only',
+            value: lr_f1_f2,
+            description: 'Early learning phase',
+            formula: 'F2 / F1 = 21.67 / 28.00'
+        },
+        'f2-f3-only': {
+            name: 'F2→F3 Transition Only',
+            value: lr_f2_f3,
+            description: 'Later learning phase',
+            formula: 'F3 / F2 = 20.00 / 21.67'
+        },
+        'power-law': {
+            name: 'Power Law Regression',
+            value: Math.pow(2, Math.log(f3/f1) / Math.log(3)),
+            description: 'Regression fit to all 3 data points',
+            formula: '2^b where b = log(F3/F1) / log(3)'
+        }
+    };
+
+    const selectedMethod = methods[method];
+
+    document.getElementById('eolmed-method-name').textContent = selectedMethod.name;
+    document.getElementById('eolmed-method-formula').textContent = selectedMethod.formula;
+    document.getElementById('eolmed-method-description').textContent = selectedMethod.description;
+    document.getElementById('eolmed-calculated-lr-value').textContent = `${(selectedMethod.value * 100).toFixed(1)}%`;
+}
+
 function init() {
     console.log('Initializing Turbine Assembly Visualization...');
 
@@ -2648,6 +3145,9 @@ function init() {
     // Setup EFGL sub-tabs
     setupEFGLSubTabs();
 
+    // Setup Eolmed sub-tabs
+    setupEolmedSubTabs();
+
     // Create EFGL charts (Tab 1)
     createTimelineChart();
     // createLearningCurveChart(); // REMOVED - redundant with scaling chart
@@ -2656,8 +3156,16 @@ function init() {
     createUtilizationChart();
     createUtilizationBarChart(); // Pattern 3 chart
 
-    // Populate data table
+    // Populate EFGL data table
     populateDataTable();
+
+    // Create Eolmed charts (Tab 2)
+    createEolmedTimelineChart();
+    createEolmedComponentChart();
+    createEolmedScalingChart();
+
+    // Populate Eolmed data table
+    populateEolmedDataTable();
 
     // Update predictions
     updatePredictions();
@@ -2667,6 +3175,9 @@ function init() {
 
     // Setup event listeners
     setupEventListeners();
+
+    // Setup Eolmed event listeners
+    setupEolmedEventListeners();
 
     console.log('Initialization complete!');
 }
