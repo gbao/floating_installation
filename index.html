@@ -963,12 +963,462 @@
 
         <!-- TAB 2: EOLMED PROJECT -->
         <div class="tab-content" id="tab-eolmed">
-        <!-- Content will be dynamically generated, similar structure to EFGL -->
-        <div id="eolmed-content-placeholder">
-            <p style="text-align: center; padding: 40px; font-size: 18px; color: #64748b;">
-                Loading Eolmed project data...
-            </p>
+
+        <!-- Technical Specifications -->
+        <section class="tech-specs-condensed">
+            <h2>Eolmed (PLN) Project - Technical Specifications</h2>
+            <div class="specs-table-container">
+                <table class="specs-table">
+                    <tr>
+                        <th>Location</th>
+                        <td>Mediterranean Sea, France (Port-la-Nouvelle)</td>
+                        <th>Installation Period</th>
+                        <td>2024 - 2025</td>
+                    </tr>
+                    <tr>
+                        <th>Number of Floaters</th>
+                        <td>3 Units (F1, F2, F3)</td>
+                        <th>Turbine Model</th>
+                        <td>Vestas V164-10MW</td>
+                    </tr>
+                    <tr>
+                        <th>Foundation Type</th>
+                        <td>Semi-submersible Floating Platform</td>
+                        <th>Assembly Method</th>
+                        <td>Quayside Assembly with Crane</td>
+                    </tr>
+                    <tr>
+                        <th>Key Innovations</th>
+                        <td colspan="3">
+                            <strong>Vibration Damper:</strong> Enhanced stability during nacelle installation |
+                            <strong>Advanced Blade Tool:</strong> Propeller-assisted erection system for faster, safer blade installation
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Average Assembly Time</th>
+                        <td>23.22 hours per floater</td>
+                        <th>Learning Rate</th>
+                        <td>77.4% (28.6% total improvement)</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+
+        <!-- Sub-Tab Navigation for Eolmed -->
+        <nav class="efgl-sub-tabs">
+            <button class="eolmed-sub-tab-btn active" data-subtab="overview">Overview</button>
+            <button class="eolmed-sub-tab-btn" data-subtab="timeline">Productive Work Time</button>
+            <button class="eolmed-sub-tab-btn" data-subtab="patterns">Calendar Time per Task</button>
+            <button class="eolmed-sub-tab-btn" data-subtab="forecasting">Forecasting</button>
+        </nav>
+
+        <!-- Sub-Tab Content Areas -->
+
+        <!-- SUB-TAB 1: OVERVIEW -->
+        <div class="eolmed-sub-tab-content active" id="eolmed-subtab-overview">
+
+            <!-- Component Performance Insights -->
+            <section class="overview-insights-section">
+                <h2>Component Performance Insights</h2>
+                <div class="overview-insights-grid">
+                    <div class="overview-insight-card towers">
+                        <div class="overview-card-header">
+                            <span class="overview-icon">🗼</span>
+                            <strong>Tower Sections</strong>
+                        </div>
+                        <div class="overview-card-metric">75% Learning Rate</div>
+                        <div class="overview-card-body">
+                            Moderate learning progression with <strong>42% improvement F1→F3</strong> (14.0h → 11.17h). Represents 56% of total assembly time, showing consistent optimization across iterations.
+                        </div>
+                    </div>
+
+                    <div class="overview-insight-card blades">
+                        <div class="overview-card-header">
+                            <span class="overview-icon">⚡</span>
+                            <strong>Blades</strong>
+                        </div>
+                        <div class="overview-card-metric">62% Learning Rate</div>
+                        <div class="overview-card-body">
+                            <strong>Exceptional 41% improvement F1→F3</strong> (8.33h → 5.0h) enabled by advanced propeller-assisted erection tool. Fastest learning among all components at 29% of total time.
+                        </div>
+                    </div>
+
+                    <div class="overview-insight-card nacelle">
+                        <div class="overview-card-header">
+                            <span class="overview-icon">⚙️</span>
+                            <strong>Nacelle</strong>
+                        </div>
+                        <div class="overview-card-metric">96% Learning Rate</div>
+                        <div class="overview-card-body">
+                            Stable performance with <strong>32% improvement F1→F3</strong> (5.67h → 3.83h). Vibration damper enables consistent execution at 15% of total time.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Project Factors -->
+            <section class="overview-factors-section">
+                <h2>Project Execution Factors</h2>
+                <div class="overview-factors-grid">
+                    <div class="overview-factor-card controllable">
+                        <div class="overview-factor-header">
+                            <span class="overview-factor-icon">✓</span>
+                            <strong>Technological Advances</strong>
+                        </div>
+                        <div class="overview-factor-subtitle">Enabled Improvements</div>
+                        <ul class="overview-factor-list">
+                            <li>Vibration damper: Stable nacelle installation</li>
+                            <li>Propeller-assisted blade tool: 41% blade time reduction</li>
+                            <li>Knowledge transfer from EFGL: Faster F1 baseline</li>
+                        </ul>
+                    </div>
+
+                    <div class="overview-factor-card constraints">
+                        <div class="overview-factor-header">
+                            <span class="overview-factor-icon">🔒</span>
+                            <strong>Technical Constraints</strong>
+                        </div>
+                        <div class="overview-factor-subtitle">Sequential Dependencies</div>
+                        <ul class="overview-factor-list">
+                            <li>Tower-before-nacelle sequence maintained</li>
+                            <li>Weather window dependencies persist</li>
+                        </ul>
+                    </div>
+
+                    <div class="overview-factor-card external">
+                        <div class="overview-factor-header">
+                            <span class="overview-factor-icon">🚢</span>
+                            <strong>External Dependencies</strong>
+                        </div>
+                        <div class="overview-factor-subtitle">Site-Specific Factors</div>
+                        <ul class="overview-factor-list">
+                            <li>Mediterranean weather conditions</li>
+                            <li>Port-la-Nouvelle logistics</li>
+                            <li>Supply chain coordination</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
         </div>
+
+        <!-- SUB-TAB 2: TIMELINE -->
+        <div class="eolmed-sub-tab-content" id="eolmed-subtab-timeline">
+
+        <!-- Component Timeline Comparison -->
+        <section class="chart-section">
+            <h2>Component Assembly Timeline - All Floaters</h2>
+            <div class="chart-container">
+                <canvas id="eolmed-timeline-chart"></canvas>
+            </div>
+        </section>
+
+        <!-- Component Breakdown -->
+        <section class="chart-section">
+            <h2>Component-Level Efficiency Improvements</h2>
+            <div class="chart-container">
+                <canvas id="eolmed-component-chart"></canvas>
+            </div>
+        </section>
+
+        <!-- Data Table -->
+        <section class="data-section">
+            <h2>Detailed Assembly Data</h2>
+            <div class="table-responsive">
+                <table id="eolmed-data-table">
+                    <thead>
+                        <tr>
+                            <th>Component</th>
+                            <th>Floater 1 (hrs)</th>
+                            <th>Floater 2 (hrs)</th>
+                            <th>Floater 3 (hrs)</th>
+                            <th>F1→F2 Improvement</th>
+                            <th>F2→F3 Improvement</th>
+                            <th>Total Improvement</th>
+                        </tr>
+                    </thead>
+                    <tbody id="eolmed-data-table-body">
+                        <!-- Populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Component-Group Performance Analysis -->
+        <section class="chart-section">
+            <h2>Component-Group Performance Analysis</h2>
+            <p class="section-description">Breaking down crane working hours by major component groups reveals differentiated learning rates and technological impact.</p>
+
+            <div class="component-analysis-grid">
+                <table class="pattern-comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Component Group</th>
+                            <th>F1 Hours</th>
+                            <th>F2 Hours</th>
+                            <th>F3 Hours</th>
+                            <th>Average</th>
+                            <th>Learning Rate</th>
+                            <th>% of Total Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>All Tower Sections</strong></td>
+                            <td>14.00h</td>
+                            <td>11.83h</td>
+                            <td>11.17h</td>
+                            <td>12.33h</td>
+                            <td class="lr-value towers">75%</td>
+                            <td>56% (avg)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>All Blades</strong></td>
+                            <td>8.33h</td>
+                            <td>6.17h</td>
+                            <td>5.00h</td>
+                            <td>6.50h</td>
+                            <td class="lr-value blades">62%</td>
+                            <td>29% (avg)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Nacelle</strong></td>
+                            <td>5.67h</td>
+                            <td>3.67h</td>
+                            <td>3.83h</td>
+                            <td>4.39h</td>
+                            <td class="lr-value nacelle">96%</td>
+                            <td>15% (avg)</td>
+                        </tr>
+                        <tr class="table-highlight">
+                            <td><strong>Total Crane Hours</strong></td>
+                            <td><strong>28.00h</strong></td>
+                            <td><strong>21.67h</strong></td>
+                            <td><strong>20.00h</strong></td>
+                            <td><strong>23.22h</strong></td>
+                            <td class="lr-value overall"><strong>77.4%</strong></td>
+                            <td><strong>100%</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="steady-state-box">
+                <div class="steady-state-header">
+                    <strong>Steady-State Performance Analysis</strong>
+                    <span class="steady-state-badge">F2-F3 Average (Excluding First-Unit Effects)</span>
+                </div>
+                <div class="steady-state-content">
+                    <div class="steady-state-calc">
+                        <div class="calc-row">
+                            <span class="calc-label">F2 Average:</span>
+                            <span class="calc-value">21.67h</span>
+                        </div>
+                        <div class="calc-row">
+                            <span class="calc-label">F3 Average:</span>
+                            <span class="calc-value">20.00h</span>
+                        </div>
+                        <div class="calc-row highlight">
+                            <span class="calc-label">F2-F3 Average:</span>
+                            <span class="calc-value">20.84h</span>
+                        </div>
+                        <div class="calc-row">
+                            <span class="calc-label">vs F1 Original:</span>
+                            <span class="calc-value">28.00h</span>
+                        </div>
+                        <div class="calc-row result">
+                            <span class="calc-label">Steady-State Improvement:</span>
+                            <span class="calc-value improvement">74.4%</span>
+                        </div>
+                    </div>
+                    <div class="steady-state-note">
+                        This metric excludes first-unit learning effects and represents the <strong>sustainable operational efficiency</strong> achieved after initial learning curve. The 74.4% steady-state performance demonstrates maturity enabled by technological advances (vibration damper and propeller-assisted blade tool).
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        </div>
+        <!-- END SUB-TAB: TIMELINE -->
+
+        <!-- SUB-TAB 3: PATTERNS -->
+        <div class="eolmed-sub-tab-content" id="eolmed-subtab-patterns">
+
+        <!-- Detailed Pattern Analysis -->
+        <section class="detailed-pattern-section">
+            <h2>Operational Patterns & Execution Analysis</h2>
+
+            <!-- Pattern 1: Technology Impact -->
+            <div class="pattern-detail-box pattern-1-consulting">
+                <h3 class="pattern-title-compact pattern-1-title">Pattern 1: Technological Innovation Impact</h3>
+
+                <div class="pattern-1-side-by-side">
+                    <!-- LEFT: Innovation Details -->
+                    <div class="pattern-1-column">
+                        <h4>Key Technological Advances</h4>
+
+                        <div class="innovation-box">
+                            <h5>🔧 Vibration Damper</h5>
+                            <ul>
+                                <li><strong>Purpose:</strong> Stabilize platform during nacelle installation</li>
+                                <li><strong>Impact:</strong> 32% nacelle time reduction (5.67h → 3.83h)</li>
+                                <li><strong>Benefit:</strong> Safer, more predictable installation</li>
+                            </ul>
+                        </div>
+
+                        <div class="innovation-box">
+                            <h5>⚡ Propeller-Assisted Blade Tool</h5>
+                            <ul>
+                                <li><strong>Feature:</strong> Integrated propellers for active stabilization</li>
+                                <li><strong>Impact:</strong> 41% blade time reduction (8.33h → 5.0h)</li>
+                                <li><strong>Benefit:</strong> Faster, safer blade erection process</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- RIGHT: Performance Metrics -->
+                    <div class="pattern-1-column">
+                        <h4>Performance Improvements</h4>
+
+                        <div class="metric-highlight-box">
+                            <div class="metric-label">Blade Learning Rate</div>
+                            <div class="metric-value">62%</div>
+                            <div class="metric-note">Fastest learning among all components</div>
+                        </div>
+
+                        <div class="metric-highlight-box">
+                            <div class="metric-label">Nacelle Learning Rate</div>
+                            <div class="metric-value">96%</div>
+                            <div class="metric-note">Stable performance with damper</div>
+                        </div>
+
+                        <div class="metric-highlight-box">
+                            <div class="metric-label">Overall Improvement</div>
+                            <div class="metric-value">28.6%</div>
+                            <div class="metric-note">F1 to F3 total reduction</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pattern 2: Learning Comparison with EFGL -->
+            <div class="pattern-detail-box pattern-2-consulting">
+                <h3 class="pattern-title-compact pattern-2-title">Pattern 2: Learning Curve Comparison</h3>
+
+                <div class="pattern-2-layout">
+                    <!-- LEFT: Comparison Table -->
+                    <div class="start-time-table-section">
+                        <table class="start-time-table-compact">
+                            <thead>
+                                <tr>
+                                    <th>Metric</th>
+                                    <th>EFGL</th>
+                                    <th>Eolmed</th>
+                                    <th>Difference</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="pattern-good">
+                                    <td><strong>F1 Baseline</strong></td>
+                                    <td>42.25h</td>
+                                    <td>28.00h</td>
+                                    <td>✓ 34% faster</td>
+                                </tr>
+                                <tr class="pattern-good">
+                                    <td><strong>F3 Final</strong></td>
+                                    <td>26.67h</td>
+                                    <td>20.00h</td>
+                                    <td>✓ 25% faster</td>
+                                </tr>
+                                <tr class="pattern-mixed">
+                                    <td><strong>Learning Rate</strong></td>
+                                    <td>79.5%</td>
+                                    <td>77.4%</td>
+                                    <td>⚠ Similar</td>
+                                </tr>
+                                <tr class="pattern-good">
+                                    <td><strong>Blade Time F3</strong></td>
+                                    <td>8.17h</td>
+                                    <td>5.00h</td>
+                                    <td>✓ 39% faster</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- RIGHT: Key Observations -->
+                    <div class="pattern-2-observations-compact">
+                        <h4>KEY OBSERVATIONS:</h4>
+                        <ul>
+                            <li>Eolmed F1 started 34% faster than EFGL F1 (knowledge transfer)</li>
+                            <li>Technology enables faster baseline but similar learning rate</li>
+                            <li>Blade tool shows strongest impact (39% faster by F3)</li>
+                            <li>Vibration damper provides nacelle installation stability</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        </div>
+        <!-- END SUB-TAB: PATTERNS -->
+
+        <!-- SUB-TAB 4: FORECASTING -->
+        <div class="eolmed-sub-tab-content" id="eolmed-subtab-forecasting">
+
+        <!-- Scenario Planning -->
+        <section class="controls-section">
+            <h2>Scaling Analysis & Future Projections</h2>
+            <p class="section-description">Project future floater assembly times based on Eolmed's 77.4% learning rate</p>
+
+            <div class="scenario-layout">
+                <!-- Left: Controls -->
+                <div class="controls-compact">
+                    <div class="control-group-compact">
+                        <label for="eolmed-turbine-count">
+                            <span class="control-label">Number of Floaters:</span>
+                            <span class="control-value" id="eolmed-turbine-count-value">10</span>
+                        </label>
+                        <input type="range" id="eolmed-turbine-count" min="4" max="50" value="10" step="1">
+                    </div>
+
+                    <div class="control-group-compact">
+                        <label for="eolmed-learning-rate-method">
+                            <span class="control-label">Learning Rate Method:</span>
+                        </label>
+                        <select id="eolmed-learning-rate-method">
+                            <option value="sequential-avg">Sequential Transition Average (77.4%)</option>
+                            <option value="f1-f2-only">F1→F2 Transition Only (77.4%)</option>
+                            <option value="f2-f3-only">F2→F3 Transition Only (92.3%)</option>
+                            <option value="power-law">Power Law Regression</option>
+                        </select>
+                    </div>
+
+                    <div class="method-info-box-compact">
+                        <div class="info-name" id="eolmed-method-name">Sequential Transition Average</div>
+                        <div class="info-formula" id="eolmed-method-formula">(LR_F1→F2 + LR_F2→F3) / 2</div>
+                        <div class="info-description" id="eolmed-method-description">Average of F1→F2 and F2→F3 transitions</div>
+                        <div class="info-lr-value">
+                            <span class="lr-label">Calculated LR:</span>
+                            <span class="lr-number" id="eolmed-calculated-lr-value">77.4%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Chart -->
+                <div class="chart-area-compact">
+                    <h3>Assembly Time Projection</h3>
+                    <div class="chart-container" style="height: 350px;">
+                        <canvas id="eolmed-scaling-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        </div>
+        <!-- END SUB-TAB: FORECASTING -->
+
         </div>
         <!-- END TAB 2: EOLMED PROJECT -->
 
