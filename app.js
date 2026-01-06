@@ -934,10 +934,16 @@ function populateDataTable() {
     improvements.forEach(item => {
         const row = document.createElement('tr');
 
-        const formatImprovement = (val) => {
-            const className = val >= 0 ? 'improvement-positive' : 'improvement-negative';
-            const sign = val >= 0 ? '+' : '';
-            return `<span class="${className}">${sign}${val.toFixed(2)}%</span>`;
+        // Calculate total and average
+        const total = item.f1 + item.f2 + item.f3;
+        const average = total / 3;
+
+        // Format improvements: show positive hours, arrow shows direction (down=good, up=bad)
+        const formatImprovement = (f1Val, f2Val) => {
+            const percentChange = ((f1Val - f2Val) / f1Val) * 100;
+            const arrow = percentChange > 0 ? '↓' : '↑';
+            const className = percentChange > 0 ? 'improvement' : 'decline';
+            return `<span class="${className}">${arrow} ${Math.abs(percentChange).toFixed(1)}%</span>`;
         };
 
         // Add asterisk to Tower Section 3 F1 as outlier
@@ -950,9 +956,11 @@ function populateDataTable() {
             <td>${f1Display}</td>
             <td>${item.f2.toFixed(2)}</td>
             <td>${item.f3.toFixed(2)}</td>
-            <td>${formatImprovement(item.imp_f1_f2)}</td>
-            <td>${formatImprovement(item.imp_f2_f3)}</td>
-            <td>${formatImprovement(item.imp_total)}</td>
+            <td>${total.toFixed(2)}</td>
+            <td>${average.toFixed(2)}</td>
+            <td>${formatImprovement(item.f1, item.f2)}</td>
+            <td>${formatImprovement(item.f2, item.f3)}</td>
+            <td>${formatImprovement(item.f1, item.f3)}</td>
         `;
 
         tbody.appendChild(row);
@@ -960,31 +968,31 @@ function populateDataTable() {
 
     // Add total row
     const totalRow = document.createElement('tr');
-    totalRow.style.fontWeight = 'bold';
-    totalRow.style.backgroundColor = '#f1f5f9';
+    totalRow.className = 'table-highlight';
 
     const f1Total = turbineData.floaters[0].total_hours;
     const f2Total = turbineData.floaters[1].total_hours;
     const f3Total = turbineData.floaters[2].total_hours;
+    const grandTotal = f1Total + f2Total + f3Total;
+    const grandAverage = grandTotal / 3;
 
-    const totalF1F2 = ((f1Total - f2Total) / f1Total) * 100;
-    const totalF2F3 = ((f2Total - f3Total) / f2Total) * 100;
-    const totalOverall = ((f1Total - f3Total) / f1Total) * 100;
-
-    const formatImprovement = (val) => {
-        const className = val >= 0 ? 'improvement-positive' : 'improvement-negative';
-        const sign = val >= 0 ? '+' : '';
-        return `<span class="${className}">${sign}${val.toFixed(2)}%</span>`;
+    const formatImprovement = (f1Val, f2Val) => {
+        const percentChange = ((f1Val - f2Val) / f1Val) * 100;
+        const arrow = percentChange > 0 ? '↓' : '↑';
+        const className = percentChange > 0 ? 'improvement' : 'decline';
+        return `<span class="${className}">${arrow} ${Math.abs(percentChange).toFixed(1)}%</span>`;
     };
 
     totalRow.innerHTML = `
-        <td>TOTAL</td>
-        <td>${f1Total.toFixed(2)}</td>
-        <td>${f2Total.toFixed(2)}</td>
-        <td>${f3Total.toFixed(2)}</td>
-        <td>${formatImprovement(totalF1F2)}</td>
-        <td>${formatImprovement(totalF2F3)}</td>
-        <td>${formatImprovement(totalOverall)}</td>
+        <td><strong>TOTAL</strong></td>
+        <td><strong>${f1Total.toFixed(2)}</strong></td>
+        <td><strong>${f2Total.toFixed(2)}</strong></td>
+        <td><strong>${f3Total.toFixed(2)}</strong></td>
+        <td><strong>${grandTotal.toFixed(2)}</strong></td>
+        <td><strong>${grandAverage.toFixed(2)}</strong></td>
+        <td><strong>${formatImprovement(f1Total, f2Total)}</strong></td>
+        <td><strong>${formatImprovement(f2Total, f3Total)}</strong></td>
+        <td><strong>${formatImprovement(f1Total, f3Total)}</strong></td>
     `;
 
     tbody.appendChild(totalRow);
@@ -2841,19 +2849,21 @@ function populateEolmedDataTable() {
         });
     });
 
+    // Format improvements: show positive hours, arrow shows direction (down=good, up=bad)
+    const formatImprovement = (f1Val, f2Val) => {
+        const percentChange = ((f1Val - f2Val) / f1Val) * 100;
+        const arrow = percentChange > 0 ? '↓' : '↑';
+        const className = percentChange > 0 ? 'improvement' : 'decline';
+        return `<span class="${className}">${arrow} ${Math.abs(percentChange).toFixed(1)}%</span>`;
+    };
+
     let rows = '';
     Object.keys(componentData).forEach(name => {
         const f1 = componentData[name][0];
         const f2 = componentData[name][1];
         const f3 = componentData[name][2];
-
-        const f1f2Improvement = ((f1 - f2) / f1 * 100);
-        const f2f3Improvement = ((f2 - f3) / f2 * 100);
-        const totalImprovement = ((f1 - f3) / f1 * 100);
-
-        const f1f2Class = f1f2Improvement > 0 ? 'improvement' : (f1f2Improvement < 0 ? 'decline' : 'neutral');
-        const f2f3Class = f2f3Improvement > 0 ? 'improvement' : (f2f3Improvement < 0 ? 'decline' : 'neutral');
-        const totalClass = totalImprovement > 0 ? 'improvement' : (totalImprovement < 0 ? 'decline' : 'neutral');
+        const total = f1 + f2 + f3;
+        const average = total / 3;
 
         rows += `
             <tr>
@@ -2861,9 +2871,11 @@ function populateEolmedDataTable() {
                 <td>${f1.toFixed(2)}</td>
                 <td>${f2.toFixed(2)}</td>
                 <td>${f3.toFixed(2)}</td>
-                <td class="${f1f2Class}">${f1f2Improvement >= 0 ? '+' : ''}${f1f2Improvement.toFixed(1)}%</td>
-                <td class="${f2f3Class}">${f2f3Improvement >= 0 ? '+' : ''}${f2f3Improvement.toFixed(1)}%</td>
-                <td class="${totalClass}">${totalImprovement >= 0 ? '+' : ''}${totalImprovement.toFixed(1)}%</td>
+                <td>${total.toFixed(2)}</td>
+                <td>${average.toFixed(2)}</td>
+                <td>${formatImprovement(f1, f2)}</td>
+                <td>${formatImprovement(f2, f3)}</td>
+                <td>${formatImprovement(f1, f3)}</td>
             </tr>
         `;
     });
@@ -2872,10 +2884,8 @@ function populateEolmedDataTable() {
     const f1Total = eolmedData.floaters[0].total_hours;
     const f2Total = eolmedData.floaters[1].total_hours;
     const f3Total = eolmedData.floaters[2].total_hours;
-
-    const f1f2TotalImprovement = ((f1Total - f2Total) / f1Total * 100);
-    const f2f3TotalImprovement = ((f2Total - f3Total) / f2Total * 100);
-    const overallImprovement = ((f1Total - f3Total) / f1Total * 100);
+    const grandTotal = f1Total + f2Total + f3Total;
+    const grandAverage = grandTotal / 3;
 
     rows += `
         <tr class="table-highlight">
@@ -2883,9 +2893,11 @@ function populateEolmedDataTable() {
             <td><strong>${f1Total.toFixed(2)}</strong></td>
             <td><strong>${f2Total.toFixed(2)}</strong></td>
             <td><strong>${f3Total.toFixed(2)}</strong></td>
-            <td class="improvement"><strong>+${f1f2TotalImprovement.toFixed(1)}%</strong></td>
-            <td class="improvement"><strong>+${f2f3TotalImprovement.toFixed(1)}%</strong></td>
-            <td class="improvement"><strong>+${overallImprovement.toFixed(1)}%</strong></td>
+            <td><strong>${grandTotal.toFixed(2)}</strong></td>
+            <td><strong>${grandAverage.toFixed(2)}</strong></td>
+            <td><strong>${formatImprovement(f1Total, f2Total)}</strong></td>
+            <td><strong>${formatImprovement(f2Total, f3Total)}</strong></td>
+            <td><strong>${formatImprovement(f1Total, f3Total)}</strong></td>
         </tr>
     `;
 

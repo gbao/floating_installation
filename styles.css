@@ -555,6 +555,21 @@ td {
     font-size: 1.1rem;
 }
 
+/* McKinsey-Style Small Footnote */
+.table-footnote-small {
+    margin-top: 0.75rem;
+    padding: 0.5rem 0;
+    border-top: 1px solid #e2e8f0;
+}
+
+.table-footnote-small p {
+    margin: 0;
+    color: #64748b;
+    font-size: 0.75rem;
+    line-height: 1.5;
+    font-style: italic;
+}
+
 /* Project Overview Section */
 .project-overview {
     background: var(--card-bg);
