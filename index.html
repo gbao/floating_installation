@@ -89,9 +89,9 @@
                         Overall crane utilization across entire EFGL campaign.<br>
                         Total crane hours: 101.25h (F1:42.25h + F2:32.33h + F3:26.67h)<br>
                         Available hours: 950h (95 project days × 10-hour working day)<br><br>
-                        95 days = Full project from F1 arrival (13 May) to F3 completion (15 Aug)<br>
-                        INCLUDES gaps between floaters and weather waits.<br><br>
-                        Per-floater utilization: F1: 10.8% → F2: 12.4% → F3: 12.1%
+                        95 days = Full project from F1 arrival (13 May) to F3 Blade 3 completion (15 Aug)<br>
+                        INCLUDES gaps between floaters allocated to next floater.<br><br>
+                        Per-floater utilization (gap-adjusted): F1: 10.8% → F2: 11.0% → F3: 10.1%
                     </div>
                 </div>
 
@@ -101,18 +101,19 @@
                         <span class="metric-title">Total Calendar / Avg per Unit</span>
                         <button class="metric-info-btn" data-tooltip="metric3">?</button>
                     </div>
-                    <div class="metric-value-large">95d / 29d</div>
+                    <div class="metric-value-large">95d / 31.5d</div>
                     <div class="metric-subtitle">(3 floaters / per floater)</div>
                     <div class="metric-detail">13 May - 15 Aug 2025</div>
-                    <div class="metric-note">F1:39d • F2:26d • F3:22d</div>
+                    <div class="metric-note">F1:39d • F2:29.3d • F3:26.3d</div>
 
                     <!-- Tooltip -->
                     <div class="metric-tooltip" id="tooltip-metric3">
                         <strong>Total Calendar / Avg per Unit</strong><br>
-                        Total project duration including all gaps between floaters.<br>
-                        Average = (39 + 26 + 22) / 3 = 29 days per floater<br><br>
-                        Includes arrival-to-departure time for each floater,<br>
-                        gaps between floaters, and weather waits.
+                        Total project duration: 95 days (crane active period).<br>
+                        Average = (39.0 + 29.3 + 26.3) / 3 = 31.5 days per floater<br><br>
+                        Inter-floater gaps allocated to next floater:<br>
+                        F1: 39.0d | F2: 26.0d + 3.3d gap | F3: 11.0d + 15.3d gap<br>
+                        Note: F3 excludes 11d post-Blade3 crane disassembly period.
                     </div>
                 </div>
 
@@ -122,7 +123,7 @@
                         <span class="metric-title">Total Task Hours / Avg per Unit</span>
                         <button class="metric-info-btn" data-tooltip="metric4">?</button>
                     </div>
-                    <div class="metric-value-large">101h / 34h</div>
+                    <div class="metric-value-large">101h / 33.75h</div>
                     <div class="metric-subtitle">(Total / per floater)</div>
                     <div class="metric-detail">Pure execution time</div>
                     <div class="metric-note">F1:42.25h • F2:32.33h • F3:26.67h</div>
@@ -846,6 +847,8 @@
                                 <th>F1</th>
                                 <th>F2</th>
                                 <th>F3</th>
+                                <th>Total</th>
+                                <th>Average</th>
                                 <th>Δ F1→F2</th>
                                 <th>Δ F2→F3</th>
                                 <th>Δ F1→F3</th>
@@ -854,96 +857,149 @@
                         <tbody>
                             <tr>
                                 <td>Per-floater preparation</td>
-                                <td>5 days</td>
-                                <td>4 days</td>
-                                <td>3 days</td>
+                                <td>5d</td>
+                                <td>4d</td>
+                                <td>3d</td>
+                                <td>12d</td>
+                                <td>4.0d</td>
                                 <td class="improvement">↓ 20%</td>
                                 <td class="improvement">↓ 25%</td>
                                 <td class="improvement">↓ 40%</td>
                             </tr>
                             <tr>
                                 <td>Tower Sec 1→2 gap</td>
-                                <td>+12 days</td>
-                                <td>+1 day</td>
-                                <td>0 days</td>
+                                <td>+12d</td>
+                                <td>+1d</td>
+                                <td>0d</td>
+                                <td>13d</td>
+                                <td>4.3d</td>
                                 <td class="improvement">↓ 92%</td>
                                 <td class="improvement">↓ 100%</td>
                                 <td class="improvement">↓ 100%</td>
                             </tr>
                             <tr>
                                 <td>Tower Sec 2→3 gap</td>
-                                <td>+3 days</td>
-                                <td>+1 day</td>
-                                <td>+2 days</td>
+                                <td>+3d</td>
+                                <td>+1d</td>
+                                <td>+2d</td>
+                                <td>6d</td>
+                                <td>2.0d</td>
                                 <td class="improvement">↓ 67%</td>
                                 <td class="decline">↑ 100%</td>
                                 <td class="improvement">↓ 33%</td>
                             </tr>
                             <tr>
                                 <td>Tower completion time</td>
-                                <td>15 days</td>
-                                <td>2 days</td>
-                                <td>2 days</td>
+                                <td>15d</td>
+                                <td>2d</td>
+                                <td>2d</td>
+                                <td>19d</td>
+                                <td>6.3d</td>
                                 <td class="improvement">↓ 87%</td>
                                 <td class="neutral">±0%</td>
                                 <td class="improvement">↓ 87%</td>
                             </tr>
                             <tr>
                                 <td>Blade 1→2 gap</td>
-                                <td>+1 day</td>
-                                <td>+6 days</td>
-                                <td>+1 day</td>
+                                <td>+1d</td>
+                                <td>+6d</td>
+                                <td>+1d</td>
+                                <td>8d</td>
+                                <td>2.7d</td>
                                 <td class="decline">↑ 500%</td>
                                 <td class="improvement">↓ 83%</td>
                                 <td class="neutral">±0%</td>
                             </tr>
                             <tr>
                                 <td>Blade 2→3 gap</td>
-                                <td>+3 days</td>
-                                <td>+1 day</td>
-                                <td>+1 day</td>
+                                <td>+3d</td>
+                                <td>+1d</td>
+                                <td>+1d</td>
+                                <td>5d</td>
+                                <td>1.7d</td>
                                 <td class="improvement">↓ 67%</td>
                                 <td class="neutral">±0%</td>
                                 <td class="improvement">↓ 67%</td>
                             </tr>
                             <tr>
                                 <td>Blade completion time</td>
-                                <td>4 days</td>
-                                <td>7 days</td>
-                                <td>2 days</td>
+                                <td>4d</td>
+                                <td>7d</td>
+                                <td>2d</td>
+                                <td>13d</td>
+                                <td>4.3d</td>
                                 <td class="decline">↑ 75%</td>
                                 <td class="improvement">↓ 71%</td>
                                 <td class="improvement">↓ 50%</td>
+                            </tr>
+                            <tr>
+                                <td>Blade 3 completion → Departure</td>
+                                <td>11.0d</td>
+                                <td>8.6d</td>
+                                <td>11.0d*</td>
+                                <td>19.6d</td>
+                                <td>10.2d</td>
+                                <td class="improvement">↓ 22%</td>
+                                <td class="decline">↑ 28%</td>
+                                <td class="neutral">±0%</td>
+                            </tr>
+                            <tr>
+                                <td>Floater N departure → Floater N+1 arrival</td>
+                                <td>3.3d</td>
+                                <td>15.3d</td>
+                                <td>n/a</td>
+                                <td>18.6d</td>
+                                <td>9.3d</td>
+                                <td class="decline">↑ 364%</td>
+                                <td>n/a</td>
+                                <td>n/a</td>
                             </tr>
                             <tr>
                                 <td>Crane working hours</td>
                                 <td>42.25h</td>
                                 <td>32.33h</td>
                                 <td>26.67h</td>
+                                <td>101.25h</td>
+                                <td>33.75h</td>
                                 <td class="improvement">↓ 23%</td>
                                 <td class="improvement">↓ 18%</td>
                                 <td class="improvement">↓ 37%</td>
                             </tr>
                             <tr class="table-highlight">
-                                <td><strong>Total calendar days</strong></td>
-                                <td><strong>39 days</strong></td>
-                                <td><strong>26 days</strong></td>
-                                <td><strong>22 days</strong></td>
+                                <td><strong>Total calendar days (incl. gaps)**</strong></td>
+                                <td><strong>39.0d</strong></td>
+                                <td><strong>29.3d</strong></td>
+                                <td><strong>26.3d</strong></td>
+                                <td><strong>94.6d</strong></td>
+                                <td><strong>31.5d</strong></td>
+                                <td class="improvement"><strong>↓ 25%</strong></td>
+                                <td class="improvement"><strong>↓ 10%</strong></td>
                                 <td class="improvement"><strong>↓ 33%</strong></td>
-                                <td class="improvement"><strong>↓ 15%</strong></td>
-                                <td class="improvement"><strong>↓ 44%</strong></td>
                             </tr>
                             <tr class="table-highlight">
                                 <td><strong>Crane utilization</strong></td>
                                 <td><strong>10.8%</strong></td>
-                                <td><strong>12.4%</strong></td>
-                                <td><strong>12.1%</strong></td>
-                                <td class="improvement"><strong>↑ 15%</strong></td>
-                                <td class="decline"><strong>↓ 2%</strong></td>
-                                <td class="improvement"><strong>↑ 12%</strong></td>
+                                <td><strong>11.0%</strong></td>
+                                <td><strong>10.1%</strong></td>
+                                <td><strong>10.7%</strong></td>
+                                <td><strong>10.6%</strong></td>
+                                <td class="improvement"><strong>↑ 2%</strong></td>
+                                <td class="decline"><strong>↓ 8%</strong></td>
+                                <td class="improvement"><strong>↓ 6%</strong></td>
                             </tr>
                         </tbody>
                     </table>
+                </div>
+
+                <div class="table-footnote" style="margin-top: 1.5rem; padding: 1rem; background: #f8fafc; border-left: 4px solid #2563eb; border-radius: 8px;">
+                    <p style="margin-bottom: 0.5rem;"><strong>*F3 Blade 3 completion → Departure (11.0d):</strong> NOT counted in F3 calendar days total. This period includes crane disassembly and tow-out preparation without crane usage. For F1 and F2, crane remains on-site preparing for the next floater.</p>
+                    <p style="margin-bottom: 0.5rem;"><strong>**Total calendar days calculation:</strong></p>
+                    <ul style="margin-left: 1.5rem; margin-bottom: 0.5rem;">
+                        <li><strong>F1:</strong> 39.0 days (13-May to 21-Jun, crane active period)</li>
+                        <li><strong>F2:</strong> 29.3 days = 26.0d crane work + 3.3d inter-floater gap (F1 departure to F2 arrival)</li>
+                        <li><strong>F3:</strong> 26.3 days = 11.0d crane work (04-Aug to 15-Aug) + 15.3d inter-floater gap (F2 departure to F3 arrival)</li>
+                    </ul>
+                    <p style="margin-bottom: 0;"><strong>Total project duration:</strong> 94.6 days ≈ <strong>95 days</strong> (13-May to 15-Aug 2025). Overall crane utilization: 101.25h / 950h (95 days × 10h/day) = <strong>10.7%</strong></p>
                 </div>
             </div>
 
