@@ -2701,31 +2701,22 @@ function createEolmedTimelineChart() {
     }
     const ctx = chartElement.getContext('2d');
 
-    const datasets = [];
-    const colors = ['#ef4444', '#f59e0b', '#10b981'];
-
-    eolmedData.floaters.forEach((floater, index) => {
-        floater.operations.forEach(op => {
-            let dataset = datasets.find(d => d.label === op.name);
-            if (!dataset) {
-                const colorIndex = datasets.length % colors.length;
-                dataset = {
-                    label: op.name,
-                    data: [],
-                    backgroundColor: colors[colorIndex],
-                    borderColor: colors[colorIndex],
-                    borderWidth: 2
-                };
-                datasets.push(dataset);
-            }
-            dataset.data.push(op.duration);
-        });
+    // Match EFGL structure: floaters as datasets, components as x-axis
+    const datasets = eolmedData.floaters.map((floater, idx) => {
+        const colors = ['#ef4444', '#f59e0b', '#10b981'];
+        return {
+            label: `Floater ${floater.id}`,
+            data: floater.operations.map(op => op.duration),
+            backgroundColor: colors[idx],
+            borderColor: colors[idx],
+            borderWidth: 2
+        };
     });
 
     new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['Floater 1', 'Floater 2', 'Floater 3'],
+            labels: eolmedData.floaters[0].operations.map(op => op.name),
             datasets: datasets
         },
         options: {
@@ -2733,32 +2724,34 @@ function createEolmedTimelineChart() {
             maintainAspectRatio: false,
             plugins: {
                 title: {
-                    display: false
+                    display: true,
+                    text: 'Assembly Time Comparison Across All Components',
+                    font: { size: 16, weight: 'bold' }
                 },
                 legend: {
-                    position: 'bottom'
+                    display: true,
+                    position: 'top'
                 },
                 tooltip: {
                     callbacks: {
                         label: function(context) {
-                            return context.dataset.label + ': ' + context.parsed.y.toFixed(2) + 'h';
+                            return `${context.dataset.label}: ${context.parsed.y.toFixed(2)} hours`;
                         }
                     }
                 }
             },
             scales: {
-                x: {
-                    stacked: true,
-                    grid: {
-                        display: false
-                    }
-                },
                 y: {
-                    stacked: true,
                     beginAtZero: true,
                     title: {
                         display: true,
-                        text: 'Assembly Time (hours)'
+                        text: 'Duration (hours)'
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Component'
                     }
                 }
             }
@@ -2774,47 +2767,66 @@ function createEolmedComponentChart() {
     }
     const ctx = chartElement.getContext('2d');
 
-    const componentData = {};
-    eolmedData.floaters.forEach((floater, fIndex) => {
-        floater.operations.forEach(op => {
-            if (!componentData[op.name]) {
-                componentData[op.name] = [];
-            }
-            componentData[op.name][fIndex] = op.duration;
-        });
-    });
+    // Calculate improvements for each component (match EFGL structure)
+    const components = eolmedData.floaters[0].operations.map(op => op.name);
+    const improvements = [];
 
-    const datasets = Object.keys(componentData).map((name, index) => {
-        const colors = ['#ef4444', '#f59e0b', '#10b981', '#3b82f6', '#8b5cf6', '#ec4899', '#06b6d4'];
-        return {
-            label: name,
-            data: componentData[name],
-            backgroundColor: colors[index % colors.length],
-            borderColor: colors[index % colors.length],
-            borderWidth: 2
-        };
+    components.forEach((component, idx) => {
+        const f1 = eolmedData.floaters[0].operations[idx].duration;
+        const f2 = eolmedData.floaters[1].operations[idx].duration;
+        const f3 = eolmedData.floaters[2].operations[idx].duration;
+
+        const imp_f1_f2 = ((f1 - f2) / f1) * 100;
+        const imp_f2_f3 = ((f2 - f3) / f2) * 100;
+        const imp_total = ((f1 - f3) / f1) * 100;
+
+        improvements.push({
+            component,
+            imp_f1_f2,
+            imp_f2_f3,
+            imp_total
+        });
     });
 
     new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['Floater 1', 'Floater 2', 'Floater 3'],
-            datasets: datasets
+            labels: improvements.map(i => i.component),
+            datasets: [
+                {
+                    label: 'F1 → F2 Improvement (%)',
+                    data: improvements.map(i => i.imp_f1_f2),
+                    backgroundColor: '#3b82f6'
+                },
+                {
+                    label: 'F2 → F3 Improvement (%)',
+                    data: improvements.map(i => i.imp_f2_f3),
+                    backgroundColor: '#10b981'
+                },
+                {
+                    label: 'Total Improvement (%)',
+                    data: improvements.map(i => i.imp_total),
+                    backgroundColor: '#8b5cf6'
+                }
+            ]
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
                 title: {
-                    display: false
+                    display: true,
+                    text: 'Efficiency Gains by Component',
+                    font: { size: 16, weight: 'bold' }
                 },
                 legend: {
-                    position: 'bottom'
+                    display: true,
+                    position: 'top'
                 },
                 tooltip: {
                     callbacks: {
                         label: function(context) {
-                            return context.dataset.label + ': ' + context.parsed.y.toFixed(2) + 'h';
+                            return `${context.dataset.label}: ${context.parsed.y.toFixed(2)}%`;
                         }
                     }
                 }
@@ -2824,7 +2836,103 @@ function createEolmedComponentChart() {
                     beginAtZero: true,
                     title: {
                         display: true,
-                        text: 'Assembly Time (hours)'
+                        text: 'Improvement (%)'
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Component'
+                    }
+                }
+            }
+        }
+    });
+}
+
+function createEolmedUtilizationBarChart() {
+    const chartElement = document.getElementById('eolmed-utilization-bar-chart');
+    if (!chartElement) {
+        console.log('Eolmed utilization bar chart element not found - skipping');
+        return;
+    }
+    const ctx = chartElement.getContext('2d');
+
+    // Eolmed floater data (simplified - using total days from project metrics)
+    const floaters = [
+        { name: 'F1', days: eolmedData.floaters[0].total_days, work: eolmedData.floaters[0].total_hours, available: eolmedData.floaters[0].total_days * 24 },
+        { name: 'F2', days: eolmedData.floaters[1].total_days, work: eolmedData.floaters[1].total_hours, available: eolmedData.floaters[1].total_days * 24 },
+        { name: 'F3', days: eolmedData.floaters[2].total_days, work: eolmedData.floaters[2].total_hours, available: eolmedData.floaters[2].total_days * 24 }
+    ];
+
+    // Calculate percentages
+    const activePercentages = floaters.map(f => (f.work / f.available) * 100);
+    const idlePercentages = floaters.map(f => 100 - (f.work / f.available) * 100);
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: floaters.map(f => `${f.name}\n(${f.days.toFixed(2)} days)`),
+            datasets: [
+                {
+                    label: 'Active (Crane Work)',
+                    data: activePercentages,
+                    backgroundColor: '#d97706',
+                    borderColor: '#b45309',
+                    borderWidth: 1,
+                    barPercentage: 0.6,
+                    categoryPercentage: 0.7
+                },
+                {
+                    label: 'Idle',
+                    data: idlePercentages,
+                    backgroundColor: '#cbd5e1',
+                    borderColor: '#94a3b8',
+                    borderWidth: 1,
+                    barPercentage: 0.6,
+                    categoryPercentage: 0.7
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            indexAxis: 'y',
+            plugins: {
+                title: {
+                    display: false
+                },
+                legend: {
+                    display: true,
+                    position: 'top'
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return `${context.dataset.label}: ${context.parsed.x.toFixed(1)}%`;
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    stacked: true,
+                    max: 100,
+                    ticks: {
+                        callback: function(value) {
+                            return value + '%';
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: '% of Available Time'
+                    }
+                },
+                y: {
+                    stacked: true,
+                    title: {
+                        display: true,
+                        text: 'Floater'
                     }
                 }
             }
@@ -3174,6 +3282,7 @@ function init() {
     // Create Eolmed charts (Tab 2)
     createEolmedTimelineChart();
     createEolmedComponentChart();
+    createEolmedUtilizationBarChart();
     createEolmedScalingChart();
 
     // Populate Eolmed data table

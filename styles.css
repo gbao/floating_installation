@@ -2950,6 +2950,33 @@ footer p {
     box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
 }
 
+/* Eolmed Sub-Tab Buttons (Amber theme) */
+.eolmed-sub-tab-btn {
+    flex: 1;
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    background: white;
+    color: #64748b;
+    transition: all 0.3s ease;
+}
+
+.eolmed-sub-tab-btn:hover {
+    background: #fef3c7;
+    color: #92400e;
+    border-color: #fde68a;
+}
+
+.eolmed-sub-tab-btn.active {
+    background: linear-gradient(135deg, #d97706, #f59e0b);
+    color: white;
+    border-color: #d97706;
+    box-shadow: 0 4px 12px rgba(217, 119, 6, 0.3);
+}
+
 /* Sub-Tab Content Areas */
 .efgl-sub-tab-content {
     display: none;
