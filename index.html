@@ -1067,17 +1067,18 @@
                     </div>
                     <div class="metric-value-large">9.0%</div>
                     <div class="metric-subtitle">Overall (3 units)</div>
-                    <div class="metric-detail">69.7h / 771h available</div>
+                    <div class="metric-detail">69.67h / 770h available</div>
                     <div class="metric-note">(77 project days × 10h/day)</div>
 
                     <!-- Tooltip -->
                     <div class="metric-tooltip" id="tooltip-eolmed-metric2">
                         <strong>Crane Utilization</strong><br>
                         Overall crane utilization across entire Eolmed campaign.<br>
-                        Total crane hours: 69.7h (F1:28.0h + F2:21.67h + F3:20.0h)<br>
-                        Available hours: 771h (77.09 project days × 10-hour working day)<br><br>
-                        Lower than EFGL's 10.7% due to more aggressive scheduling<br>
-                        and faster execution enabled by technological advances.
+                        Total crane hours: 69.67h (F1:28.0h + F2:21.67h + F3:20.0h)<br>
+                        Available hours: 770h (77 days × 10-hour working day)<br><br>
+                        77 days = Full project from F1 arrival (15 Sep) to F3 Blade 3 completion (01 Dec)<br>
+                        INCLUDES gaps between floaters allocated to next floater.<br><br>
+                        Per-floater utilization (gap-adjusted): F1: 8.0% → F2: 10.3% → F3: 9.5%
                     </div>
                 </div>
 
@@ -1089,15 +1090,17 @@
                     </div>
                     <div class="metric-value-large">77d / 26d</div>
                     <div class="metric-subtitle">(3 floaters / per floater)</div>
-                    <div class="metric-detail">2024 - 2025</div>
-                    <div class="metric-note">F1:1.17d • F2:0.90d • F3:0.83d</div>
+                    <div class="metric-detail">15 Sep - 01 Dec 2025</div>
+                    <div class="metric-note">F1:35d • F2:21d • F3:21d</div>
 
                     <!-- Tooltip -->
                     <div class="metric-tooltip" id="tooltip-eolmed-metric3">
                         <strong>Total Calendar / Avg per Unit</strong><br>
-                        Total project duration including all gaps between floaters.<br>
-                        Average = (1.17 + 0.90 + 0.83) / 3 = 0.97 days per floater<br><br>
-                        Note: Eolmed had more aggressive scheduling than EFGL.
+                        Total project duration: 77 days (crane active period).<br>
+                        Average = (35 + 21 + 21) / 3 = 25.7 days per floater<br><br>
+                        Inter-floater gaps allocated to next floater:<br>
+                        F1: 35d | F2: 20d + 1d gap | F3: 20d + 1d gap<br>
+                        Note: F3 excludes post-Blade3 period (no departure data - crane disassembly).
                     </div>
                 </div>
 
@@ -1438,54 +1441,128 @@
         <section class="detailed-pattern-section">
             <h2>Operational Patterns & Execution Analysis</h2>
 
-            <!-- Pattern 1: Technology Impact -->
+            <!-- Pattern 1: Sequencing Efficiency -->
             <div class="pattern-detail-box pattern-1-consulting">
-                <h3 class="pattern-title-compact pattern-1-title">Pattern 1: Technological Innovation Impact</h3>
+                <h3 class="pattern-title-compact pattern-1-title">Pattern 1: Sequencing Efficiency & Timeline Compression</h3>
 
                 <div class="pattern-1-side-by-side">
-                    <!-- LEFT: Innovation Details -->
-                    <div class="pattern-1-column">
-                        <h4>Key Technological Advances</h4>
-
-                        <div class="innovation-box">
-                            <h5>🔧 Vibration Damper</h5>
-                            <ul>
-                                <li><strong>Purpose:</strong> Stabilize platform during nacelle installation</li>
-                                <li><strong>Impact:</strong> 32% nacelle time reduction (5.67h → 3.83h)</li>
-                                <li><strong>Benefit:</strong> Safer, more predictable installation</li>
-                            </ul>
+                    <!-- LEFT: TOWER WORKS -->
+                    <div class="tower-works-column">
+                        <div class="pattern-section-header-blue">TOWER WORKS</div>
+                        <div class="pattern-metrics-column-compact">
+                            <div class="pattern-metric-card-compact">
+                                <div class="pattern-metric-label-compact">Per-Floater Preparation</div>
+                                <div class="pattern-metric-value-compact">12d → 1d</div>
+                                <div class="pattern-metric-change-compact">↓ 92%</div>
+                            </div>
+                            <div class="pattern-metric-card-compact">
+                                <div class="pattern-metric-label-compact">Tower Completion</div>
+                                <div class="pattern-metric-value-compact">6d → 1d</div>
+                                <div class="pattern-metric-change-compact">↓ 83%</div>
+                            </div>
                         </div>
 
-                        <div class="innovation-box">
-                            <h5>⚡ Propeller-Assisted Blade Tool</h5>
-                            <ul>
-                                <li><strong>Feature:</strong> Integrated propellers for active stabilization</li>
-                                <li><strong>Impact:</strong> 41% blade time reduction (8.33h → 5.0h)</li>
-                                <li><strong>Benefit:</strong> Faster, safer blade erection process</li>
-                            </ul>
+                        <!-- Tower Section Sequencing Flow -->
+                        <div class="pattern-flow-section-compact">
+                            <h4 class="flow-title-compact">Tower Section Sequencing Flow</h4>
+                            <div class="flow-comparison-horizontal-compact">
+                                <div class="flow-column-compact">
+                                    <div class="flow-label-compact">F1</div>
+                                    <div class="flow-steps-vertical-compact">
+                                        <div class="flow-step-box-compact">S1</div>
+                                        <div class="flow-arrow-compact">↓ +1d</div>
+                                        <div class="flow-step-box-compact">S2</div>
+                                        <div class="flow-arrow-compact">↓ +1d</div>
+                                        <div class="flow-step-box-compact">S3</div>
+                                    </div>
+                                    <div class="flow-result-compact warning">6d ⚠️</div>
+                                </div>
+                                <div class="flow-column-compact">
+                                    <div class="flow-label-compact">F2</div>
+                                    <div class="flow-steps-vertical-compact">
+                                        <div class="flow-step-box-compact">S1</div>
+                                        <div class="flow-arrow-compact">↓ +1d</div>
+                                        <div class="flow-step-box-compact">S2</div>
+                                        <div class="flow-arrow-compact">↓ +1d</div>
+                                        <div class="flow-step-box-compact">S3</div>
+                                    </div>
+                                    <div class="flow-result-compact success">3d ✓</div>
+                                </div>
+                                <div class="flow-column-compact">
+                                    <div class="flow-label-compact">F3</div>
+                                    <div class="flow-steps-vertical-compact">
+                                        <div class="flow-step-box-compact">S1</div>
+                                        <div class="flow-arrow-compact">↓ +1d</div>
+                                        <div class="flow-step-box-compact">S2</div>
+                                        <div class="flow-arrow-compact">↓ +0d</div>
+                                        <div class="flow-step-box-compact">S3</div>
+                                    </div>
+                                    <div class="flow-result-compact success">1d ✓✓</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- RIGHT: Performance Metrics -->
-                    <div class="pattern-1-column">
-                        <h4>Performance Improvements</h4>
-
-                        <div class="metric-highlight-box">
-                            <div class="metric-label">Blade Learning Rate</div>
-                            <div class="metric-value">62%</div>
-                            <div class="metric-note">Fastest learning among all components</div>
+                    <!-- RIGHT: BLADE WORKS -->
+                    <div class="blade-works-column">
+                        <div class="pattern-section-header-blue">BLADE WORKS</div>
+                        <div class="pattern-metrics-column-compact">
+                            <div class="pattern-metric-card-compact">
+                                <div class="pattern-metric-label-compact">Nacelle → Blade 1 Gap</div>
+                                <div class="pattern-metric-value-compact">3d → 6d</div>
+                                <div class="pattern-metric-change-compact">(varies)</div>
+                            </div>
+                            <div class="pattern-metric-card-compact">
+                                <div class="pattern-metric-label-compact">Blade Completion</div>
+                                <div class="pattern-metric-value-compact">1d → 2d</div>
+                                <div class="pattern-metric-change-compact">(↑ weather impact)</div>
+                            </div>
                         </div>
 
-                        <div class="metric-highlight-box">
-                            <div class="metric-label">Nacelle Learning Rate</div>
-                            <div class="metric-value">96%</div>
-                            <div class="metric-note">Stable performance with damper</div>
-                        </div>
-
-                        <div class="metric-highlight-box">
-                            <div class="metric-label">Overall Improvement</div>
-                            <div class="metric-value">28.6%</div>
-                            <div class="metric-note">F1 to F3 total reduction</div>
+                        <!-- Blade Installation Sequencing Flow -->
+                        <div class="pattern-flow-section-compact">
+                            <h4 class="flow-title-compact">Blade Installation Sequencing Flow</h4>
+                            <div class="flow-comparison-horizontal-compact">
+                                <div class="flow-column-compact">
+                                    <div class="flow-label-compact">F1</div>
+                                    <div class="flow-steps-vertical-compact">
+                                        <div class="flow-step-box-compact">Nacelle</div>
+                                        <div class="flow-arrow-compact">↓ +3d</div>
+                                        <div class="flow-step-box-compact">B1</div>
+                                        <div class="flow-arrow-compact">↓ +1d</div>
+                                        <div class="flow-step-box-compact">B2</div>
+                                        <div class="flow-arrow-compact">↓ +0d</div>
+                                        <div class="flow-step-box-compact">B3</div>
+                                    </div>
+                                    <div class="flow-result-compact success">1d ✓</div>
+                                </div>
+                                <div class="flow-column-compact">
+                                    <div class="flow-label-compact">F2</div>
+                                    <div class="flow-steps-vertical-compact">
+                                        <div class="flow-step-box-compact">Nacelle</div>
+                                        <div class="flow-arrow-compact">↓ +5d</div>
+                                        <div class="flow-step-box-compact">B1</div>
+                                        <div class="flow-arrow-compact">↓ +1d</div>
+                                        <div class="flow-step-box-compact">B2</div>
+                                        <div class="flow-arrow-compact">↓ +0d</div>
+                                        <div class="flow-step-box-compact">B3</div>
+                                    </div>
+                                    <div class="flow-result-compact neutral">2d</div>
+                                </div>
+                                <div class="flow-column-compact">
+                                    <div class="flow-label-compact">F3</div>
+                                    <div class="flow-steps-vertical-compact">
+                                        <div class="flow-step-box-compact">Nacelle</div>
+                                        <div class="flow-arrow-compact">↓ +6d</div>
+                                        <div class="flow-step-box-compact">B1</div>
+                                        <div class="flow-arrow-compact">↓ +0d</div>
+                                        <div class="flow-step-box-compact">B2</div>
+                                        <div class="flow-arrow-compact">↓ +1d</div>
+                                        <div class="flow-step-box-compact">B3</div>
+                                    </div>
+                                    <div class="flow-result-compact neutral">2d</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1561,7 +1638,7 @@
                             <canvas id="eolmed-utilization-bar-chart"></canvas>
                         </div>
                         <div class="chart-note">
-                            <strong>Note:</strong> F1: 28.0h work / TBD available • F2: 21.67h work / TBD available • F3: 20.0h work / TBD available
+                            <strong>Note:</strong> F1: 28.0h work / 350h available (35d×10h) • F2: 21.67h work / 210h available (21d×10h) • F3: 20.0h work / 210h available (21d×10h)
                         </div>
                     </div>
 
@@ -1608,26 +1685,103 @@
                         </thead>
                         <tbody>
                             <tr>
+                                <td>Per-floater preparation</td>
+                                <td>12d</td>
+                                <td>1d</td>
+                                <td>4d</td>
+                                <td>17d</td>
+                                <td>5.7d</td>
+                                <td class="improvement">↓ 92%</td>
+                                <td class="decline">↑ 300%</td>
+                                <td class="improvement">↓ 67%</td>
+                            </tr>
+                            <tr>
+                                <td>Tower Sec 1→2 gap</td>
+                                <td>+1d</td>
+                                <td>+1d</td>
+                                <td>+1d</td>
+                                <td>3d</td>
+                                <td>1.0d</td>
+                                <td class="neutral">±0%</td>
+                                <td class="neutral">±0%</td>
+                                <td class="neutral">±0%</td>
+                            </tr>
+                            <tr>
+                                <td>Tower Sec 2→3 gap</td>
+                                <td>+1d</td>
+                                <td>+1d</td>
+                                <td>+0d</td>
+                                <td>2d</td>
+                                <td>0.7d</td>
+                                <td class="neutral">±0%</td>
+                                <td class="improvement">↓ 100%</td>
+                                <td class="improvement">↓ 100%</td>
+                            </tr>
+                            <tr>
                                 <td>Tower completion time</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
+                                <td>6d</td>
+                                <td>3d</td>
+                                <td>1d</td>
+                                <td>10d</td>
+                                <td>3.3d</td>
+                                <td class="improvement">↓ 50%</td>
+                                <td class="improvement">↓ 67%</td>
+                                <td class="improvement">↓ 83%</td>
+                            </tr>
+                            <tr>
+                                <td>Blade 1→2 gap</td>
+                                <td>+1d</td>
+                                <td>+1d</td>
+                                <td>+0d</td>
+                                <td>2d</td>
+                                <td>0.7d</td>
+                                <td class="neutral">±0%</td>
+                                <td class="improvement">↓ 100%</td>
+                                <td class="improvement">↓ 100%</td>
+                            </tr>
+                            <tr>
+                                <td>Blade 2→3 gap</td>
+                                <td>+0d</td>
+                                <td>+0d</td>
+                                <td>+1d</td>
+                                <td>1d</td>
+                                <td>0.3d</td>
+                                <td class="neutral">±0%</td>
+                                <td class="decline">↑ ∞</td>
+                                <td class="decline">↑ ∞</td>
                             </tr>
                             <tr>
                                 <td>Blade completion time</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
-                                <td>TBD</td>
+                                <td>1d</td>
+                                <td>2d</td>
+                                <td>2d</td>
+                                <td>5d</td>
+                                <td>1.7d</td>
+                                <td class="decline">↑ 100%</td>
+                                <td class="neutral">±0%</td>
+                                <td class="decline">↑ 100%</td>
+                            </tr>
+                            <tr>
+                                <td>Blade 3 completion → Departure</td>
+                                <td>9d</td>
+                                <td>9d</td>
+                                <td><strong>n/a</strong></td>
+                                <td>18d</td>
+                                <td>9.0d</td>
+                                <td class="neutral">±0%</td>
+                                <td><strong>n/a</strong></td>
+                                <td><strong>n/a</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Floater N departure → Floater N+1 arrival</td>
+                                <td>1d</td>
+                                <td>1d</td>
+                                <td><strong>n/a</strong></td>
+                                <td>2d</td>
+                                <td>1.0d</td>
+                                <td class="neutral">±0%</td>
+                                <td><strong>n/a</strong></td>
+                                <td><strong>n/a</strong></td>
                             </tr>
                             <tr>
                                 <td>Crane working hours</td>
@@ -1641,33 +1795,33 @@
                                 <td class="improvement">↓ 29%</td>
                             </tr>
                             <tr class="table-highlight">
-                                <td><strong>Total calendar days</strong></td>
-                                <td><strong>1.17d</strong></td>
-                                <td><strong>0.90d</strong></td>
-                                <td><strong>0.83d</strong></td>
-                                <td><strong>2.90d</strong></td>
-                                <td><strong>0.97d</strong></td>
-                                <td class="improvement"><strong>↓ 23%</strong></td>
-                                <td class="improvement"><strong>↓ 8%</strong></td>
-                                <td class="improvement"><strong>↓ 29%</strong></td>
+                                <td><strong>Total calendar days (incl. gaps)</strong></td>
+                                <td><strong>35d</strong></td>
+                                <td><strong>21d</strong></td>
+                                <td><strong>21d</strong></td>
+                                <td><strong>77d</strong></td>
+                                <td><strong>25.7d</strong></td>
+                                <td class="improvement"><strong>↓ 40%</strong></td>
+                                <td class="neutral"><strong>±0%</strong></td>
+                                <td class="improvement"><strong>↓ 40%</strong></td>
                             </tr>
                             <tr class="table-highlight">
                                 <td><strong>Crane utilization</strong></td>
-                                <td><strong>TBD</strong></td>
-                                <td><strong>TBD</strong></td>
-                                <td><strong>TBD</strong></td>
+                                <td><strong>8.0%</strong></td>
+                                <td><strong>10.3%</strong></td>
+                                <td><strong>9.5%</strong></td>
                                 <td><strong>9.0%</strong></td>
-                                <td><strong>TBD</strong></td>
-                                <td><strong>TBD</strong></td>
-                                <td><strong>TBD</strong></td>
-                                <td><strong>TBD</strong></td>
+                                <td><strong>9.3%</strong></td>
+                                <td class="improvement"><strong>↑ 29%</strong></td>
+                                <td class="decline"><strong>↓ 8%</strong></td>
+                                <td class="improvement"><strong>↑ 19%</strong></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
                 <div class="table-footnote-small">
-                    <p>Note: Eolmed project had shorter calendar days per floater compared to EFGL. Detailed gap analysis data (blade completion → departure, inter-floater gaps) pending. Total calendar days shown are crane-active periods from project data. Tool improvements (vibration damper, propeller-assisted blade tool) contributed to 31% faster average execution time vs EFGL (23.22h vs 33.75h).</p>
+                    <p>Note: Eolmed F3 has no departure data as the floater was not towed out - crane was disassembled after Blade 3 completion. F3 calendar days end at Blade 3 (01-Dec-2025 14:50), not departure. Inter-floater gaps are allocated to the next floater following EFGL methodology: F2 calendar includes 1d gap from F1 departure to F2 arrival; F3 calendar includes 1d gap from F2 departure to F3 arrival. Total project duration: 77 days (15-Sep to 01-Dec 2025). Overall crane utilization: 69.67h / 770h (77 days × 10h/day) = 9.0%. Tool improvements (vibration damper, propeller-assisted blade tool) contributed to 31% faster average execution time vs EFGL (23.22h vs 33.75h).</p>
                 </div>
             </div>
 

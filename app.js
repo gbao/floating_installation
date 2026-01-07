@@ -2858,11 +2858,11 @@ function createEolmedUtilizationBarChart() {
     }
     const ctx = chartElement.getContext('2d');
 
-    // Eolmed floater data (simplified - using total days from project metrics)
+    // Eolmed floater data using correct calendar days (incl. gaps)
     const floaters = [
-        { name: 'F1', days: eolmedData.floaters[0].total_days, work: eolmedData.floaters[0].total_hours, available: eolmedData.floaters[0].total_days * 24 },
-        { name: 'F2', days: eolmedData.floaters[1].total_days, work: eolmedData.floaters[1].total_hours, available: eolmedData.floaters[1].total_days * 24 },
-        { name: 'F3', days: eolmedData.floaters[2].total_days, work: eolmedData.floaters[2].total_hours, available: eolmedData.floaters[2].total_days * 24 }
+        { name: 'F1', days: 35, work: eolmedData.floaters[0].total_hours, available: 35 * 10 },
+        { name: 'F2', days: 21, work: eolmedData.floaters[1].total_hours, available: 21 * 10 },
+        { name: 'F3', days: 21, work: eolmedData.floaters[2].total_hours, available: 21 * 10 }
     ];
 
     // Calculate percentages
@@ -2872,13 +2872,13 @@ function createEolmedUtilizationBarChart() {
     new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: floaters.map(f => `${f.name}\n(${f.days.toFixed(2)} days)`),
+            labels: floaters.map(f => `${f.name}\n(${f.days}d)`),
             datasets: [
                 {
                     label: 'Active (Crane Work)',
                     data: activePercentages,
-                    backgroundColor: '#d97706',
-                    borderColor: '#b45309',
+                    backgroundColor: '#059669',
+                    borderColor: '#047857',
                     borderWidth: 1,
                     barPercentage: 0.6,
                     categoryPercentage: 0.7
@@ -2897,42 +2897,88 @@ function createEolmedUtilizationBarChart() {
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            indexAxis: 'y',
             plugins: {
                 title: {
                     display: false
                 },
                 legend: {
                     display: true,
-                    position: 'top'
+                    position: 'top',
+                    labels: {
+                        usePointStyle: true,
+                        padding: 12,
+                        font: { size: 11 }
+                    }
                 },
                 tooltip: {
                     callbacks: {
                         label: function(context) {
-                            return `${context.dataset.label}: ${context.parsed.x.toFixed(1)}%`;
+                            const floater = floaters[context.dataIndex];
+                            if (context.datasetIndex === 0) {
+                                return `Active: ${context.parsed.y.toFixed(1)}% (${floater.work}h work)`;
+                            } else {
+                                return `Idle: ${context.parsed.y.toFixed(1)}%`;
+                            }
+                        },
+                        afterLabel: function(context) {
+                            const floater = floaters[context.dataIndex];
+                            return `Available: ${floater.available}h total`;
                         }
                     }
+                },
+                datalabels: {
+                    display: true,
+                    color: function(context) {
+                        return context.datasetIndex === 0 ? '#ffffff' : '#475569';
+                    },
+                    font: {
+                        size: 11,
+                        weight: 'bold'
+                    },
+                    formatter: function(value) {
+                        return value.toFixed(1) + '%';
+                    },
+                    anchor: 'center',
+                    align: 'center'
                 }
             },
             scales: {
                 x: {
                     stacked: true,
-                    max: 100,
-                    ticks: {
-                        callback: function(value) {
-                            return value + '%';
-                        }
-                    },
                     title: {
                         display: true,
-                        text: '% of Available Time'
+                        text: 'Floater',
+                        font: { size: 11, weight: 'bold' },
+                        color: '#475569'
+                    },
+                    grid: {
+                        display: false
+                    },
+                    ticks: {
+                        font: { size: 10 },
+                        color: '#64748b'
                     }
                 },
                 y: {
                     stacked: true,
+                    beginAtZero: true,
+                    max: 100,
                     title: {
                         display: true,
-                        text: 'Floater'
+                        text: '% of Available Time',
+                        font: { size: 11, weight: 'bold' },
+                        color: '#475569'
+                    },
+                    ticks: {
+                        callback: function(value) {
+                            return value + '%';
+                        },
+                        font: { size: 10 },
+                        color: '#64748b'
+                    },
+                    grid: {
+                        color: '#e2e8f0',
+                        lineWidth: 1
                     }
                 }
             }
