@@ -3406,10 +3406,16 @@ function setupEolmedEventListeners() {
 
     if (learningRateInput && learningRateValue) {
         learningRateInput.addEventListener('input', (e) => {
-            if (document.getElementById('eolmed-learning-rate-method').value === 'custom') {
+            const methodSelectorCheck = document.getElementById('eolmed-learning-rate-method');
+            if (methodSelectorCheck && methodSelectorCheck.value === 'custom') {
                 eolmedSettings.learningRate = parseFloat(e.target.value);
                 learningRateValue.textContent = `${(eolmedSettings.learningRate * 100).toFixed(0)}%`;
-                document.getElementById('eolmed-calculated-lr-value').textContent = `${(eolmedSettings.learningRate * 100).toFixed(1)}%`;
+
+                const calculatedLRValueEl = document.getElementById('eolmed-calculated-lr-value');
+                if (calculatedLRValueEl) {
+                    calculatedLRValueEl.textContent = `${(eolmedSettings.learningRate * 100).toFixed(1)}%`;
+                }
+
                 eolmedSettings.bCoefficient = Math.log(eolmedSettings.learningRate) / Math.log(2);
 
                 // Auto-update predictions and charts
@@ -3421,13 +3427,14 @@ function setupEolmedEventListeners() {
 
     // Learning rate method selector
     const methodSelector = document.getElementById('eolmed-learning-rate-method');
-    const methodInfoName = document.getElementById('eolmed-method-name');
-    const methodInfoFormula = document.getElementById('eolmed-method-formula');
-    const methodInfoDescription = document.getElementById('eolmed-method-description');
-    const calculatedLRValue = document.getElementById('eolmed-calculated-lr-value');
-    const manualLRControl = document.getElementById('eolmed-manual-lr-control');
 
     if (methodSelector) {
+        const methodInfoName = document.getElementById('eolmed-method-name');
+        const methodInfoFormula = document.getElementById('eolmed-method-formula');
+        const methodInfoDescription = document.getElementById('eolmed-method-description');
+        const calculatedLRValue = document.getElementById('eolmed-calculated-lr-value');
+        const manualLRControl = document.getElementById('eolmed-manual-lr-control');
+
         const learningRateMethods = calculateEolmedLearningRateMethods();
 
         methodSelector.addEventListener('change', (e) => {
@@ -3441,11 +3448,13 @@ function setupEolmedEventListeners() {
 
                 // Use current slider value
                 eolmedSettings.learningRate = parseFloat(learningRateInput.value);
-                calculatedLRValue.textContent = `${(eolmedSettings.learningRate * 100).toFixed(1)}%`;
+                if (calculatedLRValue) {
+                    calculatedLRValue.textContent = `${(eolmedSettings.learningRate * 100).toFixed(1)}%`;
+                }
 
-                methodInfoName.textContent = 'Custom (Manual Override)';
-                methodInfoFormula.textContent = 'User-specified value';
-                methodInfoDescription.textContent = 'Use the slider below to set a custom learning rate';
+                if (methodInfoName) methodInfoName.textContent = 'Custom (Manual Override)';
+                if (methodInfoFormula) methodInfoFormula.textContent = 'User-specified value';
+                if (methodInfoDescription) methodInfoDescription.textContent = 'Use the slider below to set a custom learning rate';
 
                 // Update calculation detail box for custom mode
                 updateEolmedCalculationDetail('custom');
@@ -3463,10 +3472,10 @@ function setupEolmedEventListeners() {
                 eolmedSettings.bCoefficient = Math.log(method.value) / Math.log(2);
 
                 // Update info display
-                methodInfoName.textContent = method.name;
-                methodInfoFormula.textContent = method.formula;
-                methodInfoDescription.textContent = method.description;
-                calculatedLRValue.textContent = `${(method.value * 100).toFixed(1)}%`;
+                if (methodInfoName) methodInfoName.textContent = method.name;
+                if (methodInfoFormula) methodInfoFormula.textContent = method.formula;
+                if (methodInfoDescription) methodInfoDescription.textContent = method.description;
+                if (calculatedLRValue) calculatedLRValue.textContent = `${(method.value * 100).toFixed(1)}%`;
 
                 // Update calculation detail box
                 updateEolmedCalculationDetail(selectedMethod);
@@ -3495,13 +3504,18 @@ function setupEolmedEventListeners() {
             eolmedSettings.learningRate = 0.8485;
             eolmedSettings.bCoefficient = -0.2353;
 
-            turbineCountInput.value = 10;
-            turbineCountValue.textContent = '10';
-            learningRateInput.value = 0.8485;
-            learningRateValue.textContent = '85%';
+            if (turbineCountInput) turbineCountInput.value = 10;
+            if (turbineCountValue) turbineCountValue.textContent = '10';
+            if (learningRateInput) learningRateInput.value = 0.8485;
+            if (learningRateValue) learningRateValue.textContent = '85%';
 
             // Reset method dropdown to default
-            methodSelector.value = 'sequential-avg';
+            const methodSelector = document.getElementById('eolmed-learning-rate-method');
+            if (methodSelector) {
+                methodSelector.value = 'sequential-avg';
+            }
+
+            const manualLRControl = document.getElementById('eolmed-manual-lr-control');
             if (manualLRControl) {
                 manualLRControl.style.display = 'none';
             }
@@ -3509,10 +3523,16 @@ function setupEolmedEventListeners() {
             // Reset method info display
             const learningRateMethods = calculateEolmedLearningRateMethods();
             const defaultMethod = learningRateMethods['sequential-avg'];
-            methodInfoName.textContent = defaultMethod.name;
-            methodInfoFormula.textContent = defaultMethod.formula;
-            methodInfoDescription.textContent = defaultMethod.description;
-            calculatedLRValue.textContent = `${(defaultMethod.value * 100).toFixed(1)}%`;
+
+            const methodInfoName = document.getElementById('eolmed-method-name');
+            const methodInfoFormula = document.getElementById('eolmed-method-formula');
+            const methodInfoDescription = document.getElementById('eolmed-method-description');
+            const calculatedLRValue = document.getElementById('eolmed-calculated-lr-value');
+
+            if (methodInfoName) methodInfoName.textContent = defaultMethod.name;
+            if (methodInfoFormula) methodInfoFormula.textContent = defaultMethod.formula;
+            if (methodInfoDescription) methodInfoDescription.textContent = defaultMethod.description;
+            if (calculatedLRValue) calculatedLRValue.textContent = `${(defaultMethod.value * 100).toFixed(1)}%`;
 
             updateEolmedCalculationDetail('sequential-avg');
             updateEolmedPredictions();
