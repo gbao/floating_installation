@@ -3666,11 +3666,19 @@ function init() {
 
     // Update predictions
     updatePredictions();
-    updateEolmedPredictions();
+
+    // Only update Eolmed predictions if elements exist
+    if (document.getElementById('eolmed-predicted-turbines')) {
+        updateEolmedPredictions();
+    }
 
     // Initialize learning rate method selector
     initializeLearningRateMethod();
-    updateEolmedCalculationDetail('sequential-avg');
+
+    // Only update Eolmed calculation detail if element exists
+    if (document.getElementById('eolmed-method-calculation')) {
+        updateEolmedCalculationDetail('sequential-avg');
+    }
 
     // Setup event listeners
     setupEventListeners();
