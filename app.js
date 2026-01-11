@@ -2045,8 +2045,8 @@ function populateEolmedDataTable() {
 
 let eolmedSettings = {
     turbineCount: 10,
-    learningRate: eolmedData.learning_curve.avg_learning_rate,
-    bCoefficient: eolmedData.learning_curve.b_coefficient
+    learningRate: 0.8485,  // Sequential Transition Average: (77.4% + 92.3%) / 2
+    bCoefficient: -0.2353  // log(0.8485) / log(2)
 };
 
 function updateEolmedPredictions() {
@@ -3147,13 +3147,6 @@ function createEolmedScalingChart() {
 }
 
 // ==================== EOLMED FORECASTING FUNCTIONS ====================
-
-// Eolmed settings object
-const eolmedSettings = {
-    turbineCount: 10,
-    learningRate: 0.8485,  // Average of F1→F2 (77.4%) and F2→F3 (92.3%)
-    bCoefficient: -0.2353
-};
 
 function calculateEolmedLearningRateMethods() {
     const f1 = eolmedData.floaters[0].total_hours;  // 28.0
