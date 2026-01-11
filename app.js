@@ -3146,6 +3146,248 @@ function createEolmedScalingChart() {
     });
 }
 
+// ==================== EOLMED FORECASTING FUNCTIONS ====================
+
+// Eolmed settings object
+const eolmedSettings = {
+    turbineCount: 10,
+    learningRate: 0.8485,  // Average of F1→F2 (77.4%) and F2→F3 (92.3%)
+    bCoefficient: -0.2353
+};
+
+function calculateEolmedLearningRateMethods() {
+    const f1 = eolmedData.floaters[0].total_hours;  // 28.0
+    const f2 = eolmedData.floaters[1].total_hours;  // 21.67
+    const f3 = eolmedData.floaters[2].total_hours;  // 20.0
+
+    const lr_f1_f2 = f2 / f1;  // 0.774
+    const lr_f2_f3 = f3 / f2;  // 0.923
+
+    return {
+        'sequential-avg': {
+            name: 'Sequential Transition Average',
+            value: (lr_f1_f2 + lr_f2_f3) / 2,
+            description: 'Average of F1→F2 (77.4%) and F2→F3 (92.3%) transitions',
+            formula: '(LR_F1→F2 + LR_F2→F3) / 2'
+        },
+        'f1-f2-only': {
+            name: 'F1→F2 Transition Only',
+            value: lr_f1_f2,
+            description: 'Early learning phase (more conservative)',
+            formula: 'F2 / F1 = 21.67 / 28.00'
+        },
+        'f2-f3-only': {
+            name: 'F2→F3 Transition Only',
+            value: lr_f2_f3,
+            description: 'Later learning phase (slower improvement)',
+            formula: 'F3 / F2 = 20.00 / 21.67'
+        },
+        'power-law': {
+            name: 'Power Law Regression',
+            value: Math.pow(2, Math.log(f3/f1) / Math.log(3)),
+            description: 'Regression fit to all 3 data points',
+            formula: '2^b where b = log(F3/F1) / log(3)'
+        },
+        'geometric-mean': {
+            name: 'Geometric Mean',
+            value: Math.sqrt(lr_f1_f2 * lr_f2_f3),
+            description: 'Geometric average of both transitions',
+            formula: '√(LR_F1→F2 × LR_F2→F3)'
+        },
+        'weighted-avg': {
+            name: 'Weighted Transition Average',
+            value: calculateEolmedWeightedLR(f1, f2, f3),
+            description: 'Weighted by time reduction magnitude',
+            formula: 'Weighted by reduction: F1→F2 (74.4%), F2→F3 (25.6%)'
+        },
+        'steady-state': {
+            name: 'Steady State (F2+F3 Avg)',
+            value: ((f2 + f3) / 2) / f1,
+            description: 'Excludes first-unit effects (more aggressive)',
+            formula: '((F2 + F3) / 2) / F1'
+        }
+    };
+}
+
+function calculateEolmedWeightedLR(f1, f2, f3) {
+    const reduction_f1_f2 = f1 - f2;
+    const reduction_f2_f3 = f2 - f3;
+    const total_reduction = reduction_f1_f2 + reduction_f2_f3;
+
+    const weight_f1_f2 = reduction_f1_f2 / total_reduction;
+    const weight_f2_f3 = reduction_f2_f3 / total_reduction;
+
+    const lr_f1_f2 = f2 / f1;
+    const lr_f2_f3 = f3 / f2;
+
+    return (lr_f1_f2 * weight_f1_f2) + (lr_f2_f3 * weight_f2_f3);
+}
+
+function updateEolmedPredictions() {
+    const predictions = calculateEolmedPredictions(eolmedSettings.turbineCount, eolmedSettings.learningRate);
+    const lastPrediction = predictions[predictions.length - 1];
+
+    // Update predicted turbines count
+    const predictedTurbinesEl = document.getElementById('eolmed-predicted-turbines');
+    if (predictedTurbinesEl) {
+        predictedTurbinesEl.textContent = eolmedSettings.turbineCount;
+    }
+
+    // Update Floater N time display
+    const formulaFNDisplay = document.getElementById('eolmed-formula-f10-display');
+    if (formulaFNDisplay) {
+        formulaFNDisplay.textContent = `${lastPrediction.time.toFixed(1)}h`;
+    }
+
+    // Update cumulative average display
+    const formulaAvgDisplay = document.getElementById('eolmed-formula-avg-display');
+    if (formulaAvgDisplay) {
+        formulaAvgDisplay.textContent = `${lastPrediction.average.toFixed(1)}h`;
+    }
+
+    // Update total project time
+    const predTotalTime = document.getElementById('eolmed-pred-total-time');
+    if (predTotalTime) {
+        predTotalTime.textContent = `${lastPrediction.cumulative.toFixed(1)}h`;
+    }
+
+    // Update time savings
+    const predSavings = document.getElementById('eolmed-pred-savings');
+    if (predSavings) {
+        const avgF1F2F3 = (eolmedData.floaters[0].total_hours +
+                          eolmedData.floaters[1].total_hours +
+                          eolmedData.floaters[2].total_hours) / 3; // = 23.22h
+        const baselineTotal = avgF1F2F3 * eolmedSettings.turbineCount;
+        const actualTotal = lastPrediction.cumulative;
+        const savings = ((baselineTotal - actualTotal) / baselineTotal) * 100;
+        predSavings.textContent = `${savings.toFixed(1)}%`;
+    }
+
+    // Update formula deviation
+    updateEolmedFormulaDeviation();
+}
+
+function calculateEolmedPredictions(count, learningRate) {
+    const baseTime = eolmedData.floaters[0].total_hours;
+    const b = Math.log(learningRate) / Math.log(2);
+    const predictions = [];
+    let cumulative = 0;
+
+    for (let n = 1; n <= count; n++) {
+        const predictedTime = baseTime * Math.pow(n, b);
+        cumulative += predictedTime;
+        const average = cumulative / n;
+
+        predictions.push({
+            turbine: n,
+            time: predictedTime,
+            cumulative: cumulative,
+            average: average
+        });
+    }
+
+    return predictions;
+}
+
+function updateEolmedFormulaDeviation() {
+    const f1 = eolmedData.floaters[0].total_hours;
+    const f2 = eolmedData.floaters[1].total_hours;
+    const f3 = eolmedData.floaters[2].total_hours;
+
+    const b = Math.log(eolmedSettings.learningRate) / Math.log(2);
+
+    const predicted_f2 = f1 * Math.pow(2, b);
+    const predicted_f3 = f1 * Math.pow(3, b);
+
+    const deviation_f2 = ((f2 - predicted_f2) / predicted_f2) * 100;
+    const deviation_f3 = ((f3 - predicted_f3) / predicted_f3) * 100;
+
+    const f2DeviationEl = document.getElementById('eolmed-f2-deviation');
+    const f3DeviationEl = document.getElementById('eolmed-f3-deviation');
+
+    if (f2DeviationEl) {
+        f2DeviationEl.textContent = `${deviation_f2.toFixed(1)}%`;
+    }
+    if (f3DeviationEl) {
+        f3DeviationEl.textContent = `${deviation_f3.toFixed(1)}%`;
+    }
+}
+
+function updateEolmedCalculationDetail(methodKey) {
+    const calculationBox = document.getElementById('eolmed-method-calculation');
+    if (!calculationBox) return;
+
+    const f1 = 28.0;
+    const f2 = 21.67;
+    const f3 = 20.0;
+
+    let html = '';
+
+    switch(methodKey) {
+        case 'sequential-avg':
+            html = `
+                <div class="calc-step"><strong>Step 1:</strong> LR<sub>F1→F2</sub> = ${f2}h / ${f1}h = 77.4%</div>
+                <div class="calc-step"><strong>Step 2:</strong> LR<sub>F2→F3</sub> = ${f3}h / ${f2}h = 92.3%</div>
+                <div class="calc-step"><strong>Step 3:</strong> Average LR = (77.4% + 92.3%) / 2 = <strong>84.9%</strong></div>
+            `;
+            break;
+        case 'f1-f2-only':
+            html = `
+                <div class="calc-step"><strong>Step 1:</strong> LR<sub>F1→F2</sub> = ${f2}h / ${f1}h = <strong>77.4%</strong></div>
+                <div class="calc-step">Uses only the first transition (early learning phase)</div>
+            `;
+            break;
+        case 'f2-f3-only':
+            html = `
+                <div class="calc-step"><strong>Step 1:</strong> LR<sub>F2→F3</sub> = ${f3}h / ${f2}h = <strong>92.3%</strong></div>
+                <div class="calc-step">Uses only the second transition (later learning phase)</div>
+            `;
+            break;
+        case 'power-law':
+            html = `
+                <div class="calc-step"><strong>Step 1:</strong> b = log(${f3}/${f1}) / log(3) = -0.109</div>
+                <div class="calc-step"><strong>Step 2:</strong> LR = 2<sup>b</sup> = 2<sup>-0.109</sup> = <strong>92.7%</strong></div>
+                <div class="calc-step">Regression fit to all 3 data points</div>
+            `;
+            break;
+        case 'geometric-mean':
+            html = `
+                <div class="calc-step"><strong>Step 1:</strong> LR<sub>F1→F2</sub> = 77.4%, LR<sub>F2→F3</sub> = 92.3%</div>
+                <div class="calc-step"><strong>Step 2:</strong> Geometric Mean = √(77.4% × 92.3%) = <strong>84.5%</strong></div>
+            `;
+            break;
+        case 'weighted-avg':
+            const reduction_f1_f2 = f1 - f2;
+            const reduction_f2_f3 = f2 - f3;
+            const total_red = reduction_f1_f2 + reduction_f2_f3;
+            const w1 = (reduction_f1_f2 / total_red * 100).toFixed(1);
+            const w2 = (reduction_f2_f3 / total_red * 100).toFixed(1);
+            html = `
+                <div class="calc-step"><strong>Step 1:</strong> Reduction F1→F2 = ${reduction_f1_f2.toFixed(2)}h (${w1}% weight)</div>
+                <div class="calc-step"><strong>Step 2:</strong> Reduction F2→F3 = ${reduction_f2_f3.toFixed(2)}h (${w2}% weight)</div>
+                <div class="calc-step"><strong>Step 3:</strong> Weighted LR = (77.4% × ${(w1/100).toFixed(3)}) + (92.3% × ${(w2/100).toFixed(3)}) = <strong>81.2%</strong></div>
+            `;
+            break;
+        case 'steady-state':
+            html = `
+                <div class="calc-step"><strong>Step 1:</strong> Steady state avg = (${f2}h + ${f3}h) / 2 = 20.8h</div>
+                <div class="calc-step"><strong>Step 2:</strong> LR = 20.8h / ${f1}h = <strong>74.5%</strong></div>
+                <div class="calc-step">Excludes first-unit learning effects</div>
+            `;
+            break;
+        case 'custom':
+            html = `
+                <div class="calc-step">Manual override - user-specified learning rate</div>
+                <div class="calc-step">Use the slider below to adjust</div>
+            `;
+            break;
+        default:
+            html = '<div class="calc-step">Calculation details will appear here</div>';
+    }
+
+    calculationBox.innerHTML = html;
+}
+
 function setupEolmedEventListeners() {
     // Turbine count slider
     const turbineCountInput = document.getElementById('eolmed-turbine-count');
@@ -3153,17 +3395,128 @@ function setupEolmedEventListeners() {
 
     if (turbineCountInput && turbineCountValue) {
         turbineCountInput.addEventListener('input', (e) => {
-            const count = parseInt(e.target.value);
-            turbineCountValue.textContent = count;
-            updateEolmedScalingChart(count);
+            eolmedSettings.turbineCount = parseInt(e.target.value);
+            turbineCountValue.textContent = eolmedSettings.turbineCount;
+        });
+    }
+
+    // Learning rate manual slider
+    const learningRateInput = document.getElementById('eolmed-learning-rate-adjust');
+    const learningRateValue = document.getElementById('eolmed-learning-rate-adjust-value');
+
+    if (learningRateInput && learningRateValue) {
+        learningRateInput.addEventListener('input', (e) => {
+            if (document.getElementById('eolmed-learning-rate-method').value === 'custom') {
+                eolmedSettings.learningRate = parseFloat(e.target.value);
+                learningRateValue.textContent = `${(eolmedSettings.learningRate * 100).toFixed(0)}%`;
+                document.getElementById('eolmed-calculated-lr-value').textContent = `${(eolmedSettings.learningRate * 100).toFixed(1)}%`;
+                eolmedSettings.bCoefficient = Math.log(eolmedSettings.learningRate) / Math.log(2);
+
+                // Auto-update predictions and charts
+                updateEolmedPredictions();
+                updateEolmedScalingChart(eolmedSettings.turbineCount);
+            }
         });
     }
 
     // Learning rate method selector
     const methodSelector = document.getElementById('eolmed-learning-rate-method');
+    const methodInfoName = document.getElementById('eolmed-method-name');
+    const methodInfoFormula = document.getElementById('eolmed-method-formula');
+    const methodInfoDescription = document.getElementById('eolmed-method-description');
+    const calculatedLRValue = document.getElementById('eolmed-calculated-lr-value');
+    const manualLRControl = document.getElementById('eolmed-manual-lr-control');
+
     if (methodSelector) {
+        const learningRateMethods = calculateEolmedLearningRateMethods();
+
         methodSelector.addEventListener('change', (e) => {
-            updateEolmedLearningRateDisplay(e.target.value);
+            const selectedMethod = e.target.value;
+
+            if (selectedMethod === 'custom') {
+                // Show manual slider
+                if (manualLRControl) {
+                    manualLRControl.style.display = 'block';
+                }
+
+                // Use current slider value
+                eolmedSettings.learningRate = parseFloat(learningRateInput.value);
+                calculatedLRValue.textContent = `${(eolmedSettings.learningRate * 100).toFixed(1)}%`;
+
+                methodInfoName.textContent = 'Custom (Manual Override)';
+                methodInfoFormula.textContent = 'User-specified value';
+                methodInfoDescription.textContent = 'Use the slider below to set a custom learning rate';
+
+                // Update calculation detail box for custom mode
+                updateEolmedCalculationDetail('custom');
+            } else {
+                // Hide manual slider
+                if (manualLRControl) {
+                    manualLRControl.style.display = 'none';
+                }
+
+                // Get method data
+                const method = learningRateMethods[selectedMethod];
+
+                // Update learning rate
+                eolmedSettings.learningRate = method.value;
+                eolmedSettings.bCoefficient = Math.log(method.value) / Math.log(2);
+
+                // Update info display
+                methodInfoName.textContent = method.name;
+                methodInfoFormula.textContent = method.formula;
+                methodInfoDescription.textContent = method.description;
+                calculatedLRValue.textContent = `${(method.value * 100).toFixed(1)}%`;
+
+                // Update calculation detail box
+                updateEolmedCalculationDetail(selectedMethod);
+            }
+
+            // Auto-update predictions and charts
+            updateEolmedPredictions();
+            updateEolmedScalingChart(eolmedSettings.turbineCount);
+        });
+    }
+
+    // Calculate button
+    const calculateBtn = document.getElementById('eolmed-calculate-btn');
+    if (calculateBtn) {
+        calculateBtn.addEventListener('click', () => {
+            updateEolmedPredictions();
+            updateEolmedScalingChart(eolmedSettings.turbineCount);
+        });
+    }
+
+    // Reset button
+    const resetBtn = document.getElementById('eolmed-reset-btn');
+    if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+            eolmedSettings.turbineCount = 10;
+            eolmedSettings.learningRate = 0.8485;
+            eolmedSettings.bCoefficient = -0.2353;
+
+            turbineCountInput.value = 10;
+            turbineCountValue.textContent = '10';
+            learningRateInput.value = 0.8485;
+            learningRateValue.textContent = '85%';
+
+            // Reset method dropdown to default
+            methodSelector.value = 'sequential-avg';
+            if (manualLRControl) {
+                manualLRControl.style.display = 'none';
+            }
+
+            // Reset method info display
+            const learningRateMethods = calculateEolmedLearningRateMethods();
+            const defaultMethod = learningRateMethods['sequential-avg'];
+            methodInfoName.textContent = defaultMethod.name;
+            methodInfoFormula.textContent = defaultMethod.formula;
+            methodInfoDescription.textContent = defaultMethod.description;
+            calculatedLRValue.textContent = `${(defaultMethod.value * 100).toFixed(1)}%`;
+
+            updateEolmedCalculationDetail('sequential-avg');
+            updateEolmedPredictions();
+            updateEolmedScalingChart(eolmedSettings.turbineCount);
         });
     }
 }
@@ -3259,49 +3612,6 @@ function updateEolmedScalingChart(count) {
     });
 }
 
-function updateEolmedLearningRateDisplay(method) {
-    const f1 = eolmedData.floaters[0].total_hours;
-    const f2 = eolmedData.floaters[1].total_hours;
-    const f3 = eolmedData.floaters[2].total_hours;
-
-    const lr_f1_f2 = f2 / f1;
-    const lr_f2_f3 = f3 / f2;
-
-    const methods = {
-        'sequential-avg': {
-            name: 'Sequential Transition Average',
-            value: (lr_f1_f2 + lr_f2_f3) / 2,
-            description: 'Average of F1→F2 and F2→F3 transitions',
-            formula: '(LR_F1→F2 + LR_F2→F3) / 2'
-        },
-        'f1-f2-only': {
-            name: 'F1→F2 Transition Only',
-            value: lr_f1_f2,
-            description: 'Early learning phase',
-            formula: 'F2 / F1 = 21.67 / 28.00'
-        },
-        'f2-f3-only': {
-            name: 'F2→F3 Transition Only',
-            value: lr_f2_f3,
-            description: 'Later learning phase',
-            formula: 'F3 / F2 = 20.00 / 21.67'
-        },
-        'power-law': {
-            name: 'Power Law Regression',
-            value: Math.pow(2, Math.log(f3/f1) / Math.log(3)),
-            description: 'Regression fit to all 3 data points',
-            formula: '2^b where b = log(F3/F1) / log(3)'
-        }
-    };
-
-    const selectedMethod = methods[method];
-
-    document.getElementById('eolmed-method-name').textContent = selectedMethod.name;
-    document.getElementById('eolmed-method-formula').textContent = selectedMethod.formula;
-    document.getElementById('eolmed-method-description').textContent = selectedMethod.description;
-    document.getElementById('eolmed-calculated-lr-value').textContent = `${(selectedMethod.value * 100).toFixed(1)}%`;
-}
-
 function init() {
     console.log('Initializing Turbine Assembly Visualization...');
 
@@ -3336,9 +3646,11 @@ function init() {
 
     // Update predictions
     updatePredictions();
+    updateEolmedPredictions();
 
     // Initialize learning rate method selector
     initializeLearningRateMethod();
+    updateEolmedCalculationDetail('sequential-avg');
 
     // Setup event listeners
     setupEventListeners();
