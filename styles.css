@@ -219,9 +219,10 @@ header h1 {
 /* Metrics Grid */
 .metrics-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 1rem;
     margin-bottom: 3rem;
+    width: 100%;
 }
 
 .metric-card {
@@ -231,6 +232,8 @@ header h1 {
     box-shadow: var(--shadow-lg);
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    min-width: 0;
+    overflow: hidden;
 }
 
 .metric-card:hover {
@@ -2697,8 +2700,9 @@ footer p {
 
 .metrics-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 1rem;
+    width: 100%;
 }
 
 .metric-card {
@@ -2725,14 +2729,17 @@ footer p {
 }
 
 .metric-title {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     font-weight: 600;
     color: var(--text-secondary);
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    line-height: 1.4;
+    letter-spacing: 0.03em;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    line-height: 1.3;
     flex: 1;
-    white-space: nowrap;
+    text-align: left;
 }
 
 .metric-info-btn {
@@ -3009,7 +3016,7 @@ footer p {
 
 @media (max-width: 1200px) {
     .metrics-grid {
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(4, minmax(0, 1fr));
         gap: 0.75rem;
     }
 
