@@ -219,14 +219,14 @@ header h1 {
 /* Metrics Grid */
 .metrics-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
     margin-bottom: 3rem;
 }
 
 .metric-card {
     background: var(--card-bg);
-    padding: 1.5rem;
+    padding: 1rem;
     border-radius: 12px;
     box-shadow: var(--shadow-lg);
     text-align: center;
@@ -2698,14 +2698,14 @@ footer p {
 .metrics-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
+    gap: 1rem;
 }
 
 .metric-card {
     background: white;
     border: 2px solid #e2e8f0;
     border-radius: 10px;
-    padding: 1.5rem;
+    padding: 1rem;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
     transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
     position: relative;
@@ -2758,28 +2758,28 @@ footer p {
 }
 
 .metric-value-large {
-    font-size: 2.5rem;
+    font-size: 1.8rem;
     font-weight: 700;
     color: var(--primary-color);
     line-height: 1.2;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.35rem;
 }
 
 .metric-subtitle {
-    font-size: 0.875rem;
+    font-size: 0.75rem;
     color: var(--text-secondary);
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
 }
 
 .metric-detail {
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     color: var(--text-primary);
     font-weight: 600;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.2rem;
 }
 
 .metric-note {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     color: var(--text-secondary);
     font-style: italic;
 }
@@ -3009,8 +3009,16 @@ footer p {
 
 @media (max-width: 1200px) {
     .metrics-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.75rem;
+    }
+
+    .metric-card {
+        padding: 0.75rem;
+    }
+
+    .metric-value-large {
+        font-size: 1.5rem;
     }
 }
 
@@ -3020,12 +3028,16 @@ footer p {
     }
 
     .metrics-grid {
-        grid-template-columns: 1fr;
-        gap: 1rem;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
     }
 
     .metric-value-large {
-        font-size: 2rem;
+        font-size: 1.4rem;
+    }
+
+    .metric-card {
+        padding: 0.75rem;
     }
 
     .metric-tooltip {
