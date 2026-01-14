@@ -72,8 +72,8 @@ let comparisonCharts = {};
 let currentTab = 'efgl';
 let currentSettings = {
     turbineCount: 10,
-    learningRate: 0.7945,
-    bCoefficient: -0.3319
+    learningRate: 0.7489,  // Power Law Regression (default)
+    bCoefficient: -0.4175  // log(0.7489) / log(2)
 };
 
 // ==================== TAB MANAGEMENT ====================
@@ -1123,18 +1123,18 @@ function initializeLearningRateMethod() {
     const methodSelector = document.getElementById('learning-rate-method');
     const learningRateMethods = calculateLearningRateMethods();
 
-    // Set default to sequential-avg
-    methodSelector.value = 'sequential-avg';
+    // Set default to power-law
+    methodSelector.value = 'power-law';
 
     // Initialize display
-    const method = learningRateMethods['sequential-avg'];
+    const method = learningRateMethods['power-law'];
     document.getElementById('method-name').textContent = method.name;
     document.getElementById('method-formula').textContent = method.formula;
     document.getElementById('method-description').textContent = method.description;
     document.getElementById('calculated-lr-value').textContent = `${(method.value * 100).toFixed(1)}%`;
 
     // Initialize calculation detail box
-    updateCalculationDetail('sequential-avg');
+    updateCalculationDetail('power-law');
 
     // Set current settings
     currentSettings.learningRate = method.value;
@@ -2053,8 +2053,8 @@ function populateEolmedDataTable() {
 
 let eolmedSettings = {
     turbineCount: 10,
-    learningRate: 0.8485,  // Sequential Transition Average: (77.4% + 92.3%) / 2
-    bCoefficient: -0.2353  // log(0.8485) / log(2)
+    learningRate: 0.8084,  // Power Law Regression (default)
+    bCoefficient: -0.3070  // log(0.8084) / log(2)
 };
 
 function updateEolmedPredictions() {
@@ -3398,6 +3398,30 @@ function updateEolmedCalculationDetail(methodKey) {
 }
 
 function setupEolmedEventListeners() {
+    // Initialize Eolmed method selector to power-law
+    const methodSelector = document.getElementById('eolmed-learning-rate-method');
+    if (methodSelector) {
+        const learningRateMethods = calculateEolmedLearningRateMethods();
+        const defaultMethod = learningRateMethods['power-law'];
+
+        methodSelector.value = 'power-law';
+
+        const methodInfoName = document.getElementById('eolmed-method-name');
+        const methodInfoFormula = document.getElementById('eolmed-method-formula');
+        const methodInfoDescription = document.getElementById('eolmed-method-description');
+        const calculatedLRValue = document.getElementById('eolmed-calculated-lr-value');
+
+        if (methodInfoName) methodInfoName.textContent = defaultMethod.name;
+        if (methodInfoFormula) methodInfoFormula.textContent = defaultMethod.formula;
+        if (methodInfoDescription) methodInfoDescription.textContent = defaultMethod.description;
+        if (calculatedLRValue) calculatedLRValue.textContent = `${(defaultMethod.value * 100).toFixed(1)}%`;
+
+        updateEolmedCalculationDetail('power-law');
+
+        eolmedSettings.learningRate = defaultMethod.value;
+        eolmedSettings.bCoefficient = Math.log(defaultMethod.value) / Math.log(2);
+    }
+
     // Turbine count slider
     const turbineCountInput = document.getElementById('eolmed-turbine-count');
     const turbineCountValue = document.getElementById('eolmed-turbine-count-value');
@@ -3512,18 +3536,16 @@ function setupEolmedEventListeners() {
     if (resetBtn) {
         resetBtn.addEventListener('click', () => {
             eolmedSettings.turbineCount = 10;
-            eolmedSettings.learningRate = 0.8485;
-            eolmedSettings.bCoefficient = -0.2353;
+            eolmedSettings.learningRate = 0.8084;  // Power Law Regression (default)
+            eolmedSettings.bCoefficient = -0.3070;  // log(0.8084) / log(2)
 
             if (turbineCountInput) turbineCountInput.value = 10;
             if (turbineCountValue) turbineCountValue.textContent = '10';
-            if (learningRateInput) learningRateInput.value = 0.8485;
-            if (learningRateValue) learningRateValue.textContent = '85%';
 
             // Reset method dropdown to default
             const methodSelector = document.getElementById('eolmed-learning-rate-method');
             if (methodSelector) {
-                methodSelector.value = 'sequential-avg';
+                methodSelector.value = 'power-law';
             }
 
             const manualLRControl = document.getElementById('eolmed-manual-lr-control');
@@ -3533,7 +3555,7 @@ function setupEolmedEventListeners() {
 
             // Reset method info display
             const learningRateMethods = calculateEolmedLearningRateMethods();
-            const defaultMethod = learningRateMethods['sequential-avg'];
+            const defaultMethod = learningRateMethods['power-law'];
 
             const methodInfoName = document.getElementById('eolmed-method-name');
             const methodInfoFormula = document.getElementById('eolmed-method-formula');
@@ -3545,7 +3567,7 @@ function setupEolmedEventListeners() {
             if (methodInfoDescription) methodInfoDescription.textContent = defaultMethod.description;
             if (calculatedLRValue) calculatedLRValue.textContent = `${(defaultMethod.value * 100).toFixed(1)}%`;
 
-            updateEolmedCalculationDetail('sequential-avg');
+            updateEolmedCalculationDetail('power-law');
             updateEolmedPredictions();
             updateEolmedScalingChart(eolmedSettings.turbineCount);
         });
