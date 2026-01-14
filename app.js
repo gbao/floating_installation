@@ -3460,9 +3460,7 @@ function setupEolmedEventListeners() {
         });
     }
 
-    // Learning rate method selector
-    const methodSelector = document.getElementById('eolmed-learning-rate-method');
-
+    // Learning rate method selector event listener
     if (methodSelector) {
         const methodInfoName = document.getElementById('eolmed-method-name');
         const methodInfoFormula = document.getElementById('eolmed-method-formula');
