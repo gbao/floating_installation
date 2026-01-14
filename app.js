@@ -1149,6 +1149,8 @@ function setupEventListeners() {
     turbineCountInput.addEventListener('input', (e) => {
         currentSettings.turbineCount = parseInt(e.target.value);
         turbineCountValue.textContent = currentSettings.turbineCount;
+        updatePredictions();
+        updateCharts();
     });
 
     // Learning rate slider
@@ -2081,6 +2083,8 @@ function setupEolmedEventListeners() {
         turbineCountInput.addEventListener('input', (e) => {
             eolmedSettings.turbineCount = parseInt(e.target.value);
             if (turbineCountValue) turbineCountValue.textContent = eolmedSettings.turbineCount;
+            updateEolmedPredictions();
+            updateEolmedCharts();
         });
     }
 
@@ -3402,6 +3406,8 @@ function setupEolmedEventListeners() {
         turbineCountInput.addEventListener('input', (e) => {
             eolmedSettings.turbineCount = parseInt(e.target.value);
             turbineCountValue.textContent = eolmedSettings.turbineCount;
+            updateEolmedPredictions();
+            updateEolmedCharts();
         });
     }
 
