@@ -1015,6 +1015,12 @@ function updatePredictions() {
         formulaFNDisplay.textContent = `${lastPrediction.time.toFixed(1)}h`;
     }
 
+    // Update Floater N label dynamically
+    const floaterNLabel = document.getElementById('floater-n-label');
+    if (floaterNLabel) {
+        floaterNLabel.textContent = currentSettings.turbineCount;
+    }
+
     // Update cumulative average display
     const formulaAvgDisplay = document.getElementById('formula-avg-display');
     if (formulaAvgDisplay) {
@@ -3230,6 +3236,12 @@ function updateEolmedPredictions() {
     const formulaFNDisplay = document.getElementById('eolmed-formula-f10-display');
     if (formulaFNDisplay) {
         formulaFNDisplay.textContent = `${lastPrediction.time.toFixed(1)}h`;
+    }
+
+    // Update Eolmed Floater N label dynamically
+    const eolmedFloaterNLabel = document.getElementById('eolmed-floater-n-label');
+    if (eolmedFloaterNLabel) {
+        eolmedFloaterNLabel.textContent = eolmedSettings.turbineCount;
     }
 
     // Update cumulative average display
