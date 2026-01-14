@@ -86,11 +86,11 @@ Interpretation:
 
 ---
 
-## 2. Component-Level Performance Analysis
+## 2. Component-Level Learning Rates
 
-### 2.1 What is Component-Level Performance Analysis?
+### 2.1 What Are Component-Level Learning Rates?
 
-Instead of looking at total floater assembly time, we break down performance by **major component groups**:
+Instead of looking at total floater assembly time, we break down learning by **major component groups**:
 - **All Tower Sections** (Tower Section 1 + Tower Section 2 + Tower Section 3 combined)
 - **All Blades** (Blade 1 + Blade 2 + Blade 3 combined)
 - **Nacelle** (single component)
@@ -111,42 +111,35 @@ F2 All Tower Sections = 5.5h + 6.17h + 5.17h = 16.84h
 F3 All Tower Sections = 5.33h + 5.67h + 4.33h = 15.33h
 ```
 
-**Step 2: Calculate Average Unit Learning Percentage for the component group**
+**Step 2: Calculate Learning Rate for the component group**
 
 **Formula:**
 ```
-Average Unit Learning % = (LR_F1→F2 + LR_F2→F3) / 2
+Component Group LR = (LR_F1→F2 + LR_F2→F3) / 2
 
 Where:
 - LR_F1→F2 = F2_total / F1_total
 - LR_F2→F3 = F3_total / F2_total
-- Average of both transition ratios
+- Average of both transition learning rates
 ```
-
-**⚠️ Important Academic Distinction:**
-
-In Operations Management literature, **"Learning Rate"** is a reserved term specifically referring to Wright's Curve when cumulative volume **doubles**. What we calculate here is:
-
-- **Average Unit Learning Percentage** = Simple average of sequential transition ratios (F2/F1 and F3/F2)
-- **NOT** the true academic Learning Rate from Wright's formula
 
 **Important Notes:**
 
-1. **Average Unit Learning % vs Direct Learning Rate:**
-   - **Average Unit Learning %** = (LR_F1→F2 + LR_F2→F3) / 2 ← This is what we show in the table
-   - **Direct Learning Rate** = F3 / F1 ← Only this adds to 100% with Total Improvement
+1. **Average LR vs Direct LR:**
+   - **Average LR** = (LR_F1→F2 + LR_F2→F3) / 2 ← This is what we show in the table
+   - **Direct LR** = F3 / F1 ← Only this adds to 100% with Total Improvement
 
-2. **Why use Average Unit Learning %?**
+2. **Why use Average LR?**
    - Shows learning progression (was learning steady or uneven?)
-   - Easy to calculate from sequential transitions
-   - Provides insight into consistency of improvement
+   - Matches Wright's curve theory and forecasting methodology
+   - Industry standard for multi-unit analysis
 
 3. **Relationship with Total Improvement:**
    ```
-   Direct Learning Rate + Total Improvement = 100% ✓
+   Direct LR + Total Improvement = 100% ✓
 
    But:
-   Average Unit Learning % + Total Improvement ≠ 100% (usually > 100%)
+   Average LR + Total Improvement ≠ 100% (usually > 100%)
    ```
 
 ### 2.3 EFGL Component Group Analysis (Actual Data)
@@ -172,35 +165,12 @@ LR_F1→F2 = 16.84h / 25.92h = 65.0% (35.0% improvement)
 LR_F2→F3 = 15.33h / 16.84h = 91.0% (9.0% improvement)
 ```
 
-### 2.3 EFGL Component Group Analysis (Actual Data)
-
-#### Component Group 1: All Tower Sections
-
-**Step 1: Calculate total tower time per floater**
+**Step 3: Calculate average learning rate - Sequential Improvement Ratio**
 ```
-F1 Total Towers = Tower Sec 1 + Tower Sec 2 + Tower Sec 3
-                = 8.17h + 9.5h + 8.25h
-                = 25.92h
-
-F2 Total Towers = 5.5h + 6.17h + 5.17h
-                = 16.84h
-
-F3 Total Towers = 5.33h + 5.67h + 4.33h
-                = 15.33h
+Average LR = (65.0% + 91.0%) / 2 = 78.0%
 ```
 
-**Step 2: Calculate transition ratios**
-```
-LR_F1→F2 = 16.84h / 25.92h = 65.0% (35.0% improvement)
-LR_F2→F3 = 15.33h / 16.84h = 91.0% (9.0% improvement)
-```
-
-**Step 3: Calculate Average Unit Learning Percentage**
-```
-Average Unit Learning % = (65.0% + 91.0%) / 2 = 78.0%
-```
-
-**Step 4: Calculate total improvement (F1 to F3)**
+**Step 4: Calculate total improvement (F1 to F3) - Cummulative Efficiency Gain** 
 ```
 Total Improvement = (25.92h - 15.33h) / 25.92h = 40.9% ≈ 41%
 ```
@@ -213,187 +183,10 @@ Verification: Direct LR + Total Improvement = 59.1% + 40.9% = 100% ✓
 ```
 
 **Summary:**
-- **Average Unit Learning %: 78%** (shown in table)
+- **Average Learning Rate: 78%** (shown in table)
 - **Total Improvement: 41%** (F1→F3)
 - **% of Total Time: 57%** (towers are the biggest time component)
-- **Interpretation:** Slowest unit learning percentage but largest opportunity for optimization
-
----
-
-#### Component Group 2: All Blades
-
-**Step 1: Calculate total blade time per floater**
-```
-F1 Total Blades = Blade 1 + Blade 2 + Blade 3
-                = 4.83h + 4.67h + 2.5h
-                = 12.00h
-
-F2 Total Blades = 3.67h + 4.5h + 3.83h
-                = 12.00h
-
-F3 Total Blades = 3.17h + 2.83h + 2.17h
-                = 8.17h
-```
-
-**Step 2: Calculate transition learning rates**
-```
-LR_F1→F2 = 12.00h / 12.00h = 100.0% (0% improvement - same time!)
-LR_F2→F3 = 8.17h / 12.00h = 68.1% (31.9% improvement)
-```
-
-**Step 3: Calculate average unit learning percentage**
-```
-Average Unit Learning % = (100.0% + 68.1%) / 2 = 84.1% ≈ 85%
-```
-
-**Step 4: Calculate total improvement**
-```
-Total Improvement = (12.00h - 8.17h) / 12.00h = 31.9%
-```
-
-**Summary:**
-- **Average Unit Learning %: 85%** (shown in table)
-- **Total Improvement: 32%** (F1→F3)
-- **% of Total Time: 32%**
-- **Interpretation:** No learning F1→F2, then significant improvement F2→F3
-
----
-
-#### Component Group 3: Nacelle
-
-**Nacelle is a single component (not aggregated)**
-
-```
-F1: 4.33h
-F2: 3.50h
-F3: 3.17h
-```
-
-**Calculate transition learning rates:**
-```
-LR_F1→F2 = 3.50h / 4.33h = 80.8% (19.2% improvement)
-LR_F2→F3 = 3.17h / 3.50h = 90.6% (9.4% improvement)
-```
-
-**Calculate average unit learning percentage:**
-```
-Average Unit Learning % = (80.8% + 90.6%) / 2 = 85.7% ≈ 86%
-```
-
-**Total improvement:**
-```
-Total Improvement = (4.33h - 3.17h) / 4.33h = 26.8%
-```
-
-**Summary:**
-- **Average Unit Learning %: 86%** (shown in table)
-- **Total Improvement: 27%** (F1→F3)
-- **% of Total Time: 11%**
-- **Interpretation:** Moderate learning, smallest component by time
-
----
-
-#### EFGL Summary Comparison
-
-| Component Group | F1 Time | F3 Time | Avg Unit Learning % | Total Improvement | % of Total |
-|----------------|---------|---------|---------------------|-------------------|------------|
-| **All Tower Sections** | 25.92h | 15.33h | **78%** | **41%** | 57% |
-| **All Blades** | 12.00h | 8.17h | **85%** | **32%** | 32% |
-| **Nacelle** | 4.33h | 3.17h | **86%** | **27%** | 11% |
-| **Total** | 42.25h | 26.67h | **79.5%** | **37%** | 100% |
-
-**Key Insights:**
-- **Tower Sections** show the **strongest learning** (78% Unit Learning %, 41% improvement) despite being the largest component
-- **Blades** had no improvement F1→F2 (100% Unit Learning %), then major improvement F2→F3 (68% Unit Learning %)
-- **Nacelle** shows the **weakest learning** (86% Unit Learning %, 27% improvement) - most mature process
-
----
-
-### 2.4 Eolmed Component Group Analysis (Actual Data)
-
-#### Component Group 1: All Tower Sections
-
-**Step 1: Calculate total tower time per floater**
-```
-F1 Total Towers = Tower Sec 1 + Tower Sec 2 + Tower Sec 3
-                = 6.17h + 4.5h + 3.33h
-                = 14.00h
-
-F2 Total Towers = 3.5h + 4.33h + 4.0h
-                = 11.83h
-
-F3 Total Towers = 4.67h + 4.0h + 2.5h
-                = 11.17h
-```
-
-**Calculate average unit learning percentage:**
-```
-LR_F1→F2 = 11.83h / 14.00h = 84.5% (15.5% improvement)
-LR_F2→F3 = 11.17h / 11.83h = 94.4% (5.6% improvement)
-
-Average Unit Learning % = (84.5% + 94.4%) / 2 = 89.5% ≈ **75%** (NOTE: Displayed as 75% in table - may use different calculation method)
-
-Total Improvement = (14.00h - 11.17h) / 14.00h = 20.2%
-```
-
----
-
-#### Component Group 2: All Blades
-
-**Calculate total blade time per floater:**
-```
-F1 Total Blades = 4.17h + 2.0h + 2.17h = 8.33h
-F2 Total Blades = 2.33h + 1.67h + 2.17h = 6.17h
-F3 Total Blades = 1.83h + 1.83h + 1.33h = 5.00h
-```
-
-**Calculate average unit learning percentage:**
-```
-LR_F1→F2 = 6.17h / 8.33h = 74.1% (25.9% improvement)
-LR_F2→F3 = 5.00h / 6.17h = 81.0% (19.0% improvement)
-
-Average Unit Learning % = (74.1% + 81.0%) / 2 = 77.6% ≈ **62%** (NOTE: Displayed as 62% in table)
-
-Total Improvement = (8.33h - 5.00h) / 8.33h = 40.0%
-```
-
----
-
-#### Component Group 3: Nacelle
-
-```
-F1: 5.67h
-F2: 3.67h
-F3: 3.83h
-
-LR_F1→F2 = 3.67h / 5.67h = 64.7% (35.3% improvement)
-LR_F2→F3 = 3.83h / 3.67h = 104.4% (negative learning - slight regression)
-
-Average Unit Learning % = (64.7% + 104.4%) / 2 = 84.6% ≈ **96%** (NOTE: Displayed as 96% in table)
-
-Total Improvement = (5.67h - 3.83h) / 5.67h = 32.5%
-```
-
----
-
-#### Eolmed Summary Comparison
-
-| Component Group | F1 Time | F3 Time | Avg Unit Learning % | Total Improvement | % of Total |
-|----------------|---------|---------|---------------------|-------------------|------------|
-| **All Tower Sections** | 14.00h | 11.17h | **75%** | **20%** | 56% |
-| **All Blades** | 8.33h | 5.00h | **62%** | **40%** | 29% |
-| **Nacelle** | 5.67h | 3.83h | **96%** | **33%** | 15% |
-| **Total** | 28.00h | 20.00h | **77.4%** | **29%** | 100% |
-
-**Key Insights:**
-- **Blades** show the **strongest learning** (62% Unit Learning %, 40% improvement) - benefited from propeller-assisted tool
-- **Nacelle** shows **regression F2→F3** (104% Unit Learning %) but still 33% total improvement
-- **Tower Sections** show good learning (75% Unit Learning %, 20% improvement)
-- Eolmed overall faster than EFGL due to technology improvements and learning transfer
-
----
-
-## 3. Steady State Performance Analysis
+- **Interpretation:** Slowest learning rate but largest opportunity for optimization
 
 ---
 
@@ -508,7 +301,7 @@ F3 Total Towers = 4.67h + 4.0h + 2.5h
 LR_F1→F2 = 11.83h / 14.00h = 84.5% (15.5% improvement)
 LR_F2→F3 = 11.17h / 11.83h = 94.4% (5.6% improvement)
 
-Average LR = (84.5% + 94.4%) / 2 = 89.5% ≈ **75%** (NOTE: Displayed as 75% in table - may use different calculation method)
+Average LR = (84.5% + 94.4%) / 2 = 89.5% 
 
 Total Improvement = (14.00h - 11.17h) / 14.00h = 20.2%
 ```
@@ -529,7 +322,7 @@ F3 Total Blades = 1.83h + 1.83h + 1.33h = 5.00h
 LR_F1→F2 = 6.17h / 8.33h = 74.1% (25.9% improvement)
 LR_F2→F3 = 5.00h / 6.17h = 81.0% (19.0% improvement)
 
-Average LR = (74.1% + 81.0%) / 2 = 77.6% ≈ **62%** (NOTE: Displayed as 62% in table)
+Average LR = (74.1% + 81.0%) / 2 = 77.6% 
 
 Total Improvement = (8.33h - 5.00h) / 8.33h = 40.0%
 ```
@@ -546,8 +339,7 @@ F3: 3.83h
 LR_F1→F2 = 3.67h / 5.67h = 64.7% (35.3% improvement)
 LR_F2→F3 = 3.83h / 3.67h = 104.4% (negative learning - slight regression)
 
-Average LR = (64.7% + 104.4%) / 2 = 84.6% ≈ **96%** (NOTE: Displayed as 96% in table)
-
+Average LR = (64.7% + 104.4%) / 2 = 84.6% 
 Total Improvement = (5.67h - 3.83h) / 5.67h = 32.5%
 ```
 

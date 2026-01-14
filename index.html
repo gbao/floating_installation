@@ -231,7 +231,7 @@
                         </div>
                         <div class="overview-card-metric">84% Avg Unit Learning</div>
                         <div class="overview-card-body">
-                            Delayed learning onset followed by sharp correction. <strong>F1→F2: No improvement</strong> (12.00h flat), then a breakthrough driving a <strong> Cumulative Efficiency Gain of 32%</strong> (12.00h → 8.17h). Indicates process issues were resolved after the second unit.
+                            Delayed learning onset followed by sharp correction. <strong>F1→F2: No improvement</strong> (12.00h flat), then a breakthrough driving a <strong> Cumulative Efficiency Gain of 32% F1→F3</strong> (12.00h → 8.17h). Indicates process issues were resolved after the second unit.
 </div>
                     </div>
 
@@ -242,7 +242,7 @@
                         </div>
                         <div class="overview-card-metric">86% Avg Unit Learning</div>
                         <div class="overview-card-body">
-                            <strong>Steady optimization under constraint.</strong> Executed immediately following Tower Sec 3. Given the lower complexity of the scope, the team achieved a natural reduction in cycle time with each unit, resulting in a <strong>Cumulative Efficiency Gain of 27%</strong> (4.33h → 3.17h).
+                            <strong>Steady optimization under constraint.</strong> Executed immediately following Tower Sec 3. Given the lower complexity of the scope, the team achieved a natural reduction in cycle time with each unit, resulting in a <strong>Cumulative Efficiency Gain of 27% F1→F3</strong> (4.33h → 3.17h).
                     </div>
                 </div>
             </section>
@@ -443,7 +443,7 @@
         <!-- Scenario Planning -->
         <section class="controls-section">
             <h2>Scenario Planning</h2>
-            <p class="section-description">Explore how assembly time improves with additional floaters using Wright's learning curve formula</p>
+            <p class="section-description">Explore how assembly time improves with additional floaters Crawford Unit Time Model ($T_n = T_1 n^b$), which is the unit-based application of the Power Law originally established by Wright.</p>
 
             <!-- Two-Column Layout: Controls (Left) + Method/Results (Right) -->
             <div class="scenario-layout">
@@ -458,26 +458,12 @@
                     </div>
 
                     <div class="control-group-compact">
-                        <label for="learning-rate-method">Learning Rate Method:</label>
+                        <label for="learning-rate-method">Forecasting Assumption:</label>
                         <select id="learning-rate-method" class="method-selector-compact">
-                            <option value="sequential-avg" selected>Sequential Transition Average</option>
-                            <option value="f1-f2-only">F1→F2 Only</option>
-                            <option value="f2-f3-only">F2→F3 Only</option>
-                            <option value="power-law">Power Law Regression</option>
-                            <option value="geometric-mean">Geometric Mean</option>
-                            <option value="weighted-avg">Weighted Average</option>
+                            <option value="power-law" selected>Statistical Best Fit -(Power Law Regression)</option>
+                            <option value="sequential-avg">Sequential Momentum (Transition Avg)</option>
                             <option value="steady-state">Steady State</option>
-                            <option value="custom">Custom</option>
                         </select>
-                    </div>
-
-                    <!-- Manual Override Slider (shown only for "Custom" mode) -->
-                    <div class="control-group-compact" id="manual-lr-control" style="display: none;">
-                        <label for="learning-rate-adjust">Manual Learning Rate:</label>
-                        <div class="control-input-row">
-                            <input type="range" id="learning-rate-adjust" min="0.5" max="1.0" value="0.7945" step="0.01">
-                            <span id="learning-rate-adjust-value" class="control-value">79%</span>
-                        </div>
                     </div>
 
                     <div class="control-buttons">
@@ -518,7 +504,7 @@
                         <div class="results-header">Predicted for <span id="predicted-turbines">10</span> Floaters:</div>
                         <div class="results-grid">
                             <div class="result-item">
-                                <div class="result-label">Floater 10 Time:</div>
+                                <div class="result-label">Floater <span id="floater-number-label">10</span> Time:</div>
                                 <div class="result-value" id="formula-f10-display">18.1h</div>
                             </div>
                             <div class="result-item">
@@ -611,7 +597,7 @@
 
                         <!-- Tower Section Sequencing Flow -->
                         <div class="pattern-flow-section-compact">
-                            <h4 class="flow-title-compact">Tower Section Sequencing Flow</h4>
+                            <h4 class="flow-title-compact">Tower Section Sequencing Flow - Gap Highlight</h4>
                             <div class="flow-comparison-horizontal-compact">
                                 <div class="flow-column-compact">
                                     <div class="flow-label-compact">F1</div>
@@ -668,7 +654,7 @@
 
                         <!-- Blade Installation Sequencing Flow -->
                         <div class="pattern-flow-section-compact">
-                            <h4 class="flow-title-compact">Blade Installation Sequencing Flow</h4>
+                            <h4 class="flow-title-compact">Blade Installation Sequencing Flow - Gap Highlight</h4>
                             <div class="flow-comparison-horizontal-compact">
                                 <div class="flow-column-compact">
                                     <div class="flow-label-compact">F1</div>
@@ -1472,7 +1458,7 @@
 
                         <!-- Tower Section Sequencing Flow -->
                         <div class="pattern-flow-section-compact">
-                            <h4 class="flow-title-compact">Tower Section Sequencing Flow - Gap highlight</h4>
+                            <h4 class="flow-title-compact">Tower Section Sequencing Flow - Gap Highlight</h4>
                             <div class="flow-comparison-horizontal-compact">
                                 <div class="flow-column-compact">
                                     <div class="flow-label-compact">F1</div>
@@ -1840,7 +1826,7 @@
                 </div>
 
                 <div class="table-footnote-small">
-                    <p>Note: Eolmed F3 has no departure data as the floater was not towed out - crane was disassembled after Blade 3 completion. F3 calendar days end at Blade 3 (01-Dec-2025 14:50), not departure. Inter-floater gaps are allocated to the next floater following EFGL methodology: F2 calendar includes 1d gap from F1 departure to F2 arrival; F3 calendar includes 1d gap from F2 departure to F3 arrival. Total project duration: 77 days (15-Sep to 01-Dec 2025). Overall crane utilization: 69.67h / 770h (77 days × 10h/day) = 9.0%. Tool improvements (vibration damper, propeller-assisted blade tool) contributed to 31% faster average execution time vs EFGL (23.22h vs 33.75h).</p>
+                    <p>Note: Eolmed F3 has no departure data as the floater was not towed out - crane was disassembled after Blade 3 completion. F3 calendar days end at Blade 3 (01-Dec-2025 14:50), not departure. Inter-floater gaps are allocated to the next floater following EFGL methodology: F2 calendar includes 1d gap from F1 departure to F2 arrival; F3 calendar includes 1d gap from F2 departure to F3 arrival. Total project duration: 77 days (15-Sep to 01-Dec 2025). Overall crane utilization: 69.67h / 770h (77 days × 10h/day) = 9.0%.</p>
                 </div>
             </div>
 
@@ -1855,7 +1841,7 @@
         <!-- Scenario Planning -->
         <section class="controls-section">
             <h2>Scenario Planning</h2>
-            <p class="section-description">Explore how assembly time improves with additional floaters using Wright's learning curve formula</p>
+            <p class="section-description">Explore how assembly time improves with additional floaters using Crawford's Model</p>
 
             <!-- Two-Column Layout: Controls (Left) + Method/Results (Right) -->
             <div class="scenario-layout">
@@ -1870,26 +1856,12 @@
                     </div>
 
                     <div class="control-group-compact">
-                        <label for="eolmed-learning-rate-method">Learning Rate Method:</label>
+                        <label for="eolmed-learning-rate-method">Forecasting Assumption:</label>
                         <select id="eolmed-learning-rate-method" class="method-selector-compact">
-                            <option value="sequential-avg" selected>Sequential Transition Average</option>
-                            <option value="f1-f2-only">F1→F2 Only</option>
-                            <option value="f2-f3-only">F2→F3 Only</option>
-                            <option value="power-law">Power Law Regression</option>
-                            <option value="geometric-mean">Geometric Mean</option>
-                            <option value="weighted-avg">Weighted Average</option>
+                            <option value="power-law" selected>Statistical Best Fit -(Power Law Regression)</option>
+                            <option value="sequential-avg">Sequential Momentum ( Transition Avg)</option>
                             <option value="steady-state">Steady State</option>
-                            <option value="custom">Custom</option>
                         </select>
-                    </div>
-
-                    <!-- Manual Override Slider (shown only for "Custom" mode) -->
-                    <div class="control-group-compact" id="eolmed-manual-lr-control" style="display: none;">
-                        <label for="eolmed-learning-rate-adjust">Manual Learning Rate:</label>
-                        <div class="control-input-row">
-                            <input type="range" id="eolmed-learning-rate-adjust" min="0.5" max="1.0" value="0.8485" step="0.01">
-                            <span id="eolmed-learning-rate-adjust-value" class="control-value">85%</span>
-                        </div>
                     </div>
 
                     <div class="control-buttons">
@@ -1930,7 +1902,7 @@
                         <div class="results-header">Predicted for <span id="eolmed-predicted-turbines">10</span> Floaters:</div>
                         <div class="results-grid">
                             <div class="result-item">
-                                <div class="result-label">Floater 10 Time:</div>
+                                <div class="result-label">Floater <span id="eolmed-floater-number-label">10</span> Time:</div>
                                 <div class="result-value" id="eolmed-formula-f10-display">15.2h</div>
                             </div>
                             <div class="result-item">
@@ -1942,7 +1914,7 @@
                                 <div class="result-value" id="eolmed-pred-total-time">198.0h</div>
                             </div>
                             <div class="result-item">
-                                <div class="result-label">Time Savings:</div>
+                                <div class="result-label">Net Efficiency Gain:</div>
                                 <div class="result-value" id="eolmed-pred-savings">15.6%</div>
                             </div>
                         </div>
@@ -1953,7 +1925,7 @@
                         <div class="results-deviation">
                             <span class="warning-icon">⚠️</span>
                             <span class="deviation-text">
-                                Formula deviation: F2 (<span id="eolmed-f2-deviation">-3.2%</span>), F3 (<span id="eolmed-f3-deviation">-5.8%</span>)
+                               Model Fit Accuracy: F2 (<span id="eolmed-f2-deviation">-3.2%</span>), F3 (<span id="eolmed-f3-deviation">-5.8%</span>)
                             </span>
                         </div>
                     </div>

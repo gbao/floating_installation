@@ -1016,7 +1016,7 @@ function updatePredictions() {
     }
 
     // Update Floater N label dynamically
-    const floaterNLabel = document.getElementById('floater-n-label');
+    const floaterNLabel = document.getElementById('floater-number-label');
     if (floaterNLabel) {
         floaterNLabel.textContent = currentSettings.turbineCount;
     }
@@ -3243,7 +3243,7 @@ function updateEolmedPredictions() {
     }
 
     // Update Eolmed Floater N label dynamically
-    const eolmedFloaterNLabel = document.getElementById('eolmed-floater-n-label');
+    const eolmedFloaterNLabel = document.getElementById('eolmed-floater-number-label');
     if (eolmedFloaterNLabel) {
         eolmedFloaterNLabel.textContent = eolmedSettings.turbineCount;
     }
