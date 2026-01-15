@@ -1153,25 +1153,27 @@ function setupEventListeners() {
         updateCharts();
     });
 
-    // Learning rate slider
+    // Learning rate slider (removed from UI, keeping code for potential future use)
     const learningRateInput = document.getElementById('learning-rate-adjust');
     const learningRateValue = document.getElementById('learning-rate-adjust-value');
 
-    learningRateInput.addEventListener('input', (e) => {
-        if (document.getElementById('learning-rate-method').value === 'custom') {
-            currentSettings.learningRate = parseFloat(e.target.value);
-            learningRateValue.textContent = `${(currentSettings.learningRate * 100).toFixed(0)}%`;
-            document.getElementById('calculated-lr-value').textContent = `${(currentSettings.learningRate * 100).toFixed(1)}%`;
-            currentSettings.bCoefficient = Math.log(currentSettings.learningRate) / Math.log(2);
+    if (learningRateInput && learningRateValue) {
+        learningRateInput.addEventListener('input', (e) => {
+            if (document.getElementById('learning-rate-method').value === 'custom') {
+                currentSettings.learningRate = parseFloat(e.target.value);
+                learningRateValue.textContent = `${(currentSettings.learningRate * 100).toFixed(0)}%`;
+                document.getElementById('calculated-lr-value').textContent = `${(currentSettings.learningRate * 100).toFixed(1)}%`;
+                currentSettings.bCoefficient = Math.log(currentSettings.learningRate) / Math.log(2);
 
-            // Update main metric card
-            document.getElementById('learning-rate').textContent = `${(currentSettings.learningRate * 100).toFixed(0)}%`;
+                // Update main metric card
+                document.getElementById('learning-rate').textContent = `${(currentSettings.learningRate * 100).toFixed(0)}%`;
 
-            // Auto-update predictions and charts
-            updatePredictions();
-            updateCharts();
-        }
-    });
+                // Auto-update predictions and charts
+                updatePredictions();
+                updateCharts();
+            }
+        });
+    }
 
     // Learning rate method selector
     const methodSelector = document.getElementById('learning-rate-method');
@@ -1188,11 +1190,13 @@ function setupEventListeners() {
 
         if (selectedMethod === 'custom') {
             // Show manual slider
-            manualLRControl.style.display = 'block';
+            if (manualLRControl) manualLRControl.style.display = 'block';
 
             // Use current slider value
-            currentSettings.learningRate = parseFloat(learningRateInput.value);
-            calculatedLRValue.textContent = `${(currentSettings.learningRate * 100).toFixed(1)}%`;
+            if (learningRateInput) {
+                currentSettings.learningRate = parseFloat(learningRateInput.value);
+                calculatedLRValue.textContent = `${(currentSettings.learningRate * 100).toFixed(1)}%`;
+            }
 
             methodInfoName.textContent = 'Custom (Manual Override)';
             methodInfoFormula.textContent = 'User-specified value';
@@ -1202,7 +1206,7 @@ function setupEventListeners() {
             updateCalculationDetail('custom');
         } else {
             // Hide manual slider
-            manualLRControl.style.display = 'none';
+            if (manualLRControl) manualLRControl.style.display = 'none';
 
             // Get method data
             const method = learningRateMethods[selectedMethod];
@@ -1246,7 +1250,7 @@ function setupEventListeners() {
 
         // Reset method dropdown to default
         methodSelector.value = 'power-law';
-        manualLRControl.style.display = 'none';
+        if (manualLRControl) manualLRControl.style.display = 'none';
 
         // Reset method info display
         const defaultMethod = learningRateMethods['power-law'];
