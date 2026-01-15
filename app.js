@@ -188,7 +188,7 @@ function calculateLearningRateMethods() {
         'sequential-avg': {
             name: 'Sequential Transition Average',
             value: (lr_f1_f2 + lr_f2_f3) / 2,
-            description: 'Average of F1→F2 (76.5%) and F2→F3 (82.5%) transitions',
+            description: 'We average the specific step-by-step improvements observed (F₁→F₂ and F₂→F₃). This is an operational heuristic that weighs recent steps heavily.',
             formula: '(LR_F1→F2 + LR_F2→F3) / 2'
         },
         'f1-f2-only': {
@@ -206,7 +206,7 @@ function calculateLearningRateMethods() {
         'power-law': {
             name: 'Power Law Regression',
             value: Math.pow(2, Math.log(f3/f1) / Math.log(3)),
-            description: 'Regression fit to all 3 data points',
+            description: 'Fit a log-linear regression curve through all completed data points (F₁, F₂, F₃). This minimizes outlier bias and represents the true underlying trend of the campaign.',
             formula: '2^b where b = log(F3/F1) / log(3)'
         },
         'geometric-mean': {
@@ -1064,6 +1064,7 @@ function updateCalculationDetail(methodKey) {
             const lr_f2_f3 = f3 / f2;
             const avg_lr = (lr_f1_f2 + lr_f2_f3) / 2;
             html = `
+                <div class="calc-step"><strong>Observed Times:</strong> F1 = ${f1}h, F2 = ${f2}h, F3 = ${f3}h</div>
                 <div class="calc-step"><strong>Step 1:</strong> LR<sub>F1→F2</sub> = ${f2}h / ${f1}h = ${(lr_f1_f2 * 100).toFixed(1)}%</div>
                 <div class="calc-step"><strong>Step 2:</strong> LR<sub>F2→F3</sub> = ${f3}h / ${f2}h = ${(lr_f2_f3 * 100).toFixed(1)}%</div>
                 <div class="calc-step"><strong>Step 3:</strong> Average LR = (${(lr_f1_f2 * 100).toFixed(1)}% + ${(lr_f2_f3 * 100).toFixed(1)}%) / 2 = <strong>${(avg_lr * 100).toFixed(1)}%</strong></div>
@@ -1085,6 +1086,7 @@ function updateCalculationDetail(methodKey) {
             const b_efgl = Math.log(f3/f1) / Math.log(3);
             const lr_efgl = Math.pow(2, b_efgl);
             html = `
+                <div class="calc-step"><strong>Observed Times:</strong> F1 = ${f1}h, F2 = ${f2}h, F3 = ${f3}h</div>
                 <div class="calc-step"><strong>Step 1:</strong> b = log(${f3}/${f1}) / log(3) = ${b_efgl.toFixed(3)}</div>
                 <div class="calc-step"><strong>Step 2:</strong> LR = 2<sup>b</sup> = 2<sup>${b_efgl.toFixed(3)}</sup> = <strong>${(lr_efgl * 100).toFixed(1)}%</strong></div>
                 <div class="calc-step">Regression fit to all 3 data points</div>
@@ -1107,6 +1109,7 @@ function updateCalculationDetail(methodKey) {
             const steady_avg = (f2 + f3) / 2;
             const steady_lr = steady_avg / f1;
             html = `
+                <div class="calc-step"><strong>Observed Times:</strong> F1 = ${f1}h, F2 = ${f2}h, F3 = ${f3}h</div>
                 <div class="calc-step"><strong>Step 1:</strong> Steady state avg = (${f2}h + ${f3}h) / 2 = ${steady_avg.toFixed(1)}h</div>
                 <div class="calc-step"><strong>Step 2:</strong> LR = ${steady_avg.toFixed(1)}h / ${f1}h = <strong>${(steady_lr * 100).toFixed(1)}%</strong></div>
                 <div class="calc-step">Excludes first-unit learning effects</div>
@@ -3132,7 +3135,7 @@ function calculateEolmedLearningRateMethods() {
         'sequential-avg': {
             name: 'Sequential Transition Average',
             value: (lr_f1_f2 + lr_f2_f3) / 2,
-            description: 'Average of F1→F2 (77.4%) and F2→F3 (92.3%) transitions',
+            description: 'We average the specific step-by-step improvements observed (F₁→F₂ and F₂→F₃). This is an operational heuristic that weighs recent steps heavily.',
             formula: '(LR_F1→F2 + LR_F2→F3) / 2'
         },
         'f1-f2-only': {
@@ -3150,7 +3153,7 @@ function calculateEolmedLearningRateMethods() {
         'power-law': {
             name: 'Power Law Regression',
             value: Math.pow(2, Math.log(f3/f1) / Math.log(3)),
-            description: 'Regression fit to all 3 data points',
+            description: 'Fit a log-linear regression curve through all completed data points (F₁, F₂, F₃). This minimizes outlier bias and represents the true underlying trend of the campaign.',
             formula: '2^b where b = log(F3/F1) / log(3)'
         },
         'geometric-mean': {
@@ -3300,6 +3303,7 @@ function updateEolmedCalculationDetail(methodKey) {
             const lr_f2_f3_eolmed = f3 / f2;
             const avg_lr_eolmed = (lr_f1_f2_eolmed + lr_f2_f3_eolmed) / 2;
             html = `
+                <div class="calc-step"><strong>Observed Times:</strong> F1 = ${f1}h, F2 = ${f2}h, F3 = ${f3}h</div>
                 <div class="calc-step"><strong>Step 1:</strong> LR<sub>F1→F2</sub> = ${f2}h / ${f1}h = ${(lr_f1_f2_eolmed * 100).toFixed(1)}%</div>
                 <div class="calc-step"><strong>Step 2:</strong> LR<sub>F2→F3</sub> = ${f3}h / ${f2}h = ${(lr_f2_f3_eolmed * 100).toFixed(1)}%</div>
                 <div class="calc-step"><strong>Step 3:</strong> Average LR = (${(lr_f1_f2_eolmed * 100).toFixed(1)}% + ${(lr_f2_f3_eolmed * 100).toFixed(1)}%) / 2 = <strong>${(avg_lr_eolmed * 100).toFixed(1)}%</strong></div>
@@ -3321,6 +3325,7 @@ function updateEolmedCalculationDetail(methodKey) {
             const b_eolmed = Math.log(f3/f1) / Math.log(3);
             const lr_eolmed = Math.pow(2, b_eolmed);
             html = `
+                <div class="calc-step"><strong>Observed Times:</strong> F1 = ${f1}h, F2 = ${f2}h, F3 = ${f3}h</div>
                 <div class="calc-step"><strong>Step 1:</strong> b = log(${f3}/${f1}) / log(3) = ${b_eolmed.toFixed(3)}</div>
                 <div class="calc-step"><strong>Step 2:</strong> LR = 2<sup>b</sup> = 2<sup>${b_eolmed.toFixed(3)}</sup> = <strong>${(lr_eolmed * 100).toFixed(1)}%</strong></div>
                 <div class="calc-step">Regression fit to all 3 data points</div>
@@ -3348,6 +3353,7 @@ function updateEolmedCalculationDetail(methodKey) {
             const steady_avg_eolmed = (f2 + f3) / 2;
             const steady_lr_eolmed = steady_avg_eolmed / f1;
             html = `
+                <div class="calc-step"><strong>Observed Times:</strong> F1 = ${f1}h, F2 = ${f2}h, F3 = ${f3}h</div>
                 <div class="calc-step"><strong>Step 1:</strong> Steady state avg = (${f2}h + ${f3}h) / 2 = ${steady_avg_eolmed.toFixed(1)}h</div>
                 <div class="calc-step"><strong>Step 2:</strong> LR = ${steady_avg_eolmed.toFixed(1)}h / ${f1}h = <strong>${(steady_lr_eolmed * 100).toFixed(1)}%</strong></div>
                 <div class="calc-step">Excludes first-unit learning effects</div>
