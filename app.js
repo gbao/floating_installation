@@ -1238,20 +1238,18 @@ function setupEventListeners() {
     // Reset button
     document.getElementById('reset-btn').addEventListener('click', () => {
         currentSettings.turbineCount = 10;
-        currentSettings.learningRate = 0.7945;
-        currentSettings.bCoefficient = -0.3319;
+        currentSettings.learningRate = 0.7489;  // Power Law Regression (default)
+        currentSettings.bCoefficient = -0.4175;  // log(0.7489) / log(2)
 
         turbineCountInput.value = 10;
         turbineCountValue.textContent = '10';
-        learningRateInput.value = 0.7945;
-        learningRateValue.textContent = '79%';
 
         // Reset method dropdown to default
-        methodSelector.value = 'sequential-avg';
+        methodSelector.value = 'power-law';
         manualLRControl.style.display = 'none';
 
         // Reset method info display
-        const defaultMethod = learningRateMethods['sequential-avg'];
+        const defaultMethod = learningRateMethods['power-law'];
         methodInfoName.textContent = defaultMethod.name;
         methodInfoFormula.textContent = defaultMethod.formula;
         methodInfoDescription.textContent = defaultMethod.description;
@@ -1259,6 +1257,9 @@ function setupEventListeners() {
 
         // Update main metric card
         document.getElementById('learning-rate').textContent = `${(defaultMethod.value * 100).toFixed(0)}%`;
+
+        // Update calculation detail box
+        updateCalculationDetail('power-law');
 
         updatePredictions();
         updateCharts();
@@ -2073,56 +2074,6 @@ function updateEolmedPredictions() {
     const baseTime = eolmedData.floaters[0].total_hours;
     const savings = ((baseTime - lastPrediction.average) / baseTime) * 100;
     if (savingsEl) savingsEl.textContent = `${savings.toFixed(1)}%`;
-}
-
-function setupEolmedEventListeners() {
-    const turbineCountInput = document.getElementById('eolmed-turbine-count');
-    const turbineCountValue = document.getElementById('eolmed-turbine-count-value');
-
-    if (turbineCountInput) {
-        turbineCountInput.addEventListener('input', (e) => {
-            eolmedSettings.turbineCount = parseInt(e.target.value);
-            if (turbineCountValue) turbineCountValue.textContent = eolmedSettings.turbineCount;
-            updateEolmedPredictions();
-            updateEolmedCharts();
-        });
-    }
-
-    const learningRateInput = document.getElementById('eolmed-learning-rate-adjust');
-    const learningRateValue = document.getElementById('eolmed-learning-rate-adjust-value');
-
-    if (learningRateInput) {
-        learningRateInput.addEventListener('input', (e) => {
-            eolmedSettings.learningRate = parseFloat(e.target.value);
-            if (learningRateValue) learningRateValue.textContent = `${(eolmedSettings.learningRate * 100).toFixed(0)}%`;
-            eolmedSettings.bCoefficient = Math.log(eolmedSettings.learningRate) / Math.log(2);
-        });
-    }
-
-    const calculateBtn = document.getElementById('eolmed-calculate-btn');
-    if (calculateBtn) {
-        calculateBtn.addEventListener('click', () => {
-            updateEolmedPredictions();
-            updateEolmedCharts();
-        });
-    }
-
-    const resetBtn = document.getElementById('eolmed-reset-btn');
-    if (resetBtn) {
-        resetBtn.addEventListener('click', () => {
-            eolmedSettings.turbineCount = 10;
-            eolmedSettings.learningRate = eolmedData.learning_curve.avg_learning_rate;
-            eolmedSettings.bCoefficient = eolmedData.learning_curve.b_coefficient;
-
-            if (turbineCountInput) turbineCountInput.value = 10;
-            if (turbineCountValue) turbineCountValue.textContent = '10';
-            if (learningRateInput) learningRateInput.value = eolmedSettings.learningRate;
-            if (learningRateValue) learningRateValue.textContent = `${(eolmedSettings.learningRate * 100).toFixed(0)}%`;
-
-            updateEolmedPredictions();
-            updateEolmedCharts();
-        });
-    }
 }
 
 function updateEolmedCharts() {
