@@ -1060,10 +1060,13 @@ function updateCalculationDetail(methodKey) {
 
     switch(methodKey) {
         case 'sequential-avg':
+            const lr_f1_f2 = f2 / f1;
+            const lr_f2_f3 = f3 / f2;
+            const avg_lr = (lr_f1_f2 + lr_f2_f3) / 2;
             html = `
-                <div class="calc-step"><strong>Step 1:</strong> LR<sub>F1→F2</sub> = ${f2}h / ${f1}h = 76.5%</div>
-                <div class="calc-step"><strong>Step 2:</strong> LR<sub>F2→F3</sub> = ${f3}h / ${f2}h = 82.5%</div>
-                <div class="calc-step"><strong>Step 3:</strong> Average LR = (76.5% + 82.5%) / 2 = <strong>79.5%</strong></div>
+                <div class="calc-step"><strong>Step 1:</strong> LR<sub>F1→F2</sub> = ${f2}h / ${f1}h = ${(lr_f1_f2 * 100).toFixed(1)}%</div>
+                <div class="calc-step"><strong>Step 2:</strong> LR<sub>F2→F3</sub> = ${f3}h / ${f2}h = ${(lr_f2_f3 * 100).toFixed(1)}%</div>
+                <div class="calc-step"><strong>Step 3:</strong> Average LR = (${(lr_f1_f2 * 100).toFixed(1)}% + ${(lr_f2_f3 * 100).toFixed(1)}%) / 2 = <strong>${(avg_lr * 100).toFixed(1)}%</strong></div>
             `;
             break;
         case 'f1-f2-only':
@@ -1079,9 +1082,11 @@ function updateCalculationDetail(methodKey) {
             `;
             break;
         case 'power-law':
+            const b_efgl = Math.log(f3/f1) / Math.log(3);
+            const lr_efgl = Math.pow(2, b_efgl);
             html = `
-                <div class="calc-step"><strong>Step 1:</strong> b = log(${f3}/${f1}) / log(3) = -0.332</div>
-                <div class="calc-step"><strong>Step 2:</strong> LR = 2<sup>b</sup> = 2<sup>-0.332</sup> = <strong>79.5%</strong></div>
+                <div class="calc-step"><strong>Step 1:</strong> b = log(${f3}/${f1}) / log(3) = ${b_efgl.toFixed(3)}</div>
+                <div class="calc-step"><strong>Step 2:</strong> LR = 2<sup>b</sup> = 2<sup>${b_efgl.toFixed(3)}</sup> = <strong>${(lr_efgl * 100).toFixed(1)}%</strong></div>
                 <div class="calc-step">Regression fit to all 3 data points</div>
             `;
             break;
@@ -1099,9 +1104,11 @@ function updateCalculationDetail(methodKey) {
             `;
             break;
         case 'steady-state':
+            const steady_avg = (f2 + f3) / 2;
+            const steady_lr = steady_avg / f1;
             html = `
-                <div class="calc-step"><strong>Step 1:</strong> Steady state avg = (${f2}h + ${f3}h) / 2 = 29.5h</div>
-                <div class="calc-step"><strong>Step 2:</strong> LR = 29.5h / ${f1}h = <strong>69.8%</strong></div>
+                <div class="calc-step"><strong>Step 1:</strong> Steady state avg = (${f2}h + ${f3}h) / 2 = ${steady_avg.toFixed(1)}h</div>
+                <div class="calc-step"><strong>Step 2:</strong> LR = ${steady_avg.toFixed(1)}h / ${f1}h = <strong>${(steady_lr * 100).toFixed(1)}%</strong></div>
                 <div class="calc-step">Excludes first-unit learning effects</div>
             `;
             break;
@@ -3289,10 +3296,13 @@ function updateEolmedCalculationDetail(methodKey) {
 
     switch(methodKey) {
         case 'sequential-avg':
+            const lr_f1_f2_eolmed = f2 / f1;
+            const lr_f2_f3_eolmed = f3 / f2;
+            const avg_lr_eolmed = (lr_f1_f2_eolmed + lr_f2_f3_eolmed) / 2;
             html = `
-                <div class="calc-step"><strong>Step 1:</strong> LR<sub>F1→F2</sub> = ${f2}h / ${f1}h = 77.4%</div>
-                <div class="calc-step"><strong>Step 2:</strong> LR<sub>F2→F3</sub> = ${f3}h / ${f2}h = 92.3%</div>
-                <div class="calc-step"><strong>Step 3:</strong> Average LR = (77.4% + 92.3%) / 2 = <strong>84.9%</strong></div>
+                <div class="calc-step"><strong>Step 1:</strong> LR<sub>F1→F2</sub> = ${f2}h / ${f1}h = ${(lr_f1_f2_eolmed * 100).toFixed(1)}%</div>
+                <div class="calc-step"><strong>Step 2:</strong> LR<sub>F2→F3</sub> = ${f3}h / ${f2}h = ${(lr_f2_f3_eolmed * 100).toFixed(1)}%</div>
+                <div class="calc-step"><strong>Step 3:</strong> Average LR = (${(lr_f1_f2_eolmed * 100).toFixed(1)}% + ${(lr_f2_f3_eolmed * 100).toFixed(1)}%) / 2 = <strong>${(avg_lr_eolmed * 100).toFixed(1)}%</strong></div>
             `;
             break;
         case 'f1-f2-only':
@@ -3308,9 +3318,11 @@ function updateEolmedCalculationDetail(methodKey) {
             `;
             break;
         case 'power-law':
+            const b_eolmed = Math.log(f3/f1) / Math.log(3);
+            const lr_eolmed = Math.pow(2, b_eolmed);
             html = `
-                <div class="calc-step"><strong>Step 1:</strong> b = log(${f3}/${f1}) / log(3) = -0.109</div>
-                <div class="calc-step"><strong>Step 2:</strong> LR = 2<sup>b</sup> = 2<sup>-0.109</sup> = <strong>92.7%</strong></div>
+                <div class="calc-step"><strong>Step 1:</strong> b = log(${f3}/${f1}) / log(3) = ${b_eolmed.toFixed(3)}</div>
+                <div class="calc-step"><strong>Step 2:</strong> LR = 2<sup>b</sup> = 2<sup>${b_eolmed.toFixed(3)}</sup> = <strong>${(lr_eolmed * 100).toFixed(1)}%</strong></div>
                 <div class="calc-step">Regression fit to all 3 data points</div>
             `;
             break;
@@ -3333,9 +3345,11 @@ function updateEolmedCalculationDetail(methodKey) {
             `;
             break;
         case 'steady-state':
+            const steady_avg_eolmed = (f2 + f3) / 2;
+            const steady_lr_eolmed = steady_avg_eolmed / f1;
             html = `
-                <div class="calc-step"><strong>Step 1:</strong> Steady state avg = (${f2}h + ${f3}h) / 2 = 20.8h</div>
-                <div class="calc-step"><strong>Step 2:</strong> LR = 20.8h / ${f1}h = <strong>74.5%</strong></div>
+                <div class="calc-step"><strong>Step 1:</strong> Steady state avg = (${f2}h + ${f3}h) / 2 = ${steady_avg_eolmed.toFixed(1)}h</div>
+                <div class="calc-step"><strong>Step 2:</strong> LR = ${steady_avg_eolmed.toFixed(1)}h / ${f1}h = <strong>${(steady_lr_eolmed * 100).toFixed(1)}%</strong></div>
                 <div class="calc-step">Excludes first-unit learning effects</div>
             `;
             break;
