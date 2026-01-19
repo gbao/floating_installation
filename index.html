@@ -399,39 +399,6 @@
                 </table>
             </div>
 
-            <div class="steady-state-box">
-                <div class="steady-state-header">
-                    <strong>Steady-State Performance Analysis</strong>
-                    <span class="steady-state-badge">F2-F3 Average (Excluding First-Unit Effects)</span>
-                </div>
-                <div class="steady-state-content">
-                    <div class="steady-state-calc">
-                        <div class="calc-row">
-                            <span class="calc-label">F2:</span>
-                            <span class="calc-value">32.33h</span>
-                        </div>
-                        <div class="calc-row">
-                            <span class="calc-label">F3:</span>
-                            <span class="calc-value">26.67h</span>
-                        </div>
-                        <div class="calc-row highlight">
-                            <span class="calc-label">Average of F2&F3 :</span>
-                            <span class="calc-value">29.50h</span>
-                        </div>
-                        <div class="calc-row">
-                            <span class="calc-label">vs F1 Original:</span>
-                            <span class="calc-value">42.25h</span>
-                        </div>
-                        <div class="calc-row result">
-                            <span class="calc-label">Steady-State Performance Ratio:</span>
-                            <span class="calc-value improvement">69.8%</span>
-                        </div>
-                    </div>
-                    <div class="steady-state-note">
-                        This metric excludes first-unit learning effects and represents the <strong>sustainable operational efficiency</strong> achieved after initial learning curve. The 69.8% performance ratio indicates significant maturity in execution processes by F2-F3.
-                    </div>
-                </div>
-            </div>
         </section>
 
         </div>
@@ -460,9 +427,8 @@
                     <div class="control-group-compact">
                         <label for="learning-rate-method">Forecasting Assumption:</label>
                         <select id="learning-rate-method" class="method-selector-compact">
-                            <option value="power-law" selected>Statistical Best Fit -(Power Law Regression)</option>
+                            <option value="power-law" selected>Statistical Best Fit - Log-Linear Least Squares</option>
                             <option value="sequential-avg">Sequential Momentum (Transition Avg)</option>
-                            <option value="steady-state">Steady State</option>
                         </select>
                     </div>
 
@@ -508,7 +474,7 @@
                                 <div class="result-value" id="formula-f10-display">18.1h</div>
                             </div>
                             <div class="result-item">
-                                <div class="result-label">Cumulative Avg:</div>
+                                <div class="result-label">Campaign Average Duration:</div>
                                 <div class="result-value" id="formula-avg-display">24.5h</div>
                             </div>
                             <div class="result-item">
@@ -516,18 +482,18 @@
                                 <div class="result-value" id="pred-total-time">245.0h</div>
                             </div>
                             <div class="result-item">
-                                <div class="result-label">Time Savings:</div>
+                                <div class="result-label">Net Efficiency Gain:</div>
                                 <div class="result-value" id="pred-savings">42.0%</div>
                             </div>
                         </div>
                         <div class="results-explanation">
-                            <strong>Time Savings</strong> = Compared to building all floaters at average F1-F3 speed (33.75h each),
+                            <strong>Net Efficiency Gain</strong> = Compared to building all floaters at average exisiting F1-F3 speed (33.75h each),
                             how much time saved by applying learning curve improvement
                         </div>
                         <div class="results-deviation">
                             <span class="warning-icon">⚠️</span>
                             <span class="deviation-text">
-                                Formula deviation: F2 (<span id="f2-deviation">-3.7%</span>), F3 (<span id="f3-deviation">-7.4%</span>)
+                                Model Fit Accuracy: F2 (<span id="f2-deviation">-3.7%</span>), F3 (<span id="f3-deviation">-7.4%</span>)
                             </span>
                         </div>
                     </div>
@@ -1390,39 +1356,6 @@
                 </table>
             </div>
 
-            <div class="steady-state-box">
-                <div class="steady-state-header">
-                    <strong>Steady-State Performance Analysis</strong>
-                    <span class="steady-state-badge">F2-F3 Average (Excluding First-Unit Effects)</span>
-                </div>
-                <div class="steady-state-content">
-                    <div class="steady-state-calc">
-                        <div class="calc-row">
-                            <span class="calc-label">F2 Average:</span>
-                            <span class="calc-value">21.67h</span>
-                        </div>
-                        <div class="calc-row">
-                            <span class="calc-label">F3 Average:</span>
-                            <span class="calc-value">20.00h</span>
-                        </div>
-                        <div class="calc-row highlight">
-                            <span class="calc-label">F2-F3 Average:</span>
-                            <span class="calc-value">20.84h</span>
-                        </div>
-                        <div class="calc-row">
-                            <span class="calc-label">vs F1 Original:</span>
-                            <span class="calc-value">28.00h</span>
-                        </div>
-                        <div class="calc-row result">
-                            <span class="calc-label">Steady-State Improvement:</span>
-                            <span class="calc-value improvement">74.4%</span>
-                        </div>
-                    </div>
-                    <div class="steady-state-note">
-                        This metric excludes first-unit learning effects and represents the <strong>sustainable operational efficiency</strong> achieved after initial learning curve. The 74.4% steady-state performance demonstrates maturity enabled by technological advances (vibration damper and propeller-assisted blade tool).
-                    </div>
-                </div>
-            </div>
         </section>
 
         </div>
@@ -1858,9 +1791,8 @@
                     <div class="control-group-compact">
                         <label for="eolmed-learning-rate-method">Forecasting Assumption:</label>
                         <select id="eolmed-learning-rate-method" class="method-selector-compact">
-                            <option value="power-law" selected>Statistical Best Fit -(Power Law Regression)</option>
+                            <option value="power-law" selected>Statistical Best Fit - Log-Linear Least Squares</option>
                             <option value="sequential-avg">Sequential Momentum ( Transition Avg)</option>
-                            <option value="steady-state">Steady State</option>
                         </select>
                     </div>
 
@@ -1906,7 +1838,7 @@
                                 <div class="result-value" id="eolmed-formula-f10-display">15.2h</div>
                             </div>
                             <div class="result-item">
-                                <div class="result-label">Cumulative Avg:</div>
+                                <div class="result-label">Campaign Average Duration:</div>
                                 <div class="result-value" id="eolmed-formula-avg-display">19.8h</div>
                             </div>
                             <div class="result-item">
@@ -1919,7 +1851,7 @@
                             </div>
                         </div>
                         <div class="results-explanation">
-                            <strong>Time Savings</strong> = Compared to building all floaters at average F1-F3 speed (23.22h each),
+                            <strong>Net Efficiency Gain</strong> = Compared to building all floaters at average exisiting F1-F3 speed (23.22h each),
                             how much time saved by applying learning curve improvement
                         </div>
                         <div class="results-deviation">

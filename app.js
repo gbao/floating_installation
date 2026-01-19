@@ -204,10 +204,26 @@ function calculateLearningRateMethods() {
             formula: 'F3 / F2 = 26.67 / 32.33'
         },
         'power-law': {
-            name: 'Power Law Regression',
-            value: Math.pow(2, Math.log(f3/f1) / Math.log(3)),
-            description: 'Fit a log-linear regression curve through all completed data points (F₁, F₂, F₃). This minimizes outlier bias and represents the true underlying trend of the campaign.',
-            formula: '2^b where b = log(F3/F1) / log(3)'
+            name: 'Log-Linear Least Squares Regression',
+            value: (() => {
+                // Log-Linear Least Squares Regression
+                const N = 3;
+                const times = [f1, f2, f3];
+                const units = [1, 2, 3];
+
+                const x = units.map(n => Math.log(n));  // ln(n)
+                const y = times.map(t => Math.log(t));  // ln(Tn)
+
+                const sum_x = x.reduce((a, b) => a + b, 0);
+                const sum_y = y.reduce((a, b) => a + b, 0);
+                const sum_xy = x.map((xi, i) => xi * y[i]).reduce((a, b) => a + b, 0);
+                const sum_x2 = x.map(xi => xi * xi).reduce((a, b) => a + b, 0);
+
+                const b = (N * sum_xy - sum_x * sum_y) / (N * sum_x2 - sum_x * sum_x);
+                return Math.pow(2, b);
+            })(),
+            description: 'Uses standard linear regression on the log-transformed Power Law equation (ln(Tₙ) = ln(T₁) + b·ln(n)). The slope b is calculated using the least squares formula to minimize error across all data points.',
+            formula: 'LR = 2^b, where b = [N·Σ(xy) - (Σx)(Σy)] / [N·Σ(x²) - (Σx)²]'
         },
         'geometric-mean': {
             name: 'Geometric Mean',
@@ -220,12 +236,6 @@ function calculateLearningRateMethods() {
             value: calculateWeightedLR(f1, f2, f3),
             description: 'Weighted by time reduction magnitude',
             formula: 'Weighted by reduction: F1→F2 (63.7%), F2→F3 (36.3%)'
-        },
-        'steady-state': {
-            name: 'Steady State (F2+F3 Avg)',
-            value: ((f2 + f3) / 2) / f1,
-            description: 'Excludes first-unit effects (more aggressive)',
-            formula: '((F2 + F3) / 2) / F1'
         }
     };
 }
@@ -1083,13 +1093,78 @@ function updateCalculationDetail(methodKey) {
             `;
             break;
         case 'power-law':
-            const b_efgl = Math.log(f3/f1) / Math.log(3);
+            // Log-Linear Least Squares Regression
+            const N = 3;
+            const times = [f1, f2, f3];
+            const units = [1, 2, 3];
+
+            const x = units.map(n => Math.log(n));
+            const y = times.map(t => Math.log(t));
+
+            const sum_x = x.reduce((a, b) => a + b, 0);
+            const sum_y = y.reduce((a, b) => a + b, 0);
+            const sum_xy = x.map((xi, i) => xi * y[i]).reduce((a, b) => a + b, 0);
+            const sum_x2 = x.map(xi => xi * xi).reduce((a, b) => a + b, 0);
+
+            const numerator = N * sum_xy - sum_x * sum_y;
+            const denominator = N * sum_x2 - sum_x * sum_x;
+            const b_efgl = numerator / denominator;
             const lr_efgl = Math.pow(2, b_efgl);
+
             html = `
-                <div class="calc-step"><strong>Observed Times:</strong> F1 = ${f1}h, F2 = ${f2}h, F3 = ${f3}h</div>
-                <div class="calc-step"><strong>Step 1:</strong> b = log(${f3}/${f1}) / log(3) = ${b_efgl.toFixed(3)}</div>
-                <div class="calc-step"><strong>Step 2:</strong> LR = 2<sup>b</sup> = 2<sup>${b_efgl.toFixed(3)}</sup> = <strong>${(lr_efgl * 100).toFixed(1)}%</strong></div>
-                <div class="calc-step">Regression fit to all 3 data points</div>
+                <div class="calc-step"><strong>Transformation:</strong> ln(Tₙ) = ln(T₁) + b·ln(n)</div>
+                <div class="calc-step"><strong>Step 1: Create Table</strong></div>
+                <table style="width:100%; font-size:0.85em; margin: 8px 0; border-collapse: collapse;">
+                    <thead>
+                        <tr style="background:#f0f0f0; border-bottom: 2px solid #ddd;">
+                            <th style="padding:4px; text-align:center;">Unit (n)</th>
+                            <th style="padding:4px; text-align:center;">Time (Tₙ)</th>
+                            <th style="padding:4px; text-align:center;">x = ln(n)</th>
+                            <th style="padding:4px; text-align:center;">y = ln(Tₙ)</th>
+                            <th style="padding:4px; text-align:center;">x·y</th>
+                            <th style="padding:4px; text-align:center;">x²</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid #eee;">
+                            <td style="padding:4px; text-align:center;">1</td>
+                            <td style="padding:4px; text-align:center;">${f1}</td>
+                            <td style="padding:4px; text-align:center;">${x[0].toFixed(3)}</td>
+                            <td style="padding:4px; text-align:center;">${y[0].toFixed(3)}</td>
+                            <td style="padding:4px; text-align:center;">${(x[0]*y[0]).toFixed(3)}</td>
+                            <td style="padding:4px; text-align:center;">${(x[0]*x[0]).toFixed(3)}</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #eee;">
+                            <td style="padding:4px; text-align:center;">2</td>
+                            <td style="padding:4px; text-align:center;">${f2}</td>
+                            <td style="padding:4px; text-align:center;">${x[1].toFixed(3)}</td>
+                            <td style="padding:4px; text-align:center;">${y[1].toFixed(3)}</td>
+                            <td style="padding:4px; text-align:center;">${(x[1]*y[1]).toFixed(3)}</td>
+                            <td style="padding:4px; text-align:center;">${(x[1]*x[1]).toFixed(3)}</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #eee;">
+                            <td style="padding:4px; text-align:center;">3</td>
+                            <td style="padding:4px; text-align:center;">${f3}</td>
+                            <td style="padding:4px; text-align:center;">${x[2].toFixed(3)}</td>
+                            <td style="padding:4px; text-align:center;">${y[2].toFixed(3)}</td>
+                            <td style="padding:4px; text-align:center;">${(x[2]*y[2]).toFixed(3)}</td>
+                            <td style="padding:4px; text-align:center;">${(x[2]*x[2]).toFixed(3)}</td>
+                        </tr>
+                        <tr style="background:#f9f9f9; font-weight:bold; border-top: 2px solid #ddd;">
+                            <td style="padding:4px; text-align:center;" colspan="2">Sum (Σ)</td>
+                            <td style="padding:4px; text-align:center;">${sum_x.toFixed(3)}</td>
+                            <td style="padding:4px; text-align:center;">${sum_y.toFixed(3)}</td>
+                            <td style="padding:4px; text-align:center;">${sum_xy.toFixed(3)}</td>
+                            <td style="padding:4px; text-align:center;">${sum_x2.toFixed(3)}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="calc-step"><strong>Step 2: Apply Formula</strong></div>
+                <div class="calc-step">b = [${N}(${sum_xy.toFixed(3)}) - (${sum_x.toFixed(3)})(${sum_y.toFixed(3)})] / [${N}(${sum_x2.toFixed(3)}) - (${sum_x.toFixed(3)})²]</div>
+                <div class="calc-step">b = [${(N*sum_xy).toFixed(3)} - ${(sum_x*sum_y).toFixed(3)}] / [${(N*sum_x2).toFixed(3)} - ${(sum_x*sum_x).toFixed(3)}]</div>
+                <div class="calc-step">b = ${numerator.toFixed(3)} / ${denominator.toFixed(3)} = <strong>${b_efgl.toFixed(3)}</strong></div>
+                <div class="calc-step"><strong>Step 3: Convert to Learning Rate</strong></div>
+                <div class="calc-step">LR = 2<sup>b</sup> = 2<sup>${b_efgl.toFixed(3)}</sup> = <strong>${(lr_efgl * 100).toFixed(1)}%</strong></div>
             `;
             break;
         case 'geometric-mean':
@@ -1103,16 +1178,6 @@ function updateCalculationDetail(methodKey) {
                 <div class="calc-step"><strong>Step 1:</strong> Reduction F1→F2 = 9.92h (63.7% weight)</div>
                 <div class="calc-step"><strong>Step 2:</strong> Reduction F2→F3 = 5.66h (36.3% weight)</div>
                 <div class="calc-step"><strong>Step 3:</strong> Weighted LR = (76.5% × 0.637) + (82.5% × 0.363) = <strong>78.7%</strong></div>
-            `;
-            break;
-        case 'steady-state':
-            const steady_avg = (f2 + f3) / 2;
-            const steady_lr = steady_avg / f1;
-            html = `
-                <div class="calc-step"><strong>Observed Times:</strong> F1 = ${f1}h, F2 = ${f2}h, F3 = ${f3}h</div>
-                <div class="calc-step"><strong>Step 1:</strong> Steady state avg = (${f2}h + ${f3}h) / 2 = ${steady_avg.toFixed(1)}h</div>
-                <div class="calc-step"><strong>Step 2:</strong> LR = ${steady_avg.toFixed(1)}h / ${f1}h = <strong>${(steady_lr * 100).toFixed(1)}%</strong></div>
-                <div class="calc-step">Excludes first-unit learning effects</div>
             `;
             break;
         case 'custom':
@@ -3151,10 +3216,26 @@ function calculateEolmedLearningRateMethods() {
             formula: 'F3 / F2 = 20.00 / 21.67'
         },
         'power-law': {
-            name: 'Power Law Regression',
-            value: Math.pow(2, Math.log(f3/f1) / Math.log(3)),
-            description: 'Fit a log-linear regression curve through all completed data points (F₁, F₂, F₃). This minimizes outlier bias and represents the true underlying trend of the campaign.',
-            formula: '2^b where b = log(F3/F1) / log(3)'
+            name: 'Log-Linear Least Squares Regression',
+            value: (() => {
+                // Log-Linear Least Squares Regression
+                const N = 3;
+                const times = [f1, f2, f3];
+                const units = [1, 2, 3];
+
+                const x = units.map(n => Math.log(n));  // ln(n)
+                const y = times.map(t => Math.log(t));  // ln(Tn)
+
+                const sum_x = x.reduce((a, b) => a + b, 0);
+                const sum_y = y.reduce((a, b) => a + b, 0);
+                const sum_xy = x.map((xi, i) => xi * y[i]).reduce((a, b) => a + b, 0);
+                const sum_x2 = x.map(xi => xi * xi).reduce((a, b) => a + b, 0);
+
+                const b = (N * sum_xy - sum_x * sum_y) / (N * sum_x2 - sum_x * sum_x);
+                return Math.pow(2, b);
+            })(),
+            description: 'Uses standard linear regression on the log-transformed Power Law equation (ln(Tₙ) = ln(T₁) + b·ln(n)). The slope b is calculated using the least squares formula to minimize error across all data points.',
+            formula: 'LR = 2^b, where b = [N·Σ(xy) - (Σx)(Σy)] / [N·Σ(x²) - (Σx)²]'
         },
         'geometric-mean': {
             name: 'Geometric Mean',
@@ -3167,12 +3248,6 @@ function calculateEolmedLearningRateMethods() {
             value: calculateEolmedWeightedLR(f1, f2, f3),
             description: 'Weighted by time reduction magnitude',
             formula: 'Weighted by reduction: F1→F2 (74.4%), F2→F3 (25.6%)'
-        },
-        'steady-state': {
-            name: 'Steady State (F2+F3 Avg)',
-            value: ((f2 + f3) / 2) / f1,
-            description: 'Excludes first-unit effects (more aggressive)',
-            formula: '((F2 + F3) / 2) / F1'
         }
     };
 }
@@ -3322,13 +3397,78 @@ function updateEolmedCalculationDetail(methodKey) {
             `;
             break;
         case 'power-law':
-            const b_eolmed = Math.log(f3/f1) / Math.log(3);
+            // Log-Linear Least Squares Regression
+            const N_eolmed = 3;
+            const times_eolmed = [f1, f2, f3];
+            const units_eolmed = [1, 2, 3];
+
+            const x_eolmed = units_eolmed.map(n => Math.log(n));
+            const y_eolmed = times_eolmed.map(t => Math.log(t));
+
+            const sum_x_eolmed = x_eolmed.reduce((a, b) => a + b, 0);
+            const sum_y_eolmed = y_eolmed.reduce((a, b) => a + b, 0);
+            const sum_xy_eolmed = x_eolmed.map((xi, i) => xi * y_eolmed[i]).reduce((a, b) => a + b, 0);
+            const sum_x2_eolmed = x_eolmed.map(xi => xi * xi).reduce((a, b) => a + b, 0);
+
+            const numerator_eolmed = N_eolmed * sum_xy_eolmed - sum_x_eolmed * sum_y_eolmed;
+            const denominator_eolmed = N_eolmed * sum_x2_eolmed - sum_x_eolmed * sum_x_eolmed;
+            const b_eolmed = numerator_eolmed / denominator_eolmed;
             const lr_eolmed = Math.pow(2, b_eolmed);
+
             html = `
-                <div class="calc-step"><strong>Observed Times:</strong> F1 = ${f1}h, F2 = ${f2}h, F3 = ${f3}h</div>
-                <div class="calc-step"><strong>Step 1:</strong> b = log(${f3}/${f1}) / log(3) = ${b_eolmed.toFixed(3)}</div>
-                <div class="calc-step"><strong>Step 2:</strong> LR = 2<sup>b</sup> = 2<sup>${b_eolmed.toFixed(3)}</sup> = <strong>${(lr_eolmed * 100).toFixed(1)}%</strong></div>
-                <div class="calc-step">Regression fit to all 3 data points</div>
+                <div class="calc-step"><strong>Transformation:</strong> ln(Tₙ) = ln(T₁) + b·ln(n)</div>
+                <div class="calc-step"><strong>Step 1: Create Table</strong></div>
+                <table style="width:100%; font-size:0.85em; margin: 8px 0; border-collapse: collapse;">
+                    <thead>
+                        <tr style="background:#f0f0f0; border-bottom: 2px solid #ddd;">
+                            <th style="padding:4px; text-align:center;">Unit (n)</th>
+                            <th style="padding:4px; text-align:center;">Time (Tₙ)</th>
+                            <th style="padding:4px; text-align:center;">x = ln(n)</th>
+                            <th style="padding:4px; text-align:center;">y = ln(Tₙ)</th>
+                            <th style="padding:4px; text-align:center;">x·y</th>
+                            <th style="padding:4px; text-align:center;">x²</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid #eee;">
+                            <td style="padding:4px; text-align:center;">1</td>
+                            <td style="padding:4px; text-align:center;">${f1}</td>
+                            <td style="padding:4px; text-align:center;">${x_eolmed[0].toFixed(3)}</td>
+                            <td style="padding:4px; text-align:center;">${y_eolmed[0].toFixed(3)}</td>
+                            <td style="padding:4px; text-align:center;">${(x_eolmed[0]*y_eolmed[0]).toFixed(3)}</td>
+                            <td style="padding:4px; text-align:center;">${(x_eolmed[0]*x_eolmed[0]).toFixed(3)}</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #eee;">
+                            <td style="padding:4px; text-align:center;">2</td>
+                            <td style="padding:4px; text-align:center;">${f2}</td>
+                            <td style="padding:4px; text-align:center;">${x_eolmed[1].toFixed(3)}</td>
+                            <td style="padding:4px; text-align:center;">${y_eolmed[1].toFixed(3)}</td>
+                            <td style="padding:4px; text-align:center;">${(x_eolmed[1]*y_eolmed[1]).toFixed(3)}</td>
+                            <td style="padding:4px; text-align:center;">${(x_eolmed[1]*x_eolmed[1]).toFixed(3)}</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #eee;">
+                            <td style="padding:4px; text-align:center;">3</td>
+                            <td style="padding:4px; text-align:center;">${f3}</td>
+                            <td style="padding:4px; text-align:center;">${x_eolmed[2].toFixed(3)}</td>
+                            <td style="padding:4px; text-align:center;">${y_eolmed[2].toFixed(3)}</td>
+                            <td style="padding:4px; text-align:center;">${(x_eolmed[2]*y_eolmed[2]).toFixed(3)}</td>
+                            <td style="padding:4px; text-align:center;">${(x_eolmed[2]*x_eolmed[2]).toFixed(3)}</td>
+                        </tr>
+                        <tr style="background:#f9f9f9; font-weight:bold; border-top: 2px solid #ddd;">
+                            <td style="padding:4px; text-align:center;" colspan="2">Sum (Σ)</td>
+                            <td style="padding:4px; text-align:center;">${sum_x_eolmed.toFixed(3)}</td>
+                            <td style="padding:4px; text-align:center;">${sum_y_eolmed.toFixed(3)}</td>
+                            <td style="padding:4px; text-align:center;">${sum_xy_eolmed.toFixed(3)}</td>
+                            <td style="padding:4px; text-align:center;">${sum_x2_eolmed.toFixed(3)}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="calc-step"><strong>Step 2: Apply Formula</strong></div>
+                <div class="calc-step">b = [${N_eolmed}(${sum_xy_eolmed.toFixed(3)}) - (${sum_x_eolmed.toFixed(3)})(${sum_y_eolmed.toFixed(3)})] / [${N_eolmed}(${sum_x2_eolmed.toFixed(3)}) - (${sum_x_eolmed.toFixed(3)})²]</div>
+                <div class="calc-step">b = [${(N_eolmed*sum_xy_eolmed).toFixed(3)} - ${(sum_x_eolmed*sum_y_eolmed).toFixed(3)}] / [${(N_eolmed*sum_x2_eolmed).toFixed(3)} - ${(sum_x_eolmed*sum_x_eolmed).toFixed(3)}]</div>
+                <div class="calc-step">b = ${numerator_eolmed.toFixed(3)} / ${denominator_eolmed.toFixed(3)} = <strong>${b_eolmed.toFixed(3)}</strong></div>
+                <div class="calc-step"><strong>Step 3: Convert to Learning Rate</strong></div>
+                <div class="calc-step">LR = 2<sup>b</sup> = 2<sup>${b_eolmed.toFixed(3)}</sup> = <strong>${(lr_eolmed * 100).toFixed(1)}%</strong></div>
             `;
             break;
         case 'geometric-mean':
@@ -3347,16 +3487,6 @@ function updateEolmedCalculationDetail(methodKey) {
                 <div class="calc-step"><strong>Step 1:</strong> Reduction F1→F2 = ${reduction_f1_f2.toFixed(2)}h (${w1}% weight)</div>
                 <div class="calc-step"><strong>Step 2:</strong> Reduction F2→F3 = ${reduction_f2_f3.toFixed(2)}h (${w2}% weight)</div>
                 <div class="calc-step"><strong>Step 3:</strong> Weighted LR = (77.4% × ${(w1/100).toFixed(3)}) + (92.3% × ${(w2/100).toFixed(3)}) = <strong>81.2%</strong></div>
-            `;
-            break;
-        case 'steady-state':
-            const steady_avg_eolmed = (f2 + f3) / 2;
-            const steady_lr_eolmed = steady_avg_eolmed / f1;
-            html = `
-                <div class="calc-step"><strong>Observed Times:</strong> F1 = ${f1}h, F2 = ${f2}h, F3 = ${f3}h</div>
-                <div class="calc-step"><strong>Step 1:</strong> Steady state avg = (${f2}h + ${f3}h) / 2 = ${steady_avg_eolmed.toFixed(1)}h</div>
-                <div class="calc-step"><strong>Step 2:</strong> LR = ${steady_avg_eolmed.toFixed(1)}h / ${f1}h = <strong>${(steady_lr_eolmed * 100).toFixed(1)}%</strong></div>
-                <div class="calc-step">Excludes first-unit learning effects</div>
             `;
             break;
         case 'custom':
