@@ -695,12 +695,11 @@ function updateFormulaDetailsBox() {
     const deviationF2 = ((actualF2 - formulaF2) / formulaF2 * 100);
     const deviationF3 = ((actualF3 - formulaF3) / formulaF3 * 100);
 
-    // Get F10 prediction (if available)
-    const f10Index = Math.min(9, predictions.length - 1); // Index 9 = F10
-    const f10Prediction = predictions[f10Index];
+    // Get last prediction (for the selected number of floaters)
+    const lastPrediction = predictions[predictions.length - 1];
 
-    // Calculate cumulative average for F1-F10
-    const cumulativeAvgF10 = f10Prediction ? f10Prediction.average : 0;
+    // Calculate cumulative average for all selected floaters
+    const cumulativeAvg = lastPrediction ? lastPrediction.average : 0;
 
     // Get current method name
     const methodSelector = document.getElementById('learning-rate-method');
@@ -733,12 +732,12 @@ function updateFormulaDetailsBox() {
         formulaEquationDisplay.innerHTML = `T<sub>n</sub> = 42.25 × n<sup>${bCoeffDisplay}</sup>`;
     }
 
-    if (formulaF10Display && f10Prediction) {
-        formulaF10Display.textContent = `${f10Prediction.time.toFixed(1)}h`;
+    if (formulaF10Display && lastPrediction) {
+        formulaF10Display.textContent = `${lastPrediction.time.toFixed(1)}h`;
     }
 
     if (formulaAvgDisplay) {
-        formulaAvgDisplay.textContent = `${cumulativeAvgF10.toFixed(1)}h`;
+        formulaAvgDisplay.textContent = `${cumulativeAvg.toFixed(1)}h`;
     }
 
     if (f2DeviationDisplay) {
