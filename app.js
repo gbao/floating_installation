@@ -4015,7 +4015,7 @@ function createEfglGanttChart() {
                 { day: 0, name: "Floater Arrives", type: "milestone", duration: 0, time: "14:00" },
                 { day: 5, name: "Tower Sect 1", type: "tower", duration: 8.17, time: "10:10" },
                 { day: 17, name: "Tower Sect 2", type: "tower", duration: 9.50, time: "07:50" },
-                { day: 19, name: "Tower Sect 3", type: "tower", duration: 8.25, time: "13:20" },
+                { day: 20, name: "Tower Sect 3", type: "tower", duration: 8.25, time: "05:25" },
                 { day: 20, name: "Nacelle", type: "nacelle", duration: 4.33, time: "16:20" },
                 { day: 24, name: "Blade 1", type: "blade", duration: 4.83, time: "07:00" },
                 { day: 25, name: "Blade 2", type: "blade", duration: 4.67, time: "06:30" },
