@@ -4080,26 +4080,49 @@ function createEfglGanttChart() {
         `;
         row.appendChild(label);
 
-        // Timeline
+        // Timeline area
         const timeline = document.createElement('div');
-        timeline.className = 'gantt-timeline';
+        timeline.className = 'gantt-timeline-area';
 
-        // Add tasks
+        // Grid lines
+        const gridLines = document.createElement('div');
+        gridLines.className = 'gantt-grid-lines';
+        for (let i = 0; i < totalDays; i++) {
+            const gridLine = document.createElement('div');
+            gridLine.className = 'gantt-grid-line';
+            if (i === 0) {
+                gridLine.classList.add('day-0');
+            } else if (i > 0 && i % 5 === 0) {
+                gridLine.classList.add('day-milestone');
+            }
+            gridLines.appendChild(gridLine);
+        }
+        timeline.appendChild(gridLines);
+
+        // Tasks
         campaign.tasks.forEach(task => {
+            const isMilestone = task.type === 'milestone' || task.type === 'departure';
+
+            // Parse time to get fraction of day
             const [h, m] = task.time.split(':').map(Number);
             const timeFraction = (h + m / 60) / 24;
+
             const leftPos = ((task.day + timeFraction) / totalDays) * 100;
 
             const taskEl = document.createElement('div');
-            taskEl.className = 'gantt-task';
+            taskEl.className = `gantt-task ${isMilestone ? 'milestone' : ''}`;
             taskEl.style.left = `${leftPos}%`;
 
             const marker = document.createElement('div');
-            if (task.type === 'milestone' || task.type === 'departure') {
-                marker.className = `gantt-task-milestone task-${task.type}`;
+            marker.className = 'gantt-task-marker';
+
+            const shape = document.createElement('div');
+            if (isMilestone) {
+                shape.className = `gantt-task-milestone task-${task.type}`;
             } else {
-                marker.className = `gantt-task-bar task-${task.type}`;
+                shape.className = `gantt-task-bar task-${task.type}`;
             }
+            marker.appendChild(shape);
 
             // Tooltip
             const tooltip = document.createElement('div');
