@@ -3829,178 +3829,165 @@ function init() {
 
 // ==================== EOLMED GANTT CHART ====================
 function createEolmedGanttChart() {
-    const canvas = document.getElementById('eolmed-gantt-chart');
-    if (!canvas) {
-        console.log('Eolmed gantt chart canvas not found');
+    const dayHeadersContainer = document.getElementById('gantt-day-headers');
+    const campaignRowsContainer = document.getElementById('gantt-campaign-rows');
+
+    if (!dayHeadersContainer || !campaignRowsContainer) {
+        console.log('Gantt containers not found');
         return;
     }
 
-    const ctx = canvas.getContext('2d');
-
-    // Campaign data - Normalized timeline
+    // Campaign data
     const campaigns = [
         {
+            id: 1,
             name: "F1 (Sep-Oct)",
-            color: "#ef4444",
+            totalDays: 26,
+            totalHours: 28.00,
             tasks: [
-                { start: 0, end: 0.2, type: "milestone", label: "Arrival (D0)" },
-                { start: 12, end: 12.26, type: "tower", label: "T1 (6.2h)" },
-                { start: 13, end: 13.19, type: "tower", label: "T2 (4.5h)" },
-                { start: 18, end: 18.14, type: "tower", label: "T3 (3.3h)" },
-                { start: 22, end: 22.24, type: "nacelle", label: "Nac (5.7h)" },
-                { start: 25, end: 25.17, type: "blade", label: "B1 (4.2h)" },
-                { start: 26, end: 26.08, type: "blade", label: "B2 (2.0h)" },
-                { start: 26, end: 26.09, type: "blade", label: "B3 (2.2h)" },
-                { start: 35, end: 35.2, type: "departure", label: "Depart (D35)" }
+                { day: 0, name: "Floater Arrives", type: "milestone", duration: 0, time: "12:40" },
+                { day: 12, name: "Tower Sect 1", type: "tower", duration: 6.17, time: "09:00" },
+                { day: 13, name: "Tower Sect 2", type: "tower", duration: 4.50, time: "11:30" },
+                { day: 18, name: "Tower Sect 3", type: "tower", duration: 3.33, time: "14:40" },
+                { day: 22, name: "Nacelle", type: "nacelle", duration: 5.67, time: "11:00" },
+                { day: 25, name: "Blade 1", type: "blade", duration: 4.17, time: "13:10" },
+                { day: 26, name: "Blade 2", type: "blade", duration: 2.00, time: "09:40" },
+                { day: 26, name: "Blade 3", type: "blade", duration: 2.17, time: "13:00" },
+                { day: 35, name: "Departure", type: "departure", duration: 0, time: "10:20" }
             ]
         },
         {
+            id: 2,
             name: "F2 (Oct-Nov)",
-            color: "#f59e0b",
+            totalDays: 11,
+            totalHours: 21.67,
             tasks: [
-                { start: 0, end: 0.2, type: "milestone", label: "Arrival (D0)" },
-                { start: 1, end: 1.15, type: "tower", label: "T1 (3.5h)" },
-                { start: 3, end: 3.18, type: "tower", label: "T2 (4.3h)" },
-                { start: 4, end: 4.17, type: "tower", label: "T3 (4.0h)" },
-                { start: 4, end: 4.15, type: "nacelle", label: "Nac (3.7h)" },
-                { start: 9, end: 9.10, type: "blade", label: "B1 (2.3h)" },
-                { start: 11, end: 11.07, type: "blade", label: "B2 (1.7h)" },
-                { start: 11, end: 11.09, type: "blade", label: "B3 (2.2h)" },
-                { start: 20, end: 20.2, type: "departure", label: "Depart (D20)" }
+                { day: 0, name: "Floater Arrives", type: "milestone", duration: 0, time: "11:10" },
+                { day: 1, name: "Tower Sect 1", type: "tower", duration: 3.50, time: "14:50" },
+                { day: 3, name: "Tower Sect 2", type: "tower", duration: 4.33, time: "16:00" },
+                { day: 4, name: "Tower Sect 3", type: "tower", duration: 4.00, time: "07:50" },
+                { day: 4, name: "Nacelle", type: "nacelle", duration: 3.67, time: "14:20" },
+                { day: 9, name: "Blade 1", type: "blade", duration: 2.33, time: "14:30" },
+                { day: 11, name: "Blade 2", type: "blade", duration: 1.67, time: "08:00" },
+                { day: 11, name: "Blade 3", type: "blade", duration: 2.17, time: "11:00" },
+                { day: 20, name: "Departure", type: "departure", duration: 0, time: "11:00" }
             ]
         },
         {
+            id: 3,
             name: "F3 (Nov-Dec)",
-            color: "#10b981",
+            totalDays: 20,
+            totalHours: 20.00,
             tasks: [
-                { start: 0, end: 0.2, type: "milestone", label: "Arrival (D0)" },
-                { start: 4, end: 4.19, type: "tower", label: "T1 (4.7h)" },
-                { start: 5, end: 5.17, type: "tower", label: "T2 (4.0h)" },
-                { start: 5, end: 5.10, type: "tower", label: "T3 (2.5h)" },
-                { start: 12, end: 12.16, type: "nacelle", label: "Nac (3.8h)" },
-                { start: 18, end: 18.08, type: "blade", label: "B1 (1.8h)" },
-                { start: 18, end: 18.08, type: "blade", label: "B2 (1.8h)" },
-                { start: 20, end: 20.06, type: "blade", label: "B3 (1.3h)" }
+                { day: 0, name: "Floater Arrives", type: "milestone", duration: 0, time: "10:50" },
+                { day: 4, name: "Tower Sect 1", type: "tower", duration: 4.67, time: "11:40" },
+                { day: 5, name: "Tower Sect 2", type: "tower", duration: 4.00, time: "11:40" },
+                { day: 5, name: "Tower Sect 3", type: "tower", duration: 2.50, time: "17:40" },
+                { day: 12, name: "Nacelle", type: "nacelle", duration: 3.83, time: "10:30" },
+                { day: 18, name: "Blade 1", type: "blade", duration: 1.83, time: "08:30" },
+                { day: 18, name: "Blade 2", type: "blade", duration: 1.83, time: "13:00" },
+                { day: 20, name: "Blade 3", type: "blade", duration: 1.33, time: "13:30" }
             ]
         }
     ];
 
-    // Color mapping by task type
-    const typeColors = {
-        milestone: '#94a3b8',
-        tower: '#3b82f6',
-        nacelle: '#a855f7',
-        blade: '#10b981',
-        departure: '#ef4444'
-    };
+    const totalDays = 36;
 
-    // Create datasets - each task becomes a dataset
-    const datasets = [];
-
-    campaigns.forEach((campaign, campaignIndex) => {
-        campaign.tasks.forEach((task, taskIndex) => {
-            // Create array with null values for all campaigns
-            const data = new Array(campaigns.length).fill(null);
-            // Set value only for the current campaign
-            data[campaignIndex] = [task.start, task.end];
-
-            datasets.push({
-                label: `${campaign.name} - ${task.label}`,
-                data: data,
-                backgroundColor: typeColors[task.type],
-                borderColor: typeColors[task.type],
-                borderWidth: 1,
-                borderSkipped: false,
-                barThickness: 20,
-                categoryPercentage: 0.8,
-                barPercentage: 0.9
-            });
-        });
-    });
-
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: campaigns.map(c => c.name),
-            datasets: datasets
-        },
-        options: {
-            indexAxis: 'y',
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    display: false
-                },
-                tooltip: {
-                    enabled: true,
-                    callbacks: {
-                        title: function() {
-                            return '';
-                        },
-                        label: function(context) {
-                            const label = context.dataset.label || '';
-                            const parts = label.split(' - ');
-                            if (parts.length > 1) {
-                                return parts[1]; // Return just the task label
-                            }
-                            return label;
-                        }
-                    }
-                }
-            },
-            scales: {
-                x: {
-                    type: 'linear',
-                    position: 'bottom',
-                    stacked: false,
-                    title: {
-                        display: true,
-                        text: 'Days from Floater Arrival',
-                        font: {
-                            size: 13,
-                            weight: '600'
-                        },
-                        color: '#475569'
-                    },
-                    min: 0,
-                    max: 40,
-                    ticks: {
-                        stepSize: 5,
-                        color: '#64748b',
-                        font: {
-                            size: 11
-                        }
-                    },
-                    grid: {
-                        color: '#e2e8f0',
-                        lineWidth: 1
-                    }
-                },
-                y: {
-                    stacked: false,
-                    title: {
-                        display: true,
-                        text: 'Floater Campaign',
-                        font: {
-                            size: 13,
-                            weight: '600'
-                        },
-                        color: '#475569'
-                    },
-                    ticks: {
-                        color: '#64748b',
-                        font: {
-                            size: 12,
-                            weight: '500'
-                        }
-                    },
-                    grid: {
-                        display: false
-                    }
-                }
-            }
+    // Create day headers
+    for (let i = 0; i < totalDays; i++) {
+        const dayCell = document.createElement('div');
+        dayCell.className = 'gantt-day-cell';
+        if (i === 0) {
+            dayCell.classList.add('day-0');
+        } else if (i > 0 && i % 5 === 0) {
+            dayCell.classList.add('day-milestone');
         }
+        dayCell.textContent = i;
+        dayHeadersContainer.appendChild(dayCell);
+    }
+
+    // Create campaign rows
+    campaigns.forEach(campaign => {
+        const row = document.createElement('div');
+        row.className = 'gantt-campaign-row';
+
+        // Label column
+        const label = document.createElement('div');
+        label.className = 'gantt-campaign-label';
+        label.innerHTML = `
+            <div class="gantt-campaign-name">${campaign.name}</div>
+            <div class="gantt-campaign-stats">
+                <span>🕐 ${campaign.totalHours.toFixed(2)}h work</span>
+                <span>📅 ${campaign.totalDays}d install</span>
+            </div>
+        `;
+        row.appendChild(label);
+
+        // Timeline area
+        const timeline = document.createElement('div');
+        timeline.className = 'gantt-timeline-area';
+
+        // Grid lines
+        const gridLines = document.createElement('div');
+        gridLines.className = 'gantt-grid-lines';
+        for (let i = 0; i < totalDays; i++) {
+            const gridLine = document.createElement('div');
+            gridLine.className = 'gantt-grid-line';
+            if (i === 0) {
+                gridLine.classList.add('day-0');
+            } else if (i > 0 && i % 5 === 0) {
+                gridLine.classList.add('day-milestone');
+            }
+            gridLines.appendChild(gridLine);
+        }
+        timeline.appendChild(gridLines);
+
+        // Tasks
+        campaign.tasks.forEach(task => {
+            const isMilestone = task.type === 'milestone' || task.type === 'departure';
+
+            // Parse time to get fraction of day
+            let timeFraction = 0.5;
+            if (task.time && task.time.includes(':')) {
+                const [h, m] = task.time.split(':').map(Number);
+                timeFraction = (h + m / 60) / 24;
+            }
+
+            const leftPos = ((task.day + timeFraction) / totalDays) * 100;
+
+            const taskEl = document.createElement('div');
+            taskEl.className = `gantt-task ${isMilestone ? 'milestone' : ''}`;
+            taskEl.style.left = `${leftPos}%`;
+
+            const marker = document.createElement('div');
+            marker.className = 'gantt-task-marker';
+
+            if (isMilestone) {
+                const diamond = document.createElement('div');
+                diamond.className = `gantt-task-milestone task-${task.type}`;
+                marker.appendChild(diamond);
+            } else {
+                const bar = document.createElement('div');
+                bar.className = `gantt-task-bar task-${task.type}`;
+                marker.appendChild(bar);
+            }
+
+            // Tooltip
+            const tooltip = document.createElement('div');
+            tooltip.className = 'gantt-tooltip';
+            tooltip.innerHTML = `
+                <div class="gantt-tooltip-name">${task.name}</div>
+                <div class="gantt-tooltip-details">Day ${task.day} • ${task.time}</div>
+                ${!isMilestone ? `<div class="gantt-tooltip-details">Duration: ${task.duration}h</div>` : ''}
+            `;
+            marker.appendChild(tooltip);
+
+            taskEl.appendChild(marker);
+            timeline.appendChild(taskEl);
+        });
+
+        row.appendChild(timeline);
+        campaignRowsContainer.appendChild(row);
     });
 }
 

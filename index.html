@@ -1212,15 +1212,34 @@
                 </div>
 
                 <!-- Gantt Chart -->
-                <div class="gantt-container">
-                    <div class="gantt-legend">
-                        <span class="legend-item"><span class="legend-dot milestone"></span> Logistics (Arrival)</span>
-                        <span class="legend-item"><span class="legend-dot tower"></span> Tower Section</span>
-                        <span class="legend-item"><span class="legend-dot nacelle"></span> Nacelle Install</span>
-                        <span class="legend-item"><span class="legend-dot blade"></span> Blade Install</span>
-                        <span class="legend-item"><span class="legend-dot departure"></span> Departure</span>
+                <div class="gantt-wrapper">
+                    <div class="gantt-header-info">
+                        <h3 class="gantt-title">Normalized Timeline Comparison</h3>
+                        <div class="gantt-legend">
+                            <span class="legend-item"><span class="legend-dot milestone"></span> Logistics (Arrival)</span>
+                            <span class="legend-item"><span class="legend-dot tower"></span> Tower Section</span>
+                            <span class="legend-item"><span class="legend-dot nacelle"></span> Nacelle Install</span>
+                            <span class="legend-item"><span class="legend-dot blade"></span> Blade Install</span>
+                            <span class="legend-item"><span class="legend-dot departure"></span> Departure</span>
+                        </div>
                     </div>
-                    <canvas id="eolmed-gantt-chart"></canvas>
+
+                    <!-- The Gantt Grid -->
+                    <div class="gantt-grid-container">
+                        <!-- Header Row (Days) -->
+                        <div class="gantt-header-row">
+                            <div class="gantt-label-cell">Floater ID</div>
+                            <div class="gantt-day-cells" id="gantt-day-headers"></div>
+                        </div>
+
+                        <!-- Campaign Rows -->
+                        <div id="gantt-campaign-rows"></div>
+                    </div>
+
+                    <div class="gantt-note">
+                        <span class="gantt-note-icon">ℹ️</span>
+                        <p><strong>Note:</strong> Timeline is normalized to 36 days. "Day 0" (highlighted blue) marks the arrival of the floater. All markers are positioned by exact time of day. "Departure" milestones are shown but excluded from "Install Duration".</p>
+                    </div>
                 </div>
             </section>
 

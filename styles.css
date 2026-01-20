@@ -4329,8 +4329,8 @@ footer p {
     color: #f59e0b;
 }
 
-/* Gantt Container */
-.gantt-container {
+/* Gantt Wrapper */
+.gantt-wrapper {
     background: white;
     border: 1px solid #e2e8f0;
     border-radius: 12px;
@@ -4338,20 +4338,35 @@ footer p {
     margin-top: 2rem;
 }
 
+.gantt-header-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e2e8f0;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.gantt-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0;
+}
+
 .gantt-legend {
     display: flex;
     flex-wrap: wrap;
     gap: 1.5rem;
-    margin-bottom: 1.5rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid #e2e8f0;
 }
 
 .legend-item {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    font-size: 0.875rem;
+    font-size: 0.75rem;
     color: #64748b;
     font-weight: 500;
 }
@@ -4365,6 +4380,7 @@ footer p {
 
 .legend-dot.milestone {
     background-color: #94a3b8;
+    transform: rotate(45deg);
 }
 
 .legend-dot.tower {
@@ -4381,11 +4397,262 @@ footer p {
 
 .legend-dot.departure {
     background-color: #ef4444;
+    transform: rotate(45deg);
 }
 
-#eolmed-gantt-chart {
-    width: 100%;
-    height: 400px;
+/* Gantt Grid */
+.gantt-grid-container {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    overflow-x: auto;
+    background: #f8fafc;
+}
+
+.gantt-header-row {
+    display: flex;
+    background: white;
+    border-bottom: 2px solid #e2e8f0;
+    min-width: 1600px;
+}
+
+.gantt-label-cell {
+    width: 180px;
+    min-width: 180px;
+    padding: 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: white;
+    border-right: 2px solid #e2e8f0;
+    position: sticky;
+    left: 0;
+    z-index: 10;
+    box-shadow: 2px 0 4px rgba(0, 0, 0, 0.05);
+}
+
+.gantt-day-cells {
+    display: flex;
+    flex: 1;
+}
+
+.gantt-day-cell {
+    flex: 1;
+    padding: 0.5rem;
+    text-align: center;
+    font-size: 0.75rem;
+    color: #94a3b8;
+    border-right: 1px solid #f1f5f9;
+}
+
+.gantt-day-cell.day-0 {
+    background: #dbeafe;
+    font-weight: 700;
+    color: #1e40af;
+}
+
+.gantt-day-cell.day-milestone {
+    background: #f8fafc;
+    font-weight: 600;
+    color: #64748b;
+}
+
+/* Campaign Rows */
+.gantt-campaign-row {
+    display: flex;
+    border-bottom: 1px solid #e2e8f0;
+    min-width: 1600px;
+    background: white;
+    transition: background-color 0.2s;
+}
+
+.gantt-campaign-row:hover {
+    background: #f1f5f9;
+}
+
+.gantt-campaign-label {
+    width: 180px;
+    min-width: 180px;
+    padding: 1rem;
+    border-right: 2px solid #e2e8f0;
+    background: white;
+    position: sticky;
+    left: 0;
+    z-index: 5;
+    box-shadow: 2px 0 4px rgba(0, 0, 0, 0.03);
+}
+
+.gantt-campaign-row:hover .gantt-campaign-label {
+    background: #eff6ff;
+}
+
+.gantt-campaign-name {
+    font-weight: 600;
+    color: #1e293b;
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+}
+
+.gantt-campaign-stats {
+    font-size: 0.75rem;
+    color: #64748b;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.gantt-timeline-area {
+    flex: 1;
+    position: relative;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.5);
+    border-left: 2px solid #cbd5e1;
+}
+
+.gantt-grid-lines {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    pointer-events: none;
+}
+
+.gantt-grid-line {
+    flex: 1;
+    border-right: 1px solid #f1f5f9;
+}
+
+.gantt-grid-line.day-0 {
+    background: rgba(219, 234, 254, 0.3);
+}
+
+.gantt-grid-line.day-milestone {
+    border-right: 1px solid #e2e8f0;
+}
+
+/* Task Markers */
+.gantt-task {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    z-index: 1;
+}
+
+.gantt-task:hover {
+    z-index: 20;
+}
+
+.gantt-task-marker {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.gantt-task-bar {
+    width: 20px;
+    height: 24px;
+    border-radius: 3px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.2s;
+}
+
+.gantt-task:hover .gantt-task-bar {
+    transform: scale(1.15);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.gantt-task-milestone {
+    width: 12px;
+    height: 12px;
+    transform: rotate(45deg);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    border: 1px solid white;
+}
+
+.gantt-task.milestone .gantt-task-marker {
+    transform: translateX(-50%);
+}
+
+.task-tower {
+    background-color: #3b82f6;
+}
+
+.task-nacelle {
+    background-color: #a855f7;
+}
+
+.task-blade {
+    background-color: #10b981;
+}
+
+.task-milestone {
+    background-color: #94a3b8;
+}
+
+.task-departure {
+    background-color: #ef4444;
+}
+
+/* Tooltip */
+.gantt-tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 8px;
+    background: #1e293b;
+    color: white;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 50;
+}
+
+.gantt-task:hover .gantt-tooltip {
+    opacity: 1;
+}
+
+.gantt-tooltip-name {
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.gantt-tooltip-details {
+    font-size: 0.7rem;
+    opacity: 0.9;
+}
+
+/* Gantt Note */
+.gantt-note {
+    margin-top: 1rem;
+    padding: 0.75rem 1rem;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 6px;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+}
+
+.gantt-note-icon {
+    font-size: 1rem;
+    color: #3b82f6;
+    flex-shrink: 0;
+}
+
+.gantt-note p {
+    font-size: 0.875rem;
+    color: #475569;
+    margin: 0;
+    line-height: 1.5;
 }
 
 /* Responsive */
@@ -4407,7 +4674,17 @@ footer p {
         font-size: 1.5rem;
     }
 
-    #eolmed-gantt-chart {
-        height: 300px;
+    .gantt-grid-container {
+        font-size: 0.7rem;
+    }
+
+    .gantt-label-cell {
+        width: 120px;
+        min-width: 120px;
+    }
+
+    .gantt-campaign-label {
+        width: 120px;
+        min-width: 120px;
     }
 }
