@@ -285,18 +285,25 @@ function createTimelineChart() {
     const ctx = document.getElementById('timeline-chart').getContext('2d');
 
     const datasets = turbineData.floaters.map((floater, idx) => {
-        const colors = ['#ef4444', '#f59e0b', '#10b981'];
+        const colors = ['#94a3b8', '#3b82f6', '#10b981'];
+        const lineWidths = [2, 2, 3];
+        const pointRadii = [4, 4, 6];
+
         return {
             label: `Floater ${floater.id}`,
             data: floater.operations.map(op => op.duration),
-            backgroundColor: colors[idx],
             borderColor: colors[idx],
-            borderWidth: 2
+            backgroundColor: colors[idx],
+            borderWidth: lineWidths[idx],
+            pointRadius: pointRadii[idx],
+            pointHoverRadius: pointRadii[idx] + 2,
+            tension: 0.3,
+            fill: false
         };
     });
 
     charts.timeline = new Chart(ctx, {
-        type: 'bar',
+        type: 'line',
         data: {
             labels: turbineData.floaters[0].operations.map(op => op.name),
             datasets: datasets
@@ -307,7 +314,7 @@ function createTimelineChart() {
             plugins: {
                 title: {
                     display: true,
-                    text: 'Assembly Time Comparison Across All Components',
+                    text: 'Task Duration Reduction (Learning Curve)',
                     font: { size: 16, weight: 'bold' }
                 },
                 legend: {
@@ -317,12 +324,7 @@ function createTimelineChart() {
                 tooltip: {
                     callbacks: {
                         label: function(context) {
-                            const label = `${context.dataset.label}: ${context.parsed.y.toFixed(2)} hours`;
-                            // Add asterisk for Tower Section 3 Floater 1 corrected value
-                            if (context.label === 'Tower Section 3' && context.datasetIndex === 0) {
-                                return [label + ' *', '(Corrected from 24.33h - see note below)'];
-                            }
-                            return label;
+                            return `${context.dataset.label}: ${context.parsed.y.toFixed(2)} hours`;
                         }
                     }
                 }
@@ -332,13 +334,19 @@ function createTimelineChart() {
                     beginAtZero: true,
                     title: {
                         display: true,
-                        text: 'Duration (hours)'
+                        text: 'Hours'
+                    },
+                    grid: {
+                        color: '#e2e8f0'
                     }
                 },
                 x: {
                     title: {
                         display: true,
-                        text: 'Component'
+                        text: 'Task'
+                    },
+                    grid: {
+                        display: false
                     }
                 }
             }
@@ -2742,18 +2750,25 @@ function createEolmedTimelineChart() {
 
     // Match EFGL structure: floaters as datasets, components as x-axis
     const datasets = eolmedData.floaters.map((floater, idx) => {
-        const colors = ['#ef4444', '#f59e0b', '#10b981'];
+        const colors = ['#94a3b8', '#3b82f6', '#10b981'];
+        const lineWidths = [2, 2, 3];
+        const pointRadii = [4, 4, 6];
+
         return {
             label: `Floater ${floater.id}`,
             data: floater.operations.map(op => op.duration),
-            backgroundColor: colors[idx],
             borderColor: colors[idx],
-            borderWidth: 2
+            backgroundColor: colors[idx],
+            borderWidth: lineWidths[idx],
+            pointRadius: pointRadii[idx],
+            pointHoverRadius: pointRadii[idx] + 2,
+            tension: 0.3,
+            fill: false
         };
     });
 
     new Chart(ctx, {
-        type: 'bar',
+        type: 'line',
         data: {
             labels: eolmedData.floaters[0].operations.map(op => op.name),
             datasets: datasets
@@ -2764,7 +2779,7 @@ function createEolmedTimelineChart() {
             plugins: {
                 title: {
                     display: true,
-                    text: 'Assembly Time Comparison Across All Components',
+                    text: 'Task Duration Reduction (Learning Curve)',
                     font: { size: 16, weight: 'bold' }
                 },
                 legend: {
@@ -2784,13 +2799,19 @@ function createEolmedTimelineChart() {
                     beginAtZero: true,
                     title: {
                         display: true,
-                        text: 'Duration (hours)'
+                        text: 'Hours'
+                    },
+                    grid: {
+                        color: '#e2e8f0'
                     }
                 },
                 x: {
                     title: {
                         display: true,
-                        text: 'Component'
+                        text: 'Task'
+                    },
+                    grid: {
+                        display: false
                     }
                 }
             }
