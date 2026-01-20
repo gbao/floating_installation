@@ -4012,13 +4012,15 @@ function createEfglGanttChart() {
             totalDays: 28,
             totalHours: 42.25,
             tasks: [
-                { day: 0, name: "Floater Arrives", type: "milestone", duration: 0, time: "12:40" },
-                { day: 5, name: "Tower Section", type: "tower", duration: 6.17, time: "09:00" },
-                { day: 12, name: "Nacelle", type: "nacelle", duration: 4.58, time: "09:00" },
-                { day: 17, name: "Blade 1", type: "blade", duration: 6.92, time: "09:00" },
-                { day: 20, name: "Blade 2", type: "blade", duration: 4.58, time: "09:00" },
-                { day: 24, name: "Blade 3", type: "blade", duration: 4.58, time: "09:00" },
-                { day: 39, name: "Departure", type: "departure", duration: 0, time: "12:00" }
+                { day: 0, name: "Floater Arrives", type: "milestone", duration: 0, time: "14:00" },
+                { day: 5, name: "Tower Sect 1", type: "tower", duration: 8.17, time: "10:10" },
+                { day: 17, name: "Tower Sect 2", type: "tower", duration: 9.50, time: "07:50" },
+                { day: 19, name: "Tower Sect 3", type: "tower", duration: 8.25, time: "13:20" },
+                { day: 20, name: "Nacelle", type: "nacelle", duration: 4.33, time: "16:20" },
+                { day: 24, name: "Blade 1", type: "blade", duration: 4.83, time: "07:00" },
+                { day: 25, name: "Blade 2", type: "blade", duration: 4.67, time: "06:30" },
+                { day: 28, name: "Blade 3", type: "blade", duration: 2.50, time: "06:30" },
+                { day: 39, name: "Departure", type: "departure", duration: 0, time: "08:00" }
             ]
         },
         {
@@ -4027,12 +4029,15 @@ function createEfglGanttChart() {
             totalDays: 17,
             totalHours: 32.33,
             tasks: [
-                { day: 0, name: "Floater Arrives", type: "milestone", duration: 0, time: "13:30" },
-                { day: 2.5, name: "Tower Section", type: "tower", duration: 6.17, time: "02:30" },
-                { day: 7, name: "Nacelle", type: "nacelle", duration: 4.58, time: "13:00" },
-                { day: 11, name: "Blade 1", type: "blade", duration: 6.92, time: "13:00" },
-                { day: 15, name: "Blade 2", type: "blade", duration: 4.58, time: "13:00" },
-                { day: 18, name: "Departure", type: "departure", duration: 0, time: "21:30" }
+                { day: 0, name: "Floater Arrives", type: "milestone", duration: 0, time: "14:30" },
+                { day: 4, name: "Tower Sect 1", type: "tower", duration: 5.50, time: "11:10" },
+                { day: 5, name: "Tower Sect 2", type: "tower", duration: 6.17, time: "09:30" },
+                { day: 6, name: "Tower Sect 3", type: "tower", duration: 5.17, time: "07:30" },
+                { day: 6, name: "Nacelle", type: "nacelle", duration: 3.50, time: "16:50" },
+                { day: 10, name: "Blade 1", type: "blade", duration: 3.67, time: "12:30" },
+                { day: 16, name: "Blade 2", type: "blade", duration: 4.50, time: "05:40" },
+                { day: 17, name: "Blade 3", type: "blade", duration: 3.83, time: "13:00" },
+                { day: 26, name: "Departure", type: "departure", duration: 0, time: "07:30" }
             ]
         },
         {
@@ -4041,11 +4046,15 @@ function createEfglGanttChart() {
             totalDays: 11,
             totalHours: 26.67,
             tasks: [
-                { day: 0, name: "Floater Arrives", type: "milestone", duration: 0, time: "13:00" },
-                { day: 1, name: "Tower Section", type: "tower", duration: 6.17, time: "09:00" },
-                { day: 5, name: "Nacelle", type: "nacelle", duration: 4.58, time: "09:00" },
-                { day: 9, name: "All Blades", type: "blade", duration: 6.92, time: "09:00" },
-                { day: 13, name: "Departure", type: "departure", duration: 0, time: "11:30" }
+                { day: 0, name: "Floater Arrives", type: "milestone", duration: 0, time: "13:30" },
+                { day: 3, name: "Tower Sect 1", type: "tower", duration: 5.33, time: "07:30" },
+                { day: 3, name: "Tower Sect 2", type: "tower", duration: 5.67, time: "13:50" },
+                { day: 5, name: "Tower Sect 3", type: "tower", duration: 4.33, time: "07:30" },
+                { day: 5, name: "Nacelle", type: "nacelle", duration: 3.17, time: "15:20" },
+                { day: 9, name: "Blade 1", type: "blade", duration: 3.17, time: "11:40" },
+                { day: 10, name: "Blade 2", type: "blade", duration: 2.83, time: "08:50" },
+                { day: 11, name: "Blade 3", type: "blade", duration: 2.17, time: "07:10" },
+                { day: 22, name: "Departure", type: "departure", duration: 0, time: "08:40" }
             ]
         }
     ];
