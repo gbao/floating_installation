@@ -3894,16 +3894,28 @@ function createEolmedGanttChart() {
         departure: '#ef4444'
     };
 
-    // Create datasets for Chart.js horizontal bar chart
-    const datasets = campaigns.map((campaign, index) => {
-        return {
-            label: campaign.name,
-            data: campaign.tasks.map(task => [task.start, task.end]),
-            backgroundColor: campaign.tasks.map(task => typeColors[task.type]),
-            borderColor: campaign.tasks.map(task => typeColors[task.type]),
-            borderWidth: 1,
-            borderSkipped: false
-        };
+    // Create datasets - each task becomes a dataset
+    const datasets = [];
+
+    campaigns.forEach((campaign, campaignIndex) => {
+        campaign.tasks.forEach((task, taskIndex) => {
+            // Create array with null values for all campaigns
+            const data = new Array(campaigns.length).fill(null);
+            // Set value only for the current campaign
+            data[campaignIndex] = [task.start, task.end];
+
+            datasets.push({
+                label: `${campaign.name} - ${task.label}`,
+                data: data,
+                backgroundColor: typeColors[task.type],
+                borderColor: typeColors[task.type],
+                borderWidth: 1,
+                borderSkipped: false,
+                barThickness: 20,
+                categoryPercentage: 0.8,
+                barPercentage: 0.9
+            });
+        });
     });
 
     new Chart(ctx, {
@@ -3923,15 +3935,16 @@ function createEolmedGanttChart() {
                 tooltip: {
                     enabled: true,
                     callbacks: {
-                        label: function(context) {
-                            const campaignIndex = context.dataIndex;
-                            const taskIndex = context.datasetIndex;
-                            const campaign = campaigns[taskIndex];
-                            const task = campaign.tasks[campaignIndex];
-                            if (task) {
-                                return task.label;
-                            }
+                        title: function() {
                             return '';
+                        },
+                        label: function(context) {
+                            const label = context.dataset.label || '';
+                            const parts = label.split(' - ');
+                            if (parts.length > 1) {
+                                return parts[1]; // Return just the task label
+                            }
+                            return label;
                         }
                     }
                 }
@@ -3940,6 +3953,7 @@ function createEolmedGanttChart() {
                 x: {
                     type: 'linear',
                     position: 'bottom',
+                    stacked: false,
                     title: {
                         display: true,
                         text: 'Days from Floater Arrival',
@@ -3964,6 +3978,7 @@ function createEolmedGanttChart() {
                     }
                 },
                 y: {
+                    stacked: false,
                     title: {
                         display: true,
                         text: 'Floater Campaign',
