@@ -4907,3 +4907,156 @@ footer p {
     font-size: 1.25rem;
     margin-right: 0.5rem;
 }
+
+/* ==================== TIMELINE PATTERNS COMPARISON TABLE ==================== */
+
+.timeline-patterns-header {
+    margin-bottom: 1.5rem;
+}
+
+.timeline-patterns-subtitle {
+    color: #64748b;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+}
+
+.timeline-patterns-table-wrapper {
+    overflow-x: auto;
+    border-radius: 0.75rem;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.timeline-patterns-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+.timeline-patterns-table thead {
+    background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+}
+
+.timeline-patterns-table th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: #1e293b;
+    border-bottom: 2px solid #cbd5e1;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.comparison-area-col {
+    width: 30%;
+}
+
+.pattern-col {
+    width: 35%;
+}
+
+.timeline-patterns-table tbody tr {
+    border-bottom: 1px solid #e2e8f0;
+    transition: background-color 0.2s;
+}
+
+.timeline-patterns-table tbody tr:hover {
+    background: #f8fafc;
+}
+
+.timeline-patterns-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.comparison-area {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem 1rem;
+    background: #f8fafc;
+}
+
+.area-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.area-content {
+    flex: 1;
+}
+
+.area-title {
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 0.25rem;
+}
+
+.area-subtitle {
+    font-size: 0.75rem;
+    color: #64748b;
+}
+
+.pattern-cell {
+    padding: 1.25rem 1rem;
+    vertical-align: top;
+}
+
+.pattern-values {
+    font-weight: 600;
+    color: #0f172a;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    font-family: 'Courier New', monospace;
+}
+
+.pattern-note {
+    font-size: 0.875rem;
+    color: #64748b;
+    font-style: italic;
+}
+
+.same-day-item {
+    font-size: 0.875rem;
+    color: #475569;
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+}
+
+.same-day-item:last-child {
+    margin-bottom: 0;
+}
+
+.same-day-item strong {
+    color: #0f172a;
+    font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .timeline-patterns-table th,
+    .timeline-patterns-table td {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.875rem;
+    }
+
+    .area-icon {
+        font-size: 1.25rem;
+    }
+
+    .area-title {
+        font-size: 0.875rem;
+    }
+
+    .area-subtitle {
+        font-size: 0.625rem;
+    }
+
+    .pattern-values {
+        font-size: 0.875rem;
+    }
+
+    .same-day-item {
+        font-size: 0.75rem;
+    }
+}
