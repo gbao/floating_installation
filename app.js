@@ -3821,7 +3821,172 @@ function init() {
     // Setup Eolmed event listeners
     setupEolmedEventListeners();
 
+    // Create Eolmed Gantt Chart
+    createEolmedGanttChart();
+
     console.log('Initialization complete!');
+}
+
+// ==================== EOLMED GANTT CHART ====================
+function createEolmedGanttChart() {
+    const canvas = document.getElementById('eolmed-gantt-chart');
+    if (!canvas) {
+        console.log('Eolmed gantt chart canvas not found');
+        return;
+    }
+
+    const ctx = canvas.getContext('2d');
+
+    // Campaign data - Normalized timeline
+    const campaigns = [
+        {
+            name: "F1 (Sep-Oct)",
+            color: "#ef4444",
+            tasks: [
+                { start: 0, end: 0.2, type: "milestone", label: "Arrival (D0)" },
+                { start: 12, end: 12.26, type: "tower", label: "T1 (6.2h)" },
+                { start: 13, end: 13.19, type: "tower", label: "T2 (4.5h)" },
+                { start: 18, end: 18.14, type: "tower", label: "T3 (3.3h)" },
+                { start: 22, end: 22.24, type: "nacelle", label: "Nac (5.7h)" },
+                { start: 25, end: 25.17, type: "blade", label: "B1 (4.2h)" },
+                { start: 26, end: 26.08, type: "blade", label: "B2 (2.0h)" },
+                { start: 26, end: 26.09, type: "blade", label: "B3 (2.2h)" },
+                { start: 35, end: 35.2, type: "departure", label: "Depart (D35)" }
+            ]
+        },
+        {
+            name: "F2 (Oct-Nov)",
+            color: "#f59e0b",
+            tasks: [
+                { start: 0, end: 0.2, type: "milestone", label: "Arrival (D0)" },
+                { start: 1, end: 1.15, type: "tower", label: "T1 (3.5h)" },
+                { start: 3, end: 3.18, type: "tower", label: "T2 (4.3h)" },
+                { start: 4, end: 4.17, type: "tower", label: "T3 (4.0h)" },
+                { start: 4, end: 4.15, type: "nacelle", label: "Nac (3.7h)" },
+                { start: 9, end: 9.10, type: "blade", label: "B1 (2.3h)" },
+                { start: 11, end: 11.07, type: "blade", label: "B2 (1.7h)" },
+                { start: 11, end: 11.09, type: "blade", label: "B3 (2.2h)" },
+                { start: 20, end: 20.2, type: "departure", label: "Depart (D20)" }
+            ]
+        },
+        {
+            name: "F3 (Nov-Dec)",
+            color: "#10b981",
+            tasks: [
+                { start: 0, end: 0.2, type: "milestone", label: "Arrival (D0)" },
+                { start: 4, end: 4.19, type: "tower", label: "T1 (4.7h)" },
+                { start: 5, end: 5.17, type: "tower", label: "T2 (4.0h)" },
+                { start: 5, end: 5.10, type: "tower", label: "T3 (2.5h)" },
+                { start: 12, end: 12.16, type: "nacelle", label: "Nac (3.8h)" },
+                { start: 18, end: 18.08, type: "blade", label: "B1 (1.8h)" },
+                { start: 18, end: 18.08, type: "blade", label: "B2 (1.8h)" },
+                { start: 20, end: 20.06, type: "blade", label: "B3 (1.3h)" }
+            ]
+        }
+    ];
+
+    // Color mapping by task type
+    const typeColors = {
+        milestone: '#94a3b8',
+        tower: '#3b82f6',
+        nacelle: '#a855f7',
+        blade: '#10b981',
+        departure: '#ef4444'
+    };
+
+    // Create datasets for Chart.js horizontal bar chart
+    const datasets = campaigns.map((campaign, index) => {
+        return {
+            label: campaign.name,
+            data: campaign.tasks.map(task => [task.start, task.end]),
+            backgroundColor: campaign.tasks.map(task => typeColors[task.type]),
+            borderColor: campaign.tasks.map(task => typeColors[task.type]),
+            borderWidth: 1,
+            borderSkipped: false
+        };
+    });
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: campaigns.map(c => c.name),
+            datasets: datasets
+        },
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    enabled: true,
+                    callbacks: {
+                        label: function(context) {
+                            const campaignIndex = context.dataIndex;
+                            const taskIndex = context.datasetIndex;
+                            const campaign = campaigns[taskIndex];
+                            const task = campaign.tasks[campaignIndex];
+                            if (task) {
+                                return task.label;
+                            }
+                            return '';
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    type: 'linear',
+                    position: 'bottom',
+                    title: {
+                        display: true,
+                        text: 'Days from Floater Arrival',
+                        font: {
+                            size: 13,
+                            weight: '600'
+                        },
+                        color: '#475569'
+                    },
+                    min: 0,
+                    max: 40,
+                    ticks: {
+                        stepSize: 5,
+                        color: '#64748b',
+                        font: {
+                            size: 11
+                        }
+                    },
+                    grid: {
+                        color: '#e2e8f0',
+                        lineWidth: 1
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Floater Campaign',
+                        font: {
+                            size: 13,
+                            weight: '600'
+                        },
+                        color: '#475569'
+                    },
+                    ticks: {
+                        color: '#64748b',
+                        font: {
+                            size: 12,
+                            weight: '500'
+                        }
+                    },
+                    grid: {
+                        display: false
+                    }
+                }
+            }
+        }
+    });
 }
 
 // Run on page load

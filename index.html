@@ -1167,6 +1167,63 @@
         <!-- SUB-TAB 1: OVERVIEW -->
         <div class="eolmed-sub-tab-content active" id="eolmed-subtab-overview">
 
+            <!-- Project Flow Section -->
+            <section class="project-flow-section">
+                <h2>Project Flow (Gantt) - Normalized Timeline Compression</h2>
+                <p class="section-description">Comparative analysis of installation floaters (Duration calculated to final Blade installation).</p>
+
+                <!-- KPI Cards -->
+                <div class="kpi-cards-grid">
+                    <div class="kpi-card">
+                        <div class="kpi-header">
+                            <span class="kpi-icon">📅</span>
+                            <span class="kpi-label">Install Reduction</span>
+                        </div>
+                        <div class="kpi-value">23%</div>
+                        <div class="kpi-detail">F1 (26d) → F3 (20d)</div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div class="kpi-header">
+                            <span class="kpi-icon">⚡</span>
+                            <span class="kpi-label">Fastest Floater</span>
+                        </div>
+                        <div class="kpi-value">11 Days</div>
+                        <div class="kpi-detail fastest">Floater 2 Record</div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div class="kpi-header">
+                            <span class="kpi-icon">🕐</span>
+                            <span class="kpi-label">Blade Install Avg</span>
+                        </div>
+                        <div class="kpi-value">1.66h</div>
+                        <div class="kpi-detail">Average in F3</div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div class="kpi-header">
+                            <span class="kpi-icon">⏸️</span>
+                            <span class="kpi-label">Wait Time</span>
+                        </div>
+                        <div class="kpi-value">High</div>
+                        <div class="kpi-detail warning">F3 logistics delay</div>
+                    </div>
+                </div>
+
+                <!-- Gantt Chart -->
+                <div class="gantt-container">
+                    <div class="gantt-legend">
+                        <span class="legend-item"><span class="legend-dot milestone"></span> Logistics (Arrival)</span>
+                        <span class="legend-item"><span class="legend-dot tower"></span> Tower Section</span>
+                        <span class="legend-item"><span class="legend-dot nacelle"></span> Nacelle Install</span>
+                        <span class="legend-item"><span class="legend-dot blade"></span> Blade Install</span>
+                        <span class="legend-item"><span class="legend-dot departure"></span> Departure</span>
+                    </div>
+                    <canvas id="eolmed-gantt-chart"></canvas>
+                </div>
+            </section>
+
             <!-- Component Performance Insights -->
             <section class="overview-insights-section">
                 <h2>Component Performance Insights</h2>
@@ -1773,7 +1830,7 @@
         <!-- Scenario Planning -->
         <section class="controls-section">
             <h2>Scenario Planning</h2>
-            <p class="section-description">Explore how assembly time improves with additional floaters using Crawford's Model</p>
+            <p class="section-description">Explore how assembly time improves with additional floaters using Crawford Unit Time Model (Tₙ = T₁ × nᵇ), which is the unit-based application of the Power Law originally established by Wright.</p>
 
             <!-- Two-Column Layout: Controls (Left) + Method/Results (Right) -->
             <div class="scenario-layout">
