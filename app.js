@@ -3821,6 +3821,9 @@ function init() {
     // Setup Eolmed event listeners
     setupEolmedEventListeners();
 
+    // Create EFGL Gantt Chart
+    createEfglGanttChart();
+
     // Create Eolmed Gantt Chart
     createEolmedGanttChart();
 
@@ -3982,6 +3985,132 @@ function createEolmedGanttChart() {
             `;
             marker.appendChild(tooltip);
 
+            taskEl.appendChild(marker);
+            timeline.appendChild(taskEl);
+        });
+
+        row.appendChild(timeline);
+        campaignRowsContainer.appendChild(row);
+    });
+}
+
+// ==================== EFGL GANTT CHART ====================
+function createEfglGanttChart() {
+    const dayHeadersContainer = document.getElementById('efgl-gantt-day-headers');
+    const campaignRowsContainer = document.getElementById('efgl-gantt-campaign-rows');
+
+    if (!dayHeadersContainer || !campaignRowsContainer) {
+        console.log('EFGL Gantt containers not found');
+        return;
+    }
+
+    // Campaign data
+    const campaigns = [
+        {
+            id: 1,
+            name: "F1 (May-Jun)",
+            totalDays: 28,
+            totalHours: 42.25,
+            tasks: [
+                { day: 0, name: "Floater Arrives", type: "milestone", duration: 0, time: "12:40" },
+                { day: 5, name: "Tower Section", type: "tower", duration: 6.17, time: "09:00" },
+                { day: 12, name: "Nacelle", type: "nacelle", duration: 4.58, time: "09:00" },
+                { day: 17, name: "Blade 1", type: "blade", duration: 6.92, time: "09:00" },
+                { day: 20, name: "Blade 2", type: "blade", duration: 4.58, time: "09:00" },
+                { day: 24, name: "Blade 3", type: "blade", duration: 4.58, time: "09:00" },
+                { day: 39, name: "Departure", type: "departure", duration: 0, time: "12:00" }
+            ]
+        },
+        {
+            id: 2,
+            name: "F2 (Jun-Jul)",
+            totalDays: 17,
+            totalHours: 32.33,
+            tasks: [
+                { day: 0, name: "Floater Arrives", type: "milestone", duration: 0, time: "13:30" },
+                { day: 2.5, name: "Tower Section", type: "tower", duration: 6.17, time: "02:30" },
+                { day: 7, name: "Nacelle", type: "nacelle", duration: 4.58, time: "13:00" },
+                { day: 11, name: "Blade 1", type: "blade", duration: 6.92, time: "13:00" },
+                { day: 15, name: "Blade 2", type: "blade", duration: 4.58, time: "13:00" },
+                { day: 18, name: "Departure", type: "departure", duration: 0, time: "21:30" }
+            ]
+        },
+        {
+            id: 3,
+            name: "F3 (Aug)",
+            totalDays: 11,
+            totalHours: 26.67,
+            tasks: [
+                { day: 0, name: "Floater Arrives", type: "milestone", duration: 0, time: "13:00" },
+                { day: 1, name: "Tower Section", type: "tower", duration: 6.17, time: "09:00" },
+                { day: 5, name: "Nacelle", type: "nacelle", duration: 4.58, time: "09:00" },
+                { day: 9, name: "All Blades", type: "blade", duration: 6.92, time: "09:00" },
+                { day: 13, name: "Departure", type: "departure", duration: 0, time: "11:30" }
+            ]
+        }
+    ];
+
+    const totalDays = 40;
+
+    // Create day headers
+    for (let i = 0; i < totalDays; i++) {
+        const dayCell = document.createElement('div');
+        dayCell.className = 'gantt-day-cell';
+        if (i === 0) {
+            dayCell.classList.add('day-0');
+        } else if (i > 0 && i % 5 === 0) {
+            dayCell.classList.add('day-milestone');
+        }
+        dayCell.textContent = i;
+        dayHeadersContainer.appendChild(dayCell);
+    }
+
+    // Create campaign rows
+    campaigns.forEach(campaign => {
+        const row = document.createElement('div');
+        row.className = 'gantt-campaign-row';
+
+        // Campaign label (sticky left)
+        const label = document.createElement('div');
+        label.className = 'gantt-campaign-label';
+        label.innerHTML = `
+            <div class="gantt-campaign-name">${campaign.name}</div>
+            <div class="gantt-campaign-stats">${campaign.totalHours}h work</div>
+            <div class="gantt-campaign-stats">${campaign.totalDays}d install</div>
+        `;
+        row.appendChild(label);
+
+        // Timeline
+        const timeline = document.createElement('div');
+        timeline.className = 'gantt-timeline';
+
+        // Add tasks
+        campaign.tasks.forEach(task => {
+            const [h, m] = task.time.split(':').map(Number);
+            const timeFraction = (h + m / 60) / 24;
+            const leftPos = ((task.day + timeFraction) / totalDays) * 100;
+
+            const taskEl = document.createElement('div');
+            taskEl.className = 'gantt-task';
+            taskEl.style.left = `${leftPos}%`;
+
+            const marker = document.createElement('div');
+            if (task.type === 'milestone' || task.type === 'departure') {
+                marker.className = `gantt-task-milestone task-${task.type}`;
+            } else {
+                marker.className = `gantt-task-bar task-${task.type}`;
+            }
+
+            // Tooltip
+            const tooltip = document.createElement('div');
+            tooltip.className = 'gantt-tooltip';
+            tooltip.innerHTML = `
+                <div><strong>${task.name}</strong></div>
+                <div>Day ${task.day} at ${task.time}</div>
+                ${task.duration > 0 ? `<div>${task.duration}h duration</div>` : ''}
+            `;
+
+            taskEl.appendChild(tooltip);
             taskEl.appendChild(marker);
             timeline.appendChild(taskEl);
         });

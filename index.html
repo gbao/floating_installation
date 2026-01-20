@@ -209,6 +209,82 @@
         <!-- SUB-TAB 1: OVERVIEW -->
         <div class="efgl-sub-tab-content active" id="subtab-overview">
 
+            <!-- Project Flow Section -->
+            <section class="project-flow-section">
+                <h2>Project Flow (Gantt) - Normalized Timeline Compression</h2>
+                <p class="section-description">Comparative analysis of installation floaters (Duration calculated to final Blade installation).</p>
+
+                <!-- KPI Cards -->
+                <div class="kpi-cards-grid">
+                    <div class="kpi-card">
+                        <div class="kpi-header">
+                            <span class="kpi-icon">📅</span>
+                            <span class="kpi-label">Install Reduction</span>
+                        </div>
+                        <div class="kpi-value">61%</div>
+                        <div class="kpi-detail">F1 (28d) → F3 (11d)</div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div class="kpi-header">
+                            <span class="kpi-icon">⚡</span>
+                            <span class="kpi-label">Fastest Floater</span>
+                        </div>
+                        <div class="kpi-value">11 Days</div>
+                        <div class="kpi-detail fastest">Floater 3 Record</div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div class="kpi-header">
+                            <span class="kpi-icon">🕐</span>
+                            <span class="kpi-label">Crane Hours Saved</span>
+                        </div>
+                        <div class="kpi-value">15.58h</div>
+                        <div class="kpi-detail">F1→F3 (37% reduction)</div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div class="kpi-header">
+                            <span class="kpi-icon">📉</span>
+                            <span class="kpi-label">Pre-Install Gap</span>
+                        </div>
+                        <div class="kpi-value">80%</div>
+                        <div class="kpi-detail">5d → 2.5d → 1d</div>
+                    </div>
+                </div>
+
+                <!-- Gantt Chart -->
+                <div class="gantt-wrapper">
+                    <div class="gantt-header-info">
+                        <h3 class="gantt-title">Normalized Timeline Comparison</h3>
+                        <div class="gantt-legend">
+                            <span class="legend-item"><span class="legend-dot milestone"></span> Logistics (Arrival)</span>
+                            <span class="legend-item"><span class="legend-dot tower"></span> Tower Section</span>
+                            <span class="legend-item"><span class="legend-dot nacelle"></span> Nacelle Install</span>
+                            <span class="legend-item"><span class="legend-dot blade"></span> Blade Install</span>
+                            <span class="legend-item"><span class="legend-dot departure"></span> Departure</span>
+                        </div>
+                    </div>
+
+                    <!-- The Gantt Grid -->
+                    <div class="gantt-grid-container">
+                        <!-- Header Row (Days) -->
+                        <div class="gantt-header-row">
+                            <div class="gantt-label-cell">Floater ID</div>
+                            <div class="gantt-day-cells" id="efgl-gantt-day-headers"></div>
+                        </div>
+
+                        <!-- Campaign Rows -->
+                        <div id="efgl-gantt-campaign-rows"></div>
+                    </div>
+
+                    <div class="gantt-note">
+                        <span class="gantt-note-icon">ℹ️</span>
+                        <p><strong>Note:</strong> Timeline is normalized to 40 days. "Day 0" (highlighted blue) marks the arrival of the floater. All markers are positioned by exact time of day. "Departure" milestones are shown but excluded from "Install Duration".</p>
+                    </div>
+                </div>
+            </section>
+
             <!-- Component Performance Insights -->
             <section class="overview-insights-section">
                 <h2>Component Performance Insights</h2>
