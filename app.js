@@ -1355,6 +1355,7 @@ function setupEventListeners() {
     const metricInfoBtns = document.querySelectorAll('.metric-info-btn');
 
     metricInfoBtns.forEach(btn => {
+        // Click handler
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
 
@@ -1368,6 +1369,15 @@ function setupEventListeners() {
             if (!isActive) {
                 btn.classList.add('active');
             }
+        });
+
+        // Hover handlers
+        btn.addEventListener('mouseenter', () => {
+            btn.classList.add('hover-active');
+        });
+
+        btn.addEventListener('mouseleave', () => {
+            btn.classList.remove('hover-active');
         });
     });
 

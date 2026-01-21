@@ -2808,6 +2808,7 @@ footer p {
     max-width: 90vw;
     z-index: 1000;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    pointer-events: none;
 }
 
 .metric-tooltip::after {
@@ -2820,13 +2821,13 @@ footer p {
     border-top-color: rgba(30, 41, 59, 0.98);
 }
 
-/* Show tooltip when button is active (changed from + to ~ for sibling anywhere in parent) */
+/* Show tooltip when button is active (click) */
 .metric-card:has(.metric-info-btn.active) .metric-tooltip {
     display: block;
 }
 
-/* Show tooltip on hover */
-.metric-card:has(.metric-info-btn:hover) .metric-tooltip {
+/* Show tooltip when button is hovered */
+.metric-card:has(.metric-info-btn.hover-active) .metric-tooltip {
     display: block;
 }
 
