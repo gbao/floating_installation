@@ -5503,3 +5503,123 @@ footer p {
     font-weight: 500;
     flex: 1;
 }
+
+/* Project Overview Section */
+.project-overview-section {
+    margin-bottom: 3rem;
+}
+
+.project-overview-section h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: #1e293b;
+    text-align: center;
+}
+
+.overview-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.overview-column {
+    background: #ffffff;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.overview-header {
+    padding: 1.5rem;
+    text-align: center;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+}
+
+.overview-header h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: #ffffff;
+}
+
+/* EFGL Column Styling */
+.overview-efgl .overview-header {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+}
+
+.overview-efgl .overview-check {
+    color: #3b82f6;
+}
+
+.overview-efgl .overview-pattern {
+    background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+    color: #1e40af;
+}
+
+/* Eolmed Column Styling */
+.overview-eolmed .overview-header {
+    background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.overview-eolmed .overview-check {
+    color: #10b981;
+}
+
+.overview-eolmed .overview-pattern {
+    background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+    color: #065f46;
+}
+
+.overview-content {
+    padding: 2rem 1.5rem;
+    flex: 1;
+}
+
+.overview-item {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    line-height: 1.6;
+    align-items: flex-start;
+}
+
+.overview-item:last-child {
+    margin-bottom: 0;
+}
+
+.overview-check {
+    font-size: 1.25rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    line-height: 1.6;
+}
+
+.overview-item span:last-child {
+    color: #334155;
+    font-size: 0.9375rem;
+}
+
+.overview-pattern {
+    padding: 1.25rem 1.5rem;
+    font-size: 0.9375rem;
+    text-align: center;
+    border-top: 2px solid rgba(0, 0, 0, 0.05);
+}
+
+.overview-pattern strong {
+    display: block;
+    margin-bottom: 0.25rem;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .overview-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+}
