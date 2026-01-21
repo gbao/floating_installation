@@ -1370,29 +1370,34 @@ function setupMetricTooltips() {
     const freshBtns = document.querySelectorAll('.metric-info-btn');
 
     freshBtns.forEach(btn => {
+        const metricCard = btn.closest('.metric-card');
+        const tooltip = metricCard ? metricCard.querySelector('.metric-tooltip') : null;
+
+        if (!tooltip) return;
+
         // Click handler
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
 
-            // Toggle active state
-            const isActive = btn.classList.contains('active');
+            // Check if currently active
+            const isActive = tooltip.classList.contains('active');
 
-            // Close all other tooltips
-            document.querySelectorAll('.metric-info-btn').forEach(b => b.classList.remove('active'));
+            // Close all tooltips
+            document.querySelectorAll('.metric-tooltip').forEach(t => t.classList.remove('active'));
 
             // Toggle current tooltip
             if (!isActive) {
-                btn.classList.add('active');
+                tooltip.classList.add('active');
             }
         });
 
         // Hover handlers
         btn.addEventListener('mouseenter', () => {
-            btn.classList.add('hover-active');
+            tooltip.classList.add('hover-active');
         });
 
         btn.addEventListener('mouseleave', () => {
-            btn.classList.remove('hover-active');
+            tooltip.classList.remove('hover-active');
         });
     });
 
@@ -1400,7 +1405,7 @@ function setupMetricTooltips() {
     if (!tooltipDocumentListenerAttached) {
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.metric-card')) {
-                document.querySelectorAll('.metric-info-btn').forEach(btn => btn.classList.remove('active'));
+                document.querySelectorAll('.metric-tooltip').forEach(t => t.classList.remove('active', 'hover-active'));
             }
         });
         tooltipDocumentListenerAttached = true;
