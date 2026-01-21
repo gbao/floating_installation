@@ -1356,6 +1356,8 @@ function setupEventListeners() {
 }
 
 // Separate function to setup metric tooltips (called multiple times for dynamic content)
+let tooltipDocumentListenerAttached = false;
+
 function setupMetricTooltips() {
     const metricInfoBtns = document.querySelectorAll('.metric-info-btn');
 
@@ -1376,7 +1378,7 @@ function setupMetricTooltips() {
             const isActive = btn.classList.contains('active');
 
             // Close all other tooltips
-            freshBtns.forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.metric-info-btn').forEach(b => b.classList.remove('active'));
 
             // Toggle current tooltip
             if (!isActive) {
@@ -1395,11 +1397,14 @@ function setupMetricTooltips() {
     });
 
     // Close tooltips when clicking outside (attach once to document)
-    document.addEventListener('click', (e) => {
-        if (!e.target.closest('.metric-card')) {
-            freshBtns.forEach(btn => btn.classList.remove('active'));
-        }
-    });
+    if (!tooltipDocumentListenerAttached) {
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.metric-card')) {
+                document.querySelectorAll('.metric-info-btn').forEach(btn => btn.classList.remove('active'));
+            }
+        });
+        tooltipDocumentListenerAttached = true;
+    }
 }
 
 function updateCharts() {
