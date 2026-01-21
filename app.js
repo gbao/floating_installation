@@ -1352,9 +1352,22 @@ function setupEventListeners() {
     });
 
     // ========== METRIC TOOLTIP TOGGLES ==========
+    setupMetricTooltips();
+}
+
+// Separate function to setup metric tooltips (called multiple times for dynamic content)
+function setupMetricTooltips() {
     const metricInfoBtns = document.querySelectorAll('.metric-info-btn');
 
     metricInfoBtns.forEach(btn => {
+        // Remove existing listeners to avoid duplicates
+        btn.replaceWith(btn.cloneNode(true));
+    });
+
+    // Re-query after replacing
+    const freshBtns = document.querySelectorAll('.metric-info-btn');
+
+    freshBtns.forEach(btn => {
         // Click handler
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -1363,7 +1376,7 @@ function setupEventListeners() {
             const isActive = btn.classList.contains('active');
 
             // Close all other tooltips
-            metricInfoBtns.forEach(b => b.classList.remove('active'));
+            freshBtns.forEach(b => b.classList.remove('active'));
 
             // Toggle current tooltip
             if (!isActive) {
@@ -1381,10 +1394,10 @@ function setupEventListeners() {
         });
     });
 
-    // Close tooltips when clicking outside
+    // Close tooltips when clicking outside (attach once to document)
     document.addEventListener('click', (e) => {
         if (!e.target.closest('.metric-card')) {
-            metricInfoBtns.forEach(btn => btn.classList.remove('active'));
+            freshBtns.forEach(btn => btn.classList.remove('active'));
         }
     });
 }
@@ -1831,6 +1844,9 @@ function initializeEolmedTab() {
 
     // Setup Eolmed event listeners
     setupEolmedEventListeners();
+
+    // Setup metric tooltips for Eolmed (dynamic content)
+    setupMetricTooltips();
 
     // Update Eolmed predictions
     updateEolmedPredictions();
