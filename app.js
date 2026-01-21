@@ -2245,9 +2245,6 @@ function updateEolmedCharts() {
 function initializeComparisonTab() {
     console.log('Initializing Comparison tab...');
 
-    // Populate comparison summary table
-    populateComparisonTable();
-
     // Create comparison charts
     createComparisonCharts();
 
@@ -2255,53 +2252,623 @@ function initializeComparisonTab() {
     populateInsights();
 }
 
-function populateComparisonTable() {
-    const tbody = document.getElementById('comparison-summary-table');
+function populateComparisonSummaryTable() {
+    const tbody = document.getElementById('comparison-summary-tbody');
     if (!tbody) return;
 
-    const metrics = [
-        {
-            name: 'Floater 1 Assembly Time',
-            efgl: `${efglData.floaters[0].total_hours.toFixed(2)}h`,
-            eolmed: `${eolmedData.floaters[0].total_hours.toFixed(2)}h`,
-            diff: efglData.floaters[0].total_hours - eolmedData.floaters[0].total_hours
-        },
-        {
-            name: 'Floater 3 Assembly Time',
-            efgl: `${efglData.floaters[2].total_hours.toFixed(2)}h`,
-            eolmed: `${eolmedData.floaters[2].total_hours.toFixed(2)}h`,
-            diff: efglData.floaters[2].total_hours - eolmedData.floaters[2].total_hours
-        },
-        {
-            name: 'Overall Improvement',
-            efgl: `${efglData.learning_curve.overall_improvement_pct.toFixed(2)}%`,
-            eolmed: `${eolmedData.learning_curve.overall_improvement_pct.toFixed(2)}%`,
-            diff: eolmedData.learning_curve.overall_improvement_pct - efglData.learning_curve.overall_improvement_pct
-        },
-        {
-            name: 'Learning Rate',
-            efgl: `${(efglData.learning_curve.avg_learning_rate * 100).toFixed(0)}%`,
-            eolmed: `${(eolmedData.learning_curve.avg_learning_rate * 100).toFixed(0)}%`,
-            diff: (eolmedData.learning_curve.avg_learning_rate - efglData.learning_curve.avg_learning_rate) * 100
-        },
-        {
-            name: 'Project Duration',
-            efgl: `${efglData.project_metrics.total_project_days.toFixed(2)} days`,
-            eolmed: `${eolmedData.project_metrics.total_project_days.toFixed(2)} days`,
-            diff: efglData.project_metrics.total_project_days - eolmedData.project_metrics.total_project_days
-        }
+    // Calculate totals for each floater
+    const efglTotals = efglData.floaters.map(f => f.total_hours);
+    const eolmedTotals = eolmedData.floaters.map(f => f.total_hours);
+
+    // Calculate average
+    const efglAvg = efglTotals.reduce((a, b) => a + b, 0) / efglTotals.length;
+    const eolmedAvg = eolmedTotals.reduce((a, b) => a + b, 0) / eolmedTotals.length;
+
+    // Create rows
+    const rows = [
+        { label: 'F1 Total', efgl: efglTotals[0], eolmed: eolmedTotals[0] },
+        { label: 'F2 Total', efgl: efglTotals[1], eolmed: eolmedTotals[1] },
+        { label: 'F3 Total', efgl: efglTotals[2], eolmed: eolmedTotals[2] },
+        { label: 'Average', efgl: efglAvg, eolmed: eolmedAvg, isAverage: true }
     ];
 
-    tbody.innerHTML = metrics.map(m => `
-        <tr>
-            <td><strong>${m.name}</strong></td>
-            <td>${m.efgl}</td>
-            <td>${m.eolmed}</td>
-            <td class="${m.diff > 0 ? 'difference-positive' : 'difference-negative'}">
-                ${m.diff > 0 ? '+' : ''}${m.diff.toFixed(2)}${m.name.includes('%') || m.name.includes('Rate') ? '' : (m.name.includes('days') ? ' days' : 'h')}
-            </td>
-        </tr>
-    `).join('');
+    tbody.innerHTML = rows.map(row => {
+        const delta = row.efgl - row.eolmed; // EFGL as baseline
+        const percent = (delta / row.efgl) * 100;
+        const deltaClass = delta > 0 ? 'positive' : 'negative';
+        const deltaIcon = delta > 0 ? '✅' : '';
+
+        return `
+            <tr${row.isAverage ? ' class="average-row"' : ''}>
+                <td><strong>${row.label}</strong></td>
+                <td>${row.efgl.toFixed(2)}</td>
+                <td>${row.eolmed.toFixed(2)}</td>
+                <td class="delta-${deltaClass}">
+                    ${delta >= 0 ? '+' : ''}${delta.toFixed(2)}h ${deltaIcon}
+                </td>
+                <td class="percent-${deltaClass}">
+                    ${percent >= 0 ? '+' : ''}${percent.toFixed(1)}%
+                </td>
+            </tr>
+        `;
+    }).join('');
+}
+
+// Custom tooltip for component comparison charts
+function createCustomTooltip(context, efglData, eolmedData, componentName) {
+    const tooltipModel = context.tooltip;
+    if (tooltipModel.opacity === 0) {
+        return;
+    }
+
+    const dataIndex = tooltipModel.dataPoints ? tooltipModel.dataPoints[0].dataIndex : 0;
+    const efglValue = efglData[dataIndex];
+    const eolmedValue = eolmedData[dataIndex];
+    const delta = efglValue - eolmedValue; // EFGL as baseline
+    const percent = ((delta / efglValue) * 100);
+    const isSavings = delta > 0;
+
+    // Build tooltip HTML
+    const floaterLabel = tooltipModel.dataPoints[0].label;
+
+    return `
+        <div style="
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 0.5rem;
+            padding: 0;
+            min-width: 200px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            font-family: system-ui, -apple-system, sans-serif;
+        ">
+            <div style="
+                padding: 0.75rem 1rem;
+                border-bottom: 1px solid #475569;
+                font-weight: 600;
+                color: #cbd5e1;
+                font-size: 0.875rem;
+            ">
+                ${floaterLabel}
+            </div>
+
+            <div style="padding: 0.75rem 1rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <div style="width: 8px; height: 8px; border-radius: 50%; background: #3b82f6;"></div>
+                        <span style="color: #94a3b8; font-size: 0.875rem;">EFGL (Baseline):</span>
+                    </div>
+                    <span style="color: white; font-weight: 600; font-size: 0.875rem;">${efglValue.toFixed(2)}h</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <div style="width: 8px; height: 8px; border-radius: 50%; background: #10b981;"></div>
+                        <span style="color: #94a3b8; font-size: 0.875rem;">Eolmed:</span>
+                    </div>
+                    <span style="color: white; font-weight: 600; font-size: 0.875rem;">${eolmedValue.toFixed(2)}h</span>
+                </div>
+            </div>
+
+            <div style="
+                background: rgba(30, 41, 59, 0.5);
+                border-top: 1px solid #475569;
+                padding: 0.75rem 1rem;
+            ">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <div style="
+                            width: 0;
+                            height: 0;
+                            border-left: 5px solid transparent;
+                            border-right: 5px solid transparent;
+                            border-top: 8px solid #a78bfa;
+                            ${isSavings ? 'transform: rotate(180deg);' : ''}
+                        "></div>
+                        <span style="color: #94a3b8; font-size: 0.875rem;">${isSavings ? 'Savings' : 'Loss'} (h):</span>
+                    </div>
+                    <span style="color: ${isSavings ? '#a78bfa' : '#fb7185'}; font-weight: 600; font-size: 0.875rem;">
+                        ${delta >= 0 ? '+' : ''}${delta.toFixed(2)}h
+                    </span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <div style="width: 6px; height: 6px; border-radius: 50%; background: ${isSavings ? '#10b981' : '#ef4444'};"></div>
+                        <span style="color: #94a3b8; font-size: 0.875rem;">Impact:</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.375rem;">
+                        <span style="font-size: 1rem;">${isSavings ? '📉' : '⚠️'}</span>
+                        <span style="color: ${isSavings ? '#10b981' : '#ef4444'}; font-weight: 600; font-size: 0.875rem;">
+                            ${percent >= 0 ? '+' : ''}${percent.toFixed(1)}%
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function createComponentComparisonCharts() {
+    // Calculate component averages
+    const efglTowerAvg = efglData.floaters.map(f =>
+        f.operations[0].duration + f.operations[1].duration + f.operations[2].duration
+    );
+    const eolmedTowerAvg = eolmedData.floaters.map(f =>
+        f.operations[0].duration + f.operations[1].duration + f.operations[2].duration
+    );
+
+    const efglNacelleAvg = efglData.floaters.map(f => f.operations[3].duration);
+    const eolmedNacelleAvg = eolmedData.floaters.map(f => f.operations[3].duration);
+
+    const efglBladeAvg = efglData.floaters.map(f =>
+        f.operations[4].duration + f.operations[5].duration + f.operations[6].duration
+    );
+    const eolmedBladeAvg = eolmedData.floaters.map(f =>
+        f.operations[4].duration + f.operations[5].duration + f.operations[6].duration
+    );
+
+    // Calculate overall deltas for scorecards (EFGL as baseline: EFGL - Eolmed)
+    const towerDelta = (efglTowerAvg.reduce((a,b)=>a+b,0)/3) - (eolmedTowerAvg.reduce((a,b)=>a+b,0)/3);
+    const towerPercent = (towerDelta / (efglTowerAvg.reduce((a,b)=>a+b,0)/3)) * 100;
+    const nacelleDelta = (efglNacelleAvg.reduce((a,b)=>a+b,0)/3) - (eolmedNacelleAvg.reduce((a,b)=>a+b,0)/3);
+    const nacellePercent = (nacelleDelta / (efglNacelleAvg.reduce((a,b)=>a+b,0)/3)) * 100;
+    const bladeDelta = (efglBladeAvg.reduce((a,b)=>a+b,0)/3) - (eolmedBladeAvg.reduce((a,b)=>a+b,0)/3);
+    const bladePercent = (bladeDelta / (efglBladeAvg.reduce((a,b)=>a+b,0)/3)) * 100;
+
+    // Update scorecards
+    if (towerDelta >= 0) {
+        document.getElementById('tower-delta').textContent = `+${towerDelta.toFixed(2)}h saved`;
+        document.getElementById('tower-percent').textContent = `📉 +${towerPercent.toFixed(0)}% Faster`;
+    } else {
+        document.getElementById('tower-delta').textContent = `${Math.abs(towerDelta).toFixed(2)}h slower`;
+        document.getElementById('tower-percent').textContent = `⚠️ ${towerPercent.toFixed(0)}%`;
+    }
+
+    if (nacelleDelta >= 0) {
+        document.getElementById('nacelle-delta').textContent = `+${nacelleDelta.toFixed(2)}h saved`;
+        document.getElementById('nacelle-percent').textContent = `📉 +${nacellePercent.toFixed(0)}% Faster`;
+    } else {
+        document.getElementById('nacelle-delta').textContent = `${Math.abs(nacelleDelta).toFixed(2)}h slower`;
+        document.getElementById('nacelle-percent').textContent = `⚠️ ${nacellePercent.toFixed(0)}%`;
+    }
+
+    if (bladeDelta >= 0) {
+        document.getElementById('blade-delta').textContent = `+${bladeDelta.toFixed(2)}h saved`;
+        document.getElementById('blade-percent').textContent = `📉 +${bladePercent.toFixed(0)}% Faster`;
+    } else {
+        document.getElementById('blade-delta').textContent = `${Math.abs(bladeDelta).toFixed(2)}h slower`;
+        document.getElementById('blade-percent').textContent = `⚠️ ${bladePercent.toFixed(0)}%`;
+    }
+
+    // Tower Chart
+    const towerCtx = document.getElementById('tower-comparison-chart');
+    if (towerCtx) {
+        const towerDeltas = efglTowerAvg.map((efgl, i) => efgl - eolmedTowerAvg[i]);
+        const towerPercents = efglTowerAvg.map((efgl, i) => ((efgl - eolmedTowerAvg[i]) / efgl) * 100);
+
+        comparisonCharts.towerComponent = new Chart(towerCtx.getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: ['F1', 'F2', 'F3'],
+                datasets: [
+                    {
+                        label: 'EFGL',
+                        data: efglTowerAvg,
+                        backgroundColor: '#3b82f6',
+                        order: 2,
+                        yAxisID: 'y'
+                    },
+                    {
+                        label: 'Eolmed',
+                        data: eolmedTowerAvg,
+                        backgroundColor: '#10b981',
+                        order: 2,
+                        yAxisID: 'y'
+                    },
+                    {
+                        label: 'Δ Hours',
+                        data: towerDeltas,
+                        type: 'scatter',
+                        pointStyle: 'triangle',
+                        pointRadius: 12,
+                        pointRotation: 180,
+                        backgroundColor: '#22c55e',
+                        borderColor: '#22c55e',
+                        borderWidth: 3,
+                        order: 1,
+                        yAxisID: 'y'
+                    },
+                    {
+                        label: '% Impact',
+                        data: towerPercents,
+                        type: 'scatter',
+                        pointStyle: 'circle',
+                        pointRadius: 10,
+                        backgroundColor: '#a78bfa',
+                        borderColor: '#a78bfa',
+                        borderWidth: 3,
+                        order: 1,
+                        yAxisID: 'y-percent'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        enabled: false,
+                        external: function(context) {
+                            let tooltipEl = document.getElementById('chartjs-tooltip');
+                            if (!tooltipEl) {
+                                tooltipEl = document.createElement('div');
+                                tooltipEl.id = 'chartjs-tooltip';
+                                tooltipEl.style.opacity = 0;
+                                tooltipEl.style.position = 'absolute';
+                                tooltipEl.style.pointerEvents = 'none';
+                                tooltipEl.style.transition = 'opacity 0.2s ease';
+                                document.body.appendChild(tooltipEl);
+                            }
+
+                            const tooltipModel = context.tooltip;
+                            if (tooltipModel.opacity === 0) {
+                                tooltipEl.style.opacity = 0;
+                                return;
+                            }
+
+                            if (tooltipModel.dataPoints && tooltipModel.dataPoints.length > 0) {
+                                const html = createCustomTooltip(context, efglTowerAvg, eolmedTowerAvg, 'Tower');
+                                tooltipEl.innerHTML = html;
+                            }
+
+                            const position = context.chart.canvas.getBoundingClientRect();
+                            tooltipEl.style.opacity = 1;
+                            tooltipEl.style.left = position.left + window.pageXOffset + tooltipModel.caretX + 'px';
+                            tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY + 'px';
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'Hours' },
+                        position: 'left'
+                    },
+                    'y-percent': {
+                        beginAtZero: true,
+                        title: { display: true, text: 'Percent Impact (%)' },
+                        position: 'right',
+                        grid: { drawOnChartArea: false }
+                    }
+                }
+            }
+        });
+    }
+
+    // Nacelle Chart
+    const nacelleCtx = document.getElementById('nacelle-comparison-chart');
+    if (nacelleCtx) {
+        const nacelleDeltas = efglNacelleAvg.map((efgl, i) => efgl - eolmedNacelleAvg[i]);
+        const nacellePercents = efglNacelleAvg.map((efgl, i) => ((efgl - eolmedNacelleAvg[i]) / efgl) * 100);
+
+        comparisonCharts.nacelleComponent = new Chart(nacelleCtx.getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: ['F1', 'F2', 'F3'],
+                datasets: [
+                    {
+                        label: 'EFGL',
+                        data: efglNacelleAvg,
+                        backgroundColor: '#3b82f6',
+                        order: 2,
+                        yAxisID: 'y'
+                    },
+                    {
+                        label: 'Eolmed',
+                        data: eolmedNacelleAvg,
+                        backgroundColor: '#10b981',
+                        order: 2,
+                        yAxisID: 'y'
+                    },
+                    {
+                        label: 'Δ Hours',
+                        data: nacelleDeltas,
+                        type: 'scatter',
+                        pointStyle: 'triangle',
+                        pointRadius: 12,
+                        pointRotation: 0,
+                        backgroundColor: '#f87171',
+                        borderColor: '#f87171',
+                        borderWidth: 3,
+                        order: 1,
+                        yAxisID: 'y'
+                    },
+                    {
+                        label: '% Impact',
+                        data: nacellePercents,
+                        type: 'scatter',
+                        pointStyle: 'circle',
+                        pointRadius: 10,
+                        backgroundColor: '#a78bfa',
+                        borderColor: '#a78bfa',
+                        borderWidth: 3,
+                        order: 1,
+                        yAxisID: 'y-percent'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        enabled: false,
+                        external: function(context) {
+                            let tooltipEl = document.getElementById('chartjs-tooltip');
+                            if (!tooltipEl) {
+                                tooltipEl = document.createElement('div');
+                                tooltipEl.id = 'chartjs-tooltip';
+                                tooltipEl.style.opacity = 0;
+                                tooltipEl.style.position = 'absolute';
+                                tooltipEl.style.pointerEvents = 'none';
+                                tooltipEl.style.transition = 'opacity 0.2s ease';
+                                document.body.appendChild(tooltipEl);
+                            }
+
+                            const tooltipModel = context.tooltip;
+                            if (tooltipModel.opacity === 0) {
+                                tooltipEl.style.opacity = 0;
+                                return;
+                            }
+
+                            if (tooltipModel.dataPoints && tooltipModel.dataPoints.length > 0) {
+                                const html = createCustomTooltip(context, efglNacelleAvg, eolmedNacelleAvg, 'Nacelle');
+                                tooltipEl.innerHTML = html;
+                            }
+
+                            const position = context.chart.canvas.getBoundingClientRect();
+                            tooltipEl.style.opacity = 1;
+                            tooltipEl.style.left = position.left + window.pageXOffset + tooltipModel.caretX + 'px';
+                            tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY + 'px';
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'Hours' },
+                        position: 'left'
+                    },
+                    'y-percent': {
+                        beginAtZero: true,
+                        title: { display: true, text: 'Percent Impact (%)' },
+                        position: 'right',
+                        grid: { drawOnChartArea: false }
+                    }
+                }
+            }
+        });
+    }
+
+    // Blade Chart
+    const bladeCtx = document.getElementById('blade-comparison-chart');
+    if (bladeCtx) {
+        const bladeDeltas = efglBladeAvg.map((efgl, i) => efgl - eolmedBladeAvg[i]);
+        const bladePercents = efglBladeAvg.map((efgl, i) => ((efgl - eolmedBladeAvg[i]) / efgl) * 100);
+
+        comparisonCharts.bladeComponent = new Chart(bladeCtx.getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: ['F1', 'F2', 'F3'],
+                datasets: [
+                    {
+                        label: 'EFGL',
+                        data: efglBladeAvg,
+                        backgroundColor: '#3b82f6',
+                        order: 2,
+                        yAxisID: 'y'
+                    },
+                    {
+                        label: 'Eolmed',
+                        data: eolmedBladeAvg,
+                        backgroundColor: '#10b981',
+                        order: 2,
+                        yAxisID: 'y'
+                    },
+                    {
+                        label: 'Δ Hours',
+                        data: bladeDeltas,
+                        type: 'scatter',
+                        pointStyle: 'triangle',
+                        pointRadius: 12,
+                        pointRotation: 180,
+                        backgroundColor: '#22c55e',
+                        borderColor: '#22c55e',
+                        borderWidth: 3,
+                        order: 1,
+                        yAxisID: 'y'
+                    },
+                    {
+                        label: '% Impact',
+                        data: bladePercents,
+                        type: 'scatter',
+                        pointStyle: 'circle',
+                        pointRadius: 10,
+                        backgroundColor: '#a78bfa',
+                        borderColor: '#a78bfa',
+                        borderWidth: 3,
+                        order: 1,
+                        yAxisID: 'y-percent'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        enabled: false,
+                        external: function(context) {
+                            let tooltipEl = document.getElementById('chartjs-tooltip');
+                            if (!tooltipEl) {
+                                tooltipEl = document.createElement('div');
+                                tooltipEl.id = 'chartjs-tooltip';
+                                tooltipEl.style.opacity = 0;
+                                tooltipEl.style.position = 'absolute';
+                                tooltipEl.style.pointerEvents = 'none';
+                                tooltipEl.style.transition = 'opacity 0.2s ease';
+                                document.body.appendChild(tooltipEl);
+                            }
+
+                            const tooltipModel = context.tooltip;
+                            if (tooltipModel.opacity === 0) {
+                                tooltipEl.style.opacity = 0;
+                                return;
+                            }
+
+                            if (tooltipModel.dataPoints && tooltipModel.dataPoints.length > 0) {
+                                const html = createCustomTooltip(context, efglBladeAvg, eolmedBladeAvg, 'Blade');
+                                tooltipEl.innerHTML = html;
+                            }
+
+                            const position = context.chart.canvas.getBoundingClientRect();
+                            tooltipEl.style.opacity = 1;
+                            tooltipEl.style.left = position.left + window.pageXOffset + tooltipModel.caretX + 'px';
+                            tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY + 'px';
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'Hours' },
+                        position: 'left'
+                    },
+                    'y-percent': {
+                        beginAtZero: true,
+                        title: { display: true, text: 'Percent Impact (%)' },
+                        position: 'right',
+                        grid: { drawOnChartArea: false }
+                    }
+                }
+            }
+        });
+    }
+
+    // Populate tower and blade detailed breakdowns
+    populateTowerDetailedBreakdown();
+    populateBladeDetailedBreakdown();
+}
+
+function populateTowerDetailedBreakdown() {
+    // Calculate tower section averages for each section
+    const efglTower1 = (efglData.floaters[0].operations[0].duration +
+                        efglData.floaters[1].operations[0].duration +
+                        efglData.floaters[2].operations[0].duration) / 3;
+    const efglTower2 = (efglData.floaters[0].operations[1].duration +
+                        efglData.floaters[1].operations[1].duration +
+                        efglData.floaters[2].operations[1].duration) / 3;
+    const efglTower3 = (efglData.floaters[0].operations[2].duration +
+                        efglData.floaters[1].operations[2].duration +
+                        efglData.floaters[2].operations[2].duration) / 3;
+
+    const eolmedTower1 = (eolmedData.floaters[0].operations[0].duration +
+                          eolmedData.floaters[1].operations[0].duration +
+                          eolmedData.floaters[2].operations[0].duration) / 3;
+    const eolmedTower2 = (eolmedData.floaters[0].operations[1].duration +
+                          eolmedData.floaters[1].operations[1].duration +
+                          eolmedData.floaters[2].operations[1].duration) / 3;
+    const eolmedTower3 = (eolmedData.floaters[0].operations[2].duration +
+                          eolmedData.floaters[1].operations[2].duration +
+                          eolmedData.floaters[2].operations[2].duration) / 3;
+
+    // Update tower section 1
+    document.getElementById('tower1-efgl').textContent = efglTower1.toFixed(2) + 'h';
+    document.getElementById('tower1-eolmed').textContent = eolmedTower1.toFixed(2) + 'h';
+    document.getElementById('tower1-delta').textContent = (efglTower1 - eolmedTower1 >= 0 ? '+' : '') + (efglTower1 - eolmedTower1).toFixed(2) + 'h';
+    document.getElementById('tower1-percent').textContent = (efglTower1 - eolmedTower1 >= 0 ? '+' : '') + (((efglTower1 - eolmedTower1) / efglTower1) * 100).toFixed(1) + '%';
+
+    // Update tower section 2
+    document.getElementById('tower2-efgl').textContent = efglTower2.toFixed(2) + 'h';
+    document.getElementById('tower2-eolmed').textContent = eolmedTower2.toFixed(2) + 'h';
+    document.getElementById('tower2-delta').textContent = (efglTower2 - eolmedTower2 >= 0 ? '+' : '') + (efglTower2 - eolmedTower2).toFixed(2) + 'h';
+    document.getElementById('tower2-percent').textContent = (efglTower2 - eolmedTower2 >= 0 ? '+' : '') + (((efglTower2 - eolmedTower2) / efglTower2) * 100).toFixed(1) + '%';
+
+    // Update tower section 3
+    document.getElementById('tower3-efgl').textContent = efglTower3.toFixed(2) + 'h';
+    document.getElementById('tower3-eolmed').textContent = eolmedTower3.toFixed(2) + 'h';
+    document.getElementById('tower3-delta').textContent = (efglTower3 - eolmedTower3 >= 0 ? '+' : '') + (efglTower3 - eolmedTower3).toFixed(2) + 'h';
+    document.getElementById('tower3-percent').textContent = (efglTower3 - eolmedTower3 >= 0 ? '+' : '') + (((efglTower3 - eolmedTower3) / efglTower3) * 100).toFixed(1) + '%';
+
+    // Update bar widths (percentages relative to EFGL)
+    const tower1Percent = (eolmedTower1 / efglTower1) * 100;
+    const tower2Percent = (eolmedTower2 / efglTower2) * 100;
+    const tower3Percent = (eolmedTower3 / efglTower3) * 100;
+
+    const towerItems = document.querySelectorAll('.component-breakdown-side .mini-breakdown-item');
+    if (towerItems.length >= 3) {
+        towerItems[0].querySelector('.mini-bar-eolmed').style.width = tower1Percent + '%';
+        towerItems[1].querySelector('.mini-bar-eolmed').style.width = tower2Percent + '%';
+        towerItems[2].querySelector('.mini-bar-eolmed').style.width = tower3Percent + '%';
+    }
+}
+
+function populateBladeDetailedBreakdown() {
+    // Calculate blade averages for each position
+    const efglBlade1 = (efglData.floaters[0].operations[4].duration +
+                        efglData.floaters[1].operations[4].duration +
+                        efglData.floaters[2].operations[4].duration) / 3;
+    const efglBlade2 = (efglData.floaters[0].operations[5].duration +
+                        efglData.floaters[1].operations[5].duration +
+                        efglData.floaters[2].operations[5].duration) / 3;
+    const efglBlade3 = (efglData.floaters[0].operations[6].duration +
+                        efglData.floaters[1].operations[6].duration +
+                        efglData.floaters[2].operations[6].duration) / 3;
+
+    const eolmedBlade1 = (eolmedData.floaters[0].operations[4].duration +
+                          eolmedData.floaters[1].operations[4].duration +
+                          eolmedData.floaters[2].operations[4].duration) / 3;
+    const eolmedBlade2 = (eolmedData.floaters[0].operations[5].duration +
+                          eolmedData.floaters[1].operations[5].duration +
+                          eolmedData.floaters[2].operations[5].duration) / 3;
+    const eolmedBlade3 = (eolmedData.floaters[0].operations[6].duration +
+                          eolmedData.floaters[1].operations[6].duration +
+                          eolmedData.floaters[2].operations[6].duration) / 3;
+
+    // Update blade 1
+    document.getElementById('blade1-efgl').textContent = efglBlade1.toFixed(2) + 'h';
+    document.getElementById('blade1-eolmed').textContent = eolmedBlade1.toFixed(2) + 'h';
+    document.getElementById('blade1-delta').textContent = (efglBlade1 - eolmedBlade1 >= 0 ? '+' : '') + (efglBlade1 - eolmedBlade1).toFixed(2) + 'h';
+    document.getElementById('blade1-percent').textContent = (efglBlade1 - eolmedBlade1 >= 0 ? '+' : '') + (((efglBlade1 - eolmedBlade1) / efglBlade1) * 100).toFixed(1) + '%';
+
+    // Update blade 2
+    document.getElementById('blade2-efgl').textContent = efglBlade2.toFixed(2) + 'h';
+    document.getElementById('blade2-eolmed').textContent = eolmedBlade2.toFixed(2) + 'h';
+    document.getElementById('blade2-delta').textContent = (efglBlade2 - eolmedBlade2 >= 0 ? '+' : '') + (efglBlade2 - eolmedBlade2).toFixed(2) + 'h';
+    document.getElementById('blade2-percent').textContent = (efglBlade2 - eolmedBlade2 >= 0 ? '+' : '') + (((efglBlade2 - eolmedBlade2) / efglBlade2) * 100).toFixed(1) + '%';
+
+    // Update blade 3
+    document.getElementById('blade3-efgl').textContent = efglBlade3.toFixed(2) + 'h';
+    document.getElementById('blade3-eolmed').textContent = eolmedBlade3.toFixed(2) + 'h';
+    document.getElementById('blade3-delta').textContent = (efglBlade3 - eolmedBlade3 >= 0 ? '+' : '') + (efglBlade3 - eolmedBlade3).toFixed(2) + 'h';
+    document.getElementById('blade3-percent').textContent = (efglBlade3 - eolmedBlade3 >= 0 ? '+' : '') + (((efglBlade3 - eolmedBlade3) / efglBlade3) * 100).toFixed(1) + '%';
+
+    // Update bar widths (percentages relative to EFGL)
+    const blade1Percent = (eolmedBlade1 / efglBlade1) * 100;
+    const blade2Percent = (eolmedBlade2 / efglBlade2) * 100;
+    const blade3Percent = (eolmedBlade3 / efglBlade3) * 100;
+
+    // Use querySelectorAll for blade side breakdown
+    const bladeSection = document.querySelector('.component-breakdown-side');
+    if (bladeSection) {
+        const bladeItems = bladeSection.querySelectorAll('.mini-breakdown-item');
+        if (bladeItems.length >= 3) {
+            bladeItems[0].querySelector('.mini-bar-eolmed').style.width = blade1Percent + '%';
+            bladeItems[1].querySelector('.mini-bar-eolmed').style.width = blade2Percent + '%';
+            bladeItems[2].querySelector('.mini-bar-eolmed').style.width = blade3Percent + '%';
+        }
+    }
 }
 
 function createComparisonCharts() {
@@ -2346,118 +2913,11 @@ function createComparisonCharts() {
         });
     }
 
-    // Blade comparison chart
-    const bladeCtx = document.getElementById('comparison-blade-chart');
-    if (bladeCtx) {
-        comparisonCharts.blades = new Chart(bladeCtx.getContext('2d'), {
-            type: 'bar',
-            data: {
-                labels: ['Blade 1', 'Blade 2', 'Blade 3'],
-                datasets: [
-                    {
-                        label: 'EFGL Average',
-                        data: [
-                            (efglData.floaters[0].operations[4].duration + efglData.floaters[1].operations[4].duration + efglData.floaters[2].operations[4].duration) / 3,
-                            (efglData.floaters[0].operations[5].duration + efglData.floaters[1].operations[5].duration + efglData.floaters[2].operations[5].duration) / 3,
-                            (efglData.floaters[0].operations[6].duration + efglData.floaters[1].operations[6].duration + efglData.floaters[2].operations[6].duration) / 3
-                        ],
-                        backgroundColor: '#ef4444'
-                    },
-                    {
-                        label: 'Eolmed Average',
-                        data: [
-                            (eolmedData.floaters[0].operations[4].duration + eolmedData.floaters[1].operations[4].duration + eolmedData.floaters[2].operations[4].duration) / 3,
-                            (eolmedData.floaters[0].operations[5].duration + eolmedData.floaters[1].operations[5].duration + eolmedData.floaters[2].operations[5].duration) / 3,
-                            (eolmedData.floaters[0].operations[6].duration + eolmedData.floaters[1].operations[6].duration + eolmedData.floaters[2].operations[6].duration) / 3
-                        ],
-                        backgroundColor: '#3b82f6'
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    title: { display: true, text: 'Average Blade Installation Time: EFGL vs Eolmed', font: { size: 16, weight: 'bold' }}
-                },
-                scales: {
-                    y: { beginAtZero: true, title: { display: true, text: 'Duration (hours)' }}
-                }
-            }
-        });
-    }
+    // Populate summary table
+    populateComparisonSummaryTable();
 
-    // Learning curve comparison
-    const learningCtx = document.getElementById('comparison-learning-curve');
-    if (learningCtx) {
-        comparisonCharts.learning = new Chart(learningCtx.getContext('2d'), {
-            type: 'line',
-            data: {
-                datasets: [
-                    {
-                        label: 'EFGL Actual',
-                        data: efglData.floaters.map(f => ({ x: f.id, y: f.total_hours })),
-                        borderColor: '#ef4444',
-                        backgroundColor: '#ef4444',
-                        pointRadius: 8,
-                        borderWidth: 3
-                    },
-                    {
-                        label: 'Eolmed Actual',
-                        data: eolmedData.floaters.map(f => ({ x: f.id, y: f.total_hours })),
-                        borderColor: '#3b82f6',
-                        backgroundColor: '#3b82f6',
-                        pointRadius: 8,
-                        borderWidth: 3
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    title: { display: true, text: 'Learning Curve Comparison', font: { size: 16, weight: 'bold' }}
-                },
-                scales: {
-                    x: { type: 'linear', title: { display: true, text: 'Floater Number' }, min: 0, max: 4 },
-                    y: { beginAtZero: true, title: { display: true, text: 'Assembly Time (hours)' }}
-                }
-            }
-        });
-    }
-
-    // Total time progression
-    const totalCtx = document.getElementById('comparison-total-time');
-    if (totalCtx) {
-        comparisonCharts.total = new Chart(totalCtx.getContext('2d'), {
-            type: 'bar',
-            data: {
-                labels: ['Floater 1', 'Floater 2', 'Floater 3'],
-                datasets: [
-                    {
-                        label: 'EFGL',
-                        data: efglData.floaters.map(f => f.total_hours),
-                        backgroundColor: '#ef4444'
-                    },
-                    {
-                        label: 'Eolmed',
-                        data: eolmedData.floaters.map(f => f.total_hours),
-                        backgroundColor: '#3b82f6'
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    title: { display: true, text: 'Total Assembly Time per Floater', font: { size: 16, weight: 'bold' }}
-                },
-                scales: {
-                    y: { beginAtZero: true, title: { display: true, text: 'Duration (hours)' }}
-                }
-            }
-        });
-    }
+    // Create component breakdown charts
+    createComponentComparisonCharts();
 
     // Combined Learning Curve Across Projects
     const combinedCtx = document.getElementById('combined-learning-curve');

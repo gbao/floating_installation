@@ -2163,26 +2163,6 @@
                 </p>
             </section>
 
-            <!-- Comparison Summary Table -->
-            <section class="comparison-table-section">
-                <h2>Key Metrics Comparison</h2>
-                <div class="table-responsive">
-                    <table class="comparison-table">
-                        <thead>
-                            <tr>
-                                <th>Metric</th>
-                                <th>EFGL</th>
-                                <th>Eolmed</th>
-                                <th>Difference</th>
-                            </tr>
-                        </thead>
-                        <tbody id="comparison-summary-table">
-                            <!-- Populated by JavaScript -->
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-
             <!-- Timeline Patterns Comparison -->
             <section class="chart-section">
                 <div class="timeline-patterns-header">
@@ -2274,24 +2254,198 @@
                 </div>
             </section>
 
+            <!-- Key Metrics Comparisons -->
             <section class="chart-section">
-                <h2>Blade Installation Time Comparison</h2>
-                <div class="chart-container">
-                    <canvas id="comparison-blade-chart"></canvas>
-                </div>
-            </section>
+                <h2>Key Metrics Comparisons</h2>
 
-            <section class="chart-section">
-                <h2>Learning Curve Comparison</h2>
-                <div class="chart-container">
-                    <canvas id="comparison-learning-curve"></canvas>
+                <!-- Summary Table -->
+                <div class="comparison-summary-table-wrapper">
+                    <h3>Summary Table: Campaign Performance Overview</h3>
+                    <table class="comparison-summary-table">
+                        <thead>
+                            <tr>
+                                <th>Metric</th>
+                                <th>EFGL (hrs)</th>
+                                <th>Eolmed (hrs)</th>
+                                <th>Δ Savings</th>
+                                <th>% Impact</th>
+                            </tr>
+                        </thead>
+                        <tbody id="comparison-summary-tbody">
+                            <!-- Data populated by JavaScript -->
+                        </tbody>
+                    </table>
                 </div>
-            </section>
 
-            <section class="chart-section">
-                <h2>Overall Assembly Time Progression</h2>
-                <div class="chart-container">
-                    <canvas id="comparison-total-time"></canvas>
+                <!-- Component Breakdown - Side by Side -->
+                <div class="component-breakdown-grid">
+                    <!-- Tower Component -->
+                    <div class="component-chart-card">
+                        <div class="component-chart-header">
+                            <h3>🗼 Tower Sections</h3>
+                            <div class="component-scorecard component-scorecard-positive">
+                                <div class="scorecard-value" id="tower-delta">+6.13h saved</div>
+                                <div class="scorecard-percent" id="tower-percent">📉 +31% Faster</div>
+                            </div>
+                        </div>
+                        <div class="component-dual-layout">
+                            <div class="component-chart-main">
+                                <div class="component-chart-container">
+                                    <canvas id="tower-comparison-chart"></canvas>
+                                </div>
+                                <div class="component-legend">
+                                    <span class="legend-item"><span class="legend-box" style="background: #3b82f6;"></span> EFGL (Baseline)</span>
+                                    <span class="legend-item"><span class="legend-box" style="background: #10b981;"></span> Eolmed</span>
+                                    <span class="legend-item">▼ Savings</span>
+                                    <span class="legend-item">● % Impact</span>
+                                </div>
+                            </div>
+                            <div class="component-breakdown-side">
+                                <h4>📋 By Section (Average among 3 floaters)</h4>
+                                <div class="mini-breakdown-bars">
+                                    <div class="mini-breakdown-item">
+                                        <div class="mini-breakdown-label">Section 1:</div>
+                                        <div class="mini-breakdown-viz">
+                                            <div class="mini-bar mini-bar-efgl" style="width: 100%;">
+                                                <span class="mini-bar-label">EFGL: <span id="tower1-efgl">8.17h</span></span>
+                                            </div>
+                                            <div class="mini-bar mini-bar-eolmed" style="width: 70%;">
+                                                <span class="mini-bar-label">Eolmed: <span id="tower1-eolmed">5.00h</span></span>
+                                            </div>
+                                            <div class="mini-bar-delta">▼ <span id="tower1-delta">+3.17h</span> (<span id="tower1-percent">+38.8%</span>)</div>
+                                        </div>
+                                    </div>
+                                    <div class="mini-breakdown-item">
+                                        <div class="mini-breakdown-label">Section 2:</div>
+                                        <div class="mini-breakdown-viz">
+                                            <div class="mini-bar mini-bar-efgl" style="width: 100%;">
+                                                <span class="mini-bar-label">EFGL: <span id="tower2-efgl">7.08h</span></span>
+                                            </div>
+                                            <div class="mini-bar mini-bar-eolmed" style="width: 75%;">
+                                                <span class="mini-bar-label">Eolmed: <span id="tower2-eolmed">5.33h</span></span>
+                                            </div>
+                                            <div class="mini-bar-delta">▼ <span id="tower2-delta">+1.75h</span> (<span id="tower2-percent">+24.7%</span>)</div>
+                                        </div>
+                                    </div>
+                                    <div class="mini-breakdown-item">
+                                        <div class="mini-breakdown-label">Section 3:</div>
+                                        <div class="mini-breakdown-viz">
+                                            <div class="mini-bar mini-bar-efgl" style="width: 100%;">
+                                                <span class="mini-bar-label">EFGL: <span id="tower3-efgl">7.67h</span></span>
+                                            </div>
+                                            <div class="mini-bar mini-bar-eolmed" style="width: 85%;">
+                                                <span class="mini-bar-label">Eolmed: <span id="tower3-eolmed">6.50h</span></span>
+                                            </div>
+                                            <div class="mini-bar-delta">▼ <span id="tower3-delta">+1.17h</span> (<span id="tower3-percent">+15.3%</span>)</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="component-analysis component-analysis-positive">
+                            <span class="analysis-icon">✅</span>
+                            <span class="analysis-text">Eolmed tower work is consistently 27% to 46% faster than baseline across all floaters.</span>
+                        </div>
+                    </div>
+
+                    <!-- Nacelle Component -->
+                    <div class="component-chart-card">
+                        <div class="component-chart-header">
+                            <h3>🏗️ Nacelle</h3>
+                            <div class="component-scorecard component-scorecard-negative">
+                                <div class="scorecard-value" id="nacelle-delta">0.93h slower</div>
+                                <div class="scorecard-percent" id="nacelle-percent">⚠️ -31%</div>
+                            </div>
+                        </div>
+                        <div class="component-alert">
+                            ⚠️ Eolmed slower - investigation needed
+                        </div>
+                        <div class="component-chart-container">
+                            <canvas id="nacelle-comparison-chart"></canvas>
+                        </div>
+                        <div class="component-legend">
+                            <span class="legend-item"><span class="legend-box" style="background: #3b82f6;"></span> EFGL (Baseline)</span>
+                            <span class="legend-item"><span class="legend-box" style="background: #10b981;"></span> Eolmed</span>
+                            <span class="legend-item">▲ Loss</span>
+                            <span class="legend-item">● % Impact</span>
+                        </div>
+                        <div class="component-analysis component-analysis-warning">
+                            <span class="analysis-icon">⚠️</span>
+                            <span class="analysis-text">Performance Gap: Eolmed is 5% to 31% slower than EFGL. F1 showed the highest regression (+31%).</span>
+                        </div>
+                    </div>
+
+                    <!-- Blade Component -->
+                    <div class="component-chart-card">
+                        <div class="component-chart-header">
+                            <h3>🌀 Blade Program</h3>
+                            <div class="component-scorecard component-scorecard-positive">
+                                <div class="scorecard-value" id="blade-delta">+5.33h saved</div>
+                                <div class="scorecard-percent" id="blade-percent">📉 +31% Faster</div>
+                            </div>
+                        </div>
+                        <div class="component-dual-layout">
+                            <div class="component-chart-main">
+                                <div class="component-chart-container">
+                                    <canvas id="blade-comparison-chart"></canvas>
+                                </div>
+                                <div class="component-legend">
+                                    <span class="legend-item"><span class="legend-box" style="background: #3b82f6;"></span> EFGL (Baseline)</span>
+                                    <span class="legend-item"><span class="legend-box" style="background: #10b981;"></span> Eolmed</span>
+                                    <span class="legend-item">▼ Savings</span>
+                                    <span class="legend-item">● % Impact</span>
+                                </div>
+                            </div>
+                            <div class="component-breakdown-side">
+                                <h4>📋 By Position (Average among 3 floaters)</h4>
+                                <div class="mini-breakdown-bars">
+                                    <div class="mini-breakdown-item">
+                                        <div class="mini-breakdown-label">Blade 1:</div>
+                                        <div class="mini-breakdown-viz">
+                                            <div class="mini-bar mini-bar-efgl" style="width: 100%;">
+                                                <span class="mini-bar-label">EFGL: <span id="blade1-efgl">5.17h</span></span>
+                                            </div>
+                                            <div class="mini-bar mini-bar-eolmed" style="width: 77.4%;">
+                                                <span class="mini-bar-label">Eolmed: <span id="blade1-eolmed">4.00h</span></span>
+                                            </div>
+                                            <div class="mini-bar-delta">▼ <span id="blade1-delta">+1.17h</span> (<span id="blade1-percent">+22.6%</span>)</div>
+                                        </div>
+                                    </div>
+                                    <div class="mini-breakdown-item">
+                                        <div class="mini-breakdown-label">Blade 2:</div>
+                                        <div class="mini-breakdown-viz">
+                                            <div class="mini-bar mini-bar-efgl" style="width: 100%;">
+                                                <span class="mini-bar-label">EFGL: <span id="blade2-efgl">5.42h</span></span>
+                                            </div>
+                                            <div class="mini-bar mini-bar-eolmed" style="width: 80.0%;">
+                                                <span class="mini-bar-label">Eolmed: <span id="blade2-eolmed">4.33h</span></span>
+                                            </div>
+                                            <div class="mini-bar-delta">▼ <span id="blade2-delta">+1.08h</span> (<span id="blade2-percent">+20.0%</span>)</div>
+                                        </div>
+                                    </div>
+                                    <div class="mini-breakdown-item">
+                                        <div class="mini-breakdown-label">Blade 3:</div>
+                                        <div class="mini-breakdown-viz">
+                                            <div class="mini-bar mini-bar-efgl" style="width: 100%;">
+                                                <span class="mini-bar-label">EFGL: <span id="blade3-efgl">4.92h</span></span>
+                                            </div>
+                                            <div class="mini-bar mini-bar-eolmed" style="width: 74.6%;">
+                                                <span class="mini-bar-label">Eolmed: <span id="blade3-eolmed">3.67h</span></span>
+                                            </div>
+                                            <div class="mini-bar-delta">▼ <span id="blade3-delta">+1.25h</span> (<span id="blade3-percent">+25.5%</span>)</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mini-breakdown-insight">
+                                    💡 Consistent savings across all blade positions
+                                </div>
+                            </div>
+                        </div>
+                        <div class="component-analysis component-analysis-positive">
+                            <span class="analysis-icon">💨</span>
+                            <span class="analysis-text">Massive gains observed with propeller blade tool: Floater 2 achieved a 49% reduction (-5.8h) compared to baseline.</span>
+                        </div>
+                    </div>
                 </div>
             </section>
 

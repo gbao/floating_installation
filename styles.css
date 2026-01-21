@@ -5066,3 +5066,440 @@ footer p {
         font-size: 0.75rem;
     }
 }
+
+/* ===========================
+   Comparison Summary Table
+   =========================== */
+.comparison-summary-table-wrapper {
+    margin: 2rem 0;
+}
+
+.comparison-summary-table-wrapper h3 {
+    font-size: 1.25rem;
+    color: #1e293b;
+    margin-bottom: 1rem;
+}
+
+.comparison-summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.comparison-summary-table thead {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+}
+
+.comparison-summary-table thead th {
+    padding: 1rem;
+    text-align: left;
+    color: white;
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.comparison-summary-table tbody tr {
+    border-bottom: 1px solid #e2e8f0;
+    transition: background-color 0.2s;
+}
+
+.comparison-summary-table tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+.comparison-summary-table tbody tr.average-row {
+    background: #f1f5f9;
+    font-weight: 600;
+    border-top: 2px solid #cbd5e1;
+}
+
+.comparison-summary-table tbody td {
+    padding: 1rem;
+    color: #334155;
+}
+
+.comparison-summary-table .delta-positive {
+    color: #10b981;
+    font-weight: 600;
+}
+
+.comparison-summary-table .delta-negative {
+    color: #ef4444;
+    font-weight: 600;
+}
+
+.comparison-summary-table .percent-positive {
+    color: #10b981;
+    font-weight: 600;
+}
+
+.comparison-summary-table .percent-negative {
+    color: #ef4444;
+    font-weight: 600;
+}
+
+/* ===========================
+   Component Breakdown Grid
+   =========================== */
+.component-breakdown-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.component-chart-card {
+    background: white;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e2e8f0;
+}
+
+.component-chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.component-chart-header h3 {
+    font-size: 1.125rem;
+    color: #1e293b;
+    margin: 0;
+}
+
+.component-scorecard {
+    background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    text-align: right;
+    min-width: 100px;
+    border: 2px solid;
+}
+
+.component-scorecard-positive {
+    border-color: #10b981;
+    background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+}
+
+.component-scorecard-negative {
+    border-color: #ef4444;
+    background: linear-gradient(135deg, #fee2e2, #fecaca);
+}
+
+.scorecard-value {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.3;
+    white-space: nowrap;
+}
+
+.component-scorecard-positive .scorecard-value {
+    color: #059669;
+}
+
+.component-scorecard-negative .scorecard-value {
+    color: #dc2626;
+}
+
+.scorecard-percent {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #64748b;
+    margin-top: 0.25rem;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.component-scorecard-positive .scorecard-percent {
+    color: #047857;
+}
+
+.component-scorecard-negative .scorecard-percent {
+    color: #b91c1c;
+}
+
+.component-alert {
+    background: #fef3c7;
+    border-left: 4px solid #f59e0b;
+    padding: 0.75rem;
+    margin: 0.75rem 0;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    color: #92400e;
+}
+
+.component-chart-container {
+    height: 350px;
+    position: relative;
+    margin: 1rem 0;
+}
+
+.component-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e2e8f0;
+    font-size: 0.875rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #64748b;
+}
+
+.legend-box {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 0.25rem;
+}
+
+/* ===========================
+   Blade Detailed Breakdown
+   =========================== */
+.blade-detailed-breakdown {
+    background: white;
+    border-radius: 0.75rem;
+    padding: 2rem;
+    margin: 2rem 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e2e8f0;
+}
+
+.blade-detailed-breakdown h3 {
+    font-size: 1.25rem;
+    color: #1e293b;
+    margin-bottom: 1.5rem;
+}
+
+.blade-breakdown-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.blade-breakdown-item {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 1rem;
+    align-items: center;
+}
+
+.blade-breakdown-label {
+    font-weight: 600;
+    color: #475569;
+    font-size: 1rem;
+}
+
+.blade-breakdown-viz {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.blade-bar {
+    height: 2.5rem;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.blade-bar-efgl {
+    background: #3b82f6;
+    color: white;
+}
+
+.blade-bar-eolmed {
+    background: #10b981;
+    color: white;
+}
+
+.blade-bar-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.blade-bar-delta {
+    font-size: 0.875rem;
+    color: #10b981;
+    font-weight: 600;
+    margin-top: 0.25rem;
+}
+
+.blade-breakdown-insight {
+    background: linear-gradient(135deg, #ede9fe, #ddd6fe);
+    border-left: 4px solid #8b5cf6;
+    padding: 1rem 1.5rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    color: #5b21b6;
+    font-weight: 500;
+}
+
+@media (max-width: 768px) {
+    .blade-breakdown-item {
+        grid-template-columns: 1fr;
+    }
+
+    .blade-breakdown-label {
+        margin-bottom: 0.5rem;
+    }
+}
+
+/* ===========================
+   Component Dual Layout (Chart + Breakdown Side-by-Side)
+   =========================== */
+.component-dual-layout {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+@media (max-width: 1024px) {
+    .component-dual-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+.component-chart-main {
+    min-width: 0;
+}
+
+.component-breakdown-side {
+    background: #f8fafc;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    border: 1px solid #e2e8f0;
+}
+
+.component-breakdown-side h4 {
+    font-size: 1rem;
+    color: #1e293b;
+    margin: 0 0 1rem 0;
+    font-weight: 600;
+}
+
+/* Mini Breakdown Bars */
+.mini-breakdown-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.mini-breakdown-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.mini-breakdown-label {
+    font-weight: 600;
+    color: #475569;
+    font-size: 0.875rem;
+}
+
+.mini-breakdown-viz {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+}
+
+.mini-bar {
+    height: 2rem;
+    border-radius: 0.375rem;
+    display: flex;
+    align-items: center;
+    padding: 0 0.75rem;
+    transition: all 0.3s ease;
+}
+
+.mini-bar-efgl {
+    background: #3b82f6;
+    color: white;
+}
+
+.mini-bar-eolmed {
+    background: #10b981;
+    color: white;
+}
+
+.mini-bar-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.mini-bar-delta {
+    font-size: 0.75rem;
+    color: #10b981;
+    font-weight: 600;
+    margin-top: 0.125rem;
+    padding-left: 0.25rem;
+}
+
+.mini-breakdown-insight {
+    background: linear-gradient(135deg, #ede9fe, #ddd6fe);
+    border-left: 3px solid #8b5cf6;
+    padding: 0.75rem 1rem;
+    border-radius: 0.375rem;
+    font-size: 0.75rem;
+    color: #5b21b6;
+    font-weight: 500;
+    margin-top: 0.75rem;
+}
+
+/* Component Analysis Boxes */
+.component-analysis {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    border-radius: 0.5rem;
+    margin-top: 1.5rem;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.component-analysis-positive {
+    background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+    border: 2px solid #10b981;
+    color: #065f46;
+}
+
+.component-analysis-warning {
+    background: linear-gradient(135deg, #fed7aa, #fecaca);
+    border: 2px solid #f59e0b;
+    color: #7c2d12;
+}
+
+.analysis-icon {
+    font-size: 1.75rem;
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+.analysis-text {
+    font-weight: 500;
+    flex: 1;
+}
