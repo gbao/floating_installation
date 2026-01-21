@@ -2920,9 +2920,9 @@ function createComparisonCharts() {
     const combinedCtx = document.getElementById('combined-learning-curve');
     if (combinedCtx) {
         // Sequential data points: EFGL F1, F2, F3, then Eolmed F1, F2, F3
-        // Using original F1-P1 value (58.33h) for total improvement visualization
+        // Using updated F1-P1 value (42.25h) for total improvement visualization
         const combinedData = [
-            { x: 1, y: 58.33, label: 'F1-P1', project: 'EFGL', note: 'Original (pre-correction)' },
+            { x: 1, y: 42.25, label: 'F1-P1', project: 'EFGL' },
             { x: 2, y: 32.33, label: 'F2-P1', project: 'EFGL' },
             { x: 3, y: 26.67, label: 'F3-P1', project: 'EFGL' },
             { x: 4, y: 28.00, label: 'F1-P2', project: 'Eolmed', note: 'Site setup penalty' },
@@ -3008,7 +3008,7 @@ function createComparisonCharts() {
                                 }
 
                                 // Add total improvement from F1-P1
-                                const totalImprovement = ((58.33 - dataPoint.y) / 58.33 * 100);
+                                const totalImprovement = ((42.25 - dataPoint.y) / 42.25 * 100);
                                 lines.push(`Total improvement from start: ${totalImprovement.toFixed(1)}%`);
 
                                 return lines;
