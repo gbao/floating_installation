@@ -2467,8 +2467,8 @@ function createComponentComparisonCharts() {
                         pointStyle: 'triangle',
                         pointRadius: 12,
                         pointRotation: 180,
-                        backgroundColor: '#22c55e',
-                        borderColor: '#22c55e',
+                        backgroundColor: '#f97316',
+                        borderColor: '#f97316',
                         borderWidth: 3,
                         order: 1,
                         yAxisID: 'y'
@@ -2679,8 +2679,8 @@ function createComponentComparisonCharts() {
                         pointStyle: 'triangle',
                         pointRadius: 12,
                         pointRotation: 180,
-                        backgroundColor: '#22c55e',
-                        borderColor: '#22c55e',
+                        backgroundColor: '#f97316',
+                        borderColor: '#f97316',
                         borderWidth: 3,
                         order: 1,
                         yAxisID: 'y'
