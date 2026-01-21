@@ -2247,9 +2247,6 @@ function initializeComparisonTab() {
 
     // Create comparison charts
     createComparisonCharts();
-
-    // Populate insights
-    populateInsights();
 }
 
 function populateComparisonSummaryTable() {
@@ -3090,29 +3087,6 @@ function createComparisonCharts() {
             }
         });
     }
-}
-
-function populateInsights() {
-    const towerEfglAvg = efglData.floaters.reduce((sum, f) => sum + f.operations[0].duration + f.operations[1].duration + f.operations[2].duration, 0) / 3;
-    const towerEolmedAvg = eolmedData.floaters.reduce((sum, f) => sum + f.operations[0].duration + f.operations[1].duration + f.operations[2].duration, 0) / 3;
-    const towerDiff = ((towerEfglAvg - towerEolmedAvg) / towerEfglAvg * 100);
-
-    const bladeEfglAvg = efglData.floaters.reduce((sum, f) => sum + f.operations[4].duration + f.operations[5].duration + f.operations[6].duration, 0) / 3;
-    const bladeEolmedAvg = eolmedData.floaters.reduce((sum, f) => sum + f.operations[4].duration + f.operations[5].duration + f.operations[6].duration, 0) / 3;
-    const bladeDiff = ((bladeEfglAvg - bladeEolmedAvg) / bladeEfglAvg * 100);
-
-    document.getElementById('insight-towers').textContent =
-        `Eolmed achieved ${Math.abs(towerDiff).toFixed(1)}% ${towerDiff > 0 ? 'faster' : 'slower'} average tower erection times compared to EFGL, demonstrating ${towerDiff > 0 ? 'improved' : 'different'} methodologies in tower installation.`;
-
-    document.getElementById('insight-blades').textContent =
-        `Blade installation shows ${Math.abs(bladeDiff).toFixed(1)}% ${bladeDiff > 0 ? 'improvement' : 'difference'} in Eolmed, indicating ${bladeDiff > 0 ? 'significant learning from EFGL experience' : 'varying approaches'}.`;
-
-    const overallDiff = efglData.project_metrics.total_project_days - eolmedData.project_metrics.total_project_days;
-    document.getElementById('insight-overall').textContent =
-        `Overall project duration: EFGL completed in ${efglData.project_metrics.total_project_days.toFixed(1)} days while Eolmed took ${eolmedData.project_metrics.total_project_days.toFixed(1)} days, ${overallDiff > 0 ? 'showing' : 'indicating'} ${Math.abs(overallDiff).toFixed(1)} days ${overallDiff > 0 ? 'improvement' : 'difference'}.`;
-
-    document.getElementById('insight-learning').textContent =
-        `EFGL's learning rate of ${(efglData.learning_curve.avg_learning_rate * 100).toFixed(0)}% compared to Eolmed's ${(eolmedData.learning_curve.avg_learning_rate * 100).toFixed(0)}% indicates that ${eolmedData.learning_curve.avg_learning_rate > efglData.learning_curve.avg_learning_rate ? 'Eolmed had a slower learning curve' : 'EFGL had a slower learning curve'}, benefiting from iterative process improvements.`;
 }
 
 // ==================== INITIALIZATION ====================
