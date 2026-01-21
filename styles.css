@@ -2825,6 +2825,11 @@ footer p {
     display: block;
 }
 
+/* Show tooltip on hover */
+.metric-card:has(.metric-info-btn:hover) .metric-tooltip {
+    display: block;
+}
+
 /* ==================== CONDENSED TECHNICAL SPECIFICATIONS ==================== */
 
 .tech-specs-condensed {
