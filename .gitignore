@@ -1,0 +1,41 @@
+# Claude AI working directory
+.claude/
+
+# Python analysis scripts (local development only)
+check_quayside.py
+compare_erections.py
+detailed_comparison.py
+extract_timestamps.py
+final_comparison.py
+summary_comparison.py
+verify_final.py
+
+# Internal methodology documentation (keep local)
+EOLMED_PATTERN1_RECALCULATION.md
+LEARNING_RATE_METHODOLOGY.md
+SEQUENCING_FLOW_VISUALIZATION.md
+
+# Testing files
+test.html
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
