@@ -1655,9 +1655,9 @@ footer p {
 }
 
 .flow-arrow-compact {
-    font-size: 0.65rem;
-    color: #94a3b8;
-    font-weight: 600;
+    font-size: 0.85rem;
+    color: #2563eb;
+    font-weight: 700;
 }
 
 .flow-result-compact {
